@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 using namespace animal_shogi;
 
-TEST(point_test, exapmle)
+TEST(point_test, example)
 {
     point p{1, 2};
     EXPECT_EQ(1, p.x());
