@@ -1,6 +1,10 @@
 ﻿#include <piece.h>
 #include <gtest/gtest.h>
+using namespace animal_shogi;
 
-TEST(piece_test, default_construct)
+TEST(piece_test, example)
 {
+    const piece p{player::BLACK, ptype::CHICK};
+    auto const moves = p.calc_moves({3, 2});
+    EXPECT_EQ(point(3, 1), moves[0]);
 }
