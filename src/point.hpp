@@ -10,7 +10,7 @@ namespace animal_shogi
     {
         static_assert(std::is_arithmetic<T>::value, "basic_point<T> : T must be arithmetic type");
     public:
-        //explicitにしない
+        // explicitにしない
         basic_point(T val)
             : basic_point(val, val)
         {
