@@ -9,8 +9,8 @@ namespace
 {
     using moves_t = unordered_map<ptype, vector<point>>;
 
-    // 駒の動きのテーブル
-    const moves_t piece_moves =
+    // 駒の動きの表
+    const moves_t piece_movement_table =
     {
         {ptype::CHICK, {{0, -1}}},
         {ptype::ELEPHANT, {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}}},
@@ -27,7 +27,7 @@ piece::piece(player player, ptype ptype)
 
 vector<point> piece::calc_moves(point const& current) const
 {
-    auto points = piece_moves.at(ptype_);
+    auto points = piece_movement_table.at(ptype_);
     transform(begin(points), end(points), begin(points), [&current](const point& p)
     {
         return p + current;
