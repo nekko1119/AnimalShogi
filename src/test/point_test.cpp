@@ -9,6 +9,7 @@ TEST(point_test, example)
     p.y(3);
     p += 2;
     EXPECT_TRUE(p == point(3, 5));
+    testing::StaticAssertTypeEq<point::value_type, int>();
 }
 
 TEST(point_test, constuct)
@@ -46,7 +47,7 @@ TEST(point_test, accessor)
     EXPECT_EQ(4, p.y());
 }
 
-TEST(point_test, compare)
+TEST(point_test, equality)
 {
     point p1{1, 2};
     point p2{3, 4};
@@ -73,4 +74,13 @@ TEST(point_test, sub)
     p1 -= p2;
     EXPECT_EQ(p1, point(-2, -2));
     EXPECT_EQ(p1 - p2, point(-5, -6));
+}
+
+TEST(point_test, mul)
+{
+    point p1{1, 2};
+    point p2{3, 4};
+    p1 *= p2;
+    EXPECT_EQ(p1, point(3, 8));
+    EXPECT_EQ(p1 * p2, point(9, 32));
 }
