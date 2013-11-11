@@ -7,7 +7,7 @@ TEST(point_test, example)
     point p{1, 2};
     EXPECT_EQ(1, p.x());
     p.y(3);
-    p += 2;
+    p += {2, 2};
     EXPECT_TRUE(p == point(3, 5));
     testing::StaticAssertTypeEq<point::value_type, int>();
 }

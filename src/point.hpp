@@ -18,8 +18,7 @@ namespace animal_shogi
     public:
         using value_type = T;
 
-        // explicitにしない
-        basic_point(T val)
+        explicit basic_point(T val)
             : basic_point(val, val)
         {
         }
