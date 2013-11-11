@@ -8,6 +8,16 @@ namespace animal_shogi
         BLACK,  // 先手
         WHITE   // 後手
     };
+
+    inline bool is_black(turn trn)
+    {
+        return trn == turn::BLACK;
+    }
+
+    inline bool is_white(turn trn)
+    {
+        return !is_black(trn);
+    }
 }
 
 #endif

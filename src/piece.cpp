@@ -55,7 +55,7 @@ piece::piece(turn turn, ptype ptype)
 vector<point> piece::calc_moves(point const& current) const
 {
     auto points = piece_movement_table.at(ptype_).moves;
-    if (turn_ == turn::WHITE)
+    if (is_white(turn_))
     {
         reverse_points(points);
     }
@@ -66,5 +66,5 @@ vector<point> piece::calc_moves(point const& current) const
 string piece::str() const
 {
     auto str = piece_movement_table.at(ptype_).name;
-    return turn_ == turn::BLACK ? str : to_lower(move(str));
+    return is_black(turn_) ? str : to_lower(move(str));
 }
