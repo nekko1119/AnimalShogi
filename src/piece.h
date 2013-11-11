@@ -1,9 +1,10 @@
 ﻿#ifndef ANIMAL_SHOGI_PIECE_H
 #define ANIMAL_SHOGI_PIECE_H
 
-#include "constant/player.h"
+#include "constant/turn.h"
 #include "constant/ptype.h"
 #include "point.hpp"
+#include <string>
 #include <vector>
 
 namespace animal_shogi
@@ -11,12 +12,13 @@ namespace animal_shogi
     class piece
     {
     public:
-        piece(player player, ptype ptype);
+        piece(turn turn, ptype ptype);
 
         std::vector<point> calc_moves(point const& current) const;
+        std::string str() const;
 
     private:
-        player player_;
+        turn turn_;
         ptype ptype_;
     };
 }
