@@ -27,9 +27,9 @@ detail::board::board()
 string detail::board::str() const
 {
     string str;
-    for_each(board_.begin() + 1, board_.end() - 1, [&str](inner_type const& in)
+    for_each(begin(board_) + 1, end(board_) - 1, [&str](inner_type const& in)
     {
-        for_each(in.begin() + 1, in.end() - 1, [&str](boost::optional<piece> const& p)
+        for_each(begin(in) + 1, end(in) - 1, [&str](boost::optional<piece> const& p)
         {
             str.append((p ? p->str() : "__") + " ");
         });
