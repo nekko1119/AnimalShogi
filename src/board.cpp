@@ -7,6 +7,13 @@ static auto instance = board::get();
 
 detail::board::board()
 {
+    // どうぶつしょうぎの初期配置
+    /*
+    象ラ麒
+    ＿ひ＿
+    ＿ひ＿
+    麒ラ象
+    */
     board_[1][1] = {turn::WHITE, ptype::GIRAFFE};
     board_[1][2] = {turn::WHITE, ptype::LION};
     board_[1][3] = {turn::WHITE, ptype::ELEPHANT};
