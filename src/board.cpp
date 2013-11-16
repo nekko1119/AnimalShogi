@@ -29,9 +29,10 @@ string detail::board::str() const
     string str;
     for_each(begin(board_) + 1, end(board_) - 1, [&str](inner_type const& in)
     {
+        str.append("|");
         for_each(begin(in) + 1, end(in) - 1, [&str](boost::optional<piece> const& p)
         {
-            str.append((p ? p->str() : "__") + " ");
+            str.append((p ? p->str() : "  ") + "|");
         });
         str.append("\n");
     });
