@@ -3,7 +3,7 @@
 
 #include "constant/turn.h"
 #include "constant/ptype.h"
-#include "point.hpp"
+#include "utility/point.hpp"
 #include <string>
 #include <vector>
 

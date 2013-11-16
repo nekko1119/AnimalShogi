@@ -2,7 +2,7 @@
 #define ANIMAL_SHOGI_BOARD_HPP
 
 #include "piece.h"
-#include "singleton_holder.hpp"
+#include "utility/singleton_holder.hpp"
 #include <boost/optional.hpp>
 #include <array>
 #include <string>
