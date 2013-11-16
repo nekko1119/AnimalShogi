@@ -28,7 +28,7 @@ namespace animal_shogi
         {
         }
 
-        T x() const
+        T const& x() const
         {
             return x_;
         }
@@ -38,7 +38,7 @@ namespace animal_shogi
             x_ = val;
         }
 
-        T y() const
+        T const& y() const
         {
             return y_;
         }
