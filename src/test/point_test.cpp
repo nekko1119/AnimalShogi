@@ -1,4 +1,4 @@
-﻿#include "point.hpp"
+﻿#include "utility/point.hpp"
 #include <gtest/gtest.h>
 using namespace animal_shogi;
 

@@ -4,23 +4,13 @@
 #include <functional>
 #include <locale>
 #include <unordered_map>
+#include <utility>
 using namespace animal_shogi;
 using namespace std;
 
 namespace
 {
-    struct piece_info
-    {
-        piece_info(vector<point> v, string name)
-            : moves(v), name(name)
-        {
-        }
-
-        vector<point> moves;
-        string name;
-    };
-
-    using moves_t = unordered_map<ptype, piece_info>;
+    using moves_t = unordered_map<ptype, std::pair<std::vector<point>, string>>;
 
     // 駒の動きの表
     moves_t const piece_movement_table =
@@ -54,7 +44,7 @@ piece::piece(turn turn, ptype ptype)
 
 vector<point> piece::calc_moves(point const& current) const
 {
-    auto points = piece_movement_table.at(ptype_).moves;
+    auto points = piece_movement_table.at(ptype_).first;
     if (is_white(turn_))
     {
         reverse_points(points);
@@ -65,6 +55,6 @@ vector<point> piece::calc_moves(point const& current) const
 
 string piece::str() const
 {
-    auto str = piece_movement_table.at(ptype_).name;
+    auto str = piece_movement_table.at(ptype_).second;
     return is_black(turn_) ? str : to_lower(move(str));
 }
