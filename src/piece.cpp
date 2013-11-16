@@ -10,7 +10,7 @@ using namespace std;
 
 namespace
 {
-    using moves_t = unordered_map<ptype, std::pair<std::vector<point>, string>>;
+    using moves_t = unordered_map<ptype, pair<vector<point>, string>>;
 
     // 駒の動きの表
     moves_t const piece_movement_table =
