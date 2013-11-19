@@ -32,7 +32,7 @@ string detail::board::str() const
         str.append("|");
         for_each(begin(in) + 1, end(in) - 1, [&str](boost::optional<piece> const& p)
         {
-            str.append((p ? p->str() : "  ") + "|");
+            str.append((p ? p->str() : "   ") + "|");
         });
         str.append("\n");
     });

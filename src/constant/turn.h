@@ -2,6 +2,7 @@
 #define ANIMAL_SHOGI_CONSTANT_TURN_H
 
 #include <config.hpp>
+#include <string>
 
 namespace animal_shogi
 {
@@ -19,6 +20,11 @@ namespace animal_shogi
     inline ASHOGI_CONSTEXPR bool is_white(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
     {
         return !is_black(trn);
+    }
+
+    inline ASHOGI_CONSTEXPR std::string get_turn_mark(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
+    {
+        return is_black(trn) ? "+" : "-";
     }
 }
 
