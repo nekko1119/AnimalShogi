@@ -1,6 +1,7 @@
 ﻿#ifndef ANIMAL_SHOGI_POINT_HPP
 #define NAIMAL_SHOGI_POINT_HPP
 
+#include "../config.hpp"
 #include <boost/operators.hpp>
 #include <type_traits>
 
@@ -28,7 +29,7 @@ namespace animal_shogi
         {
         }
 
-        T const& x() const
+        T const& x() const ASHOGI_NOEXCEPT_OR_NOTHROW
         {
             return x_;
         }
@@ -38,7 +39,7 @@ namespace animal_shogi
             x_ = val;
         }
 
-        T const& y() const
+        T const& y() const ASHOGI_NOEXCEPT_OR_NOTHROW
         {
             return y_;
         }
@@ -69,12 +70,12 @@ namespace animal_shogi
             return *this;
         }
 
-        friend bool operator==(basic_point const& lhs, basic_point const& rhs)
+        friend bool operator==(basic_point const& lhs, basic_point const& rhs) ASHOGI_NOEXCEPT_OR_NOTHROW
         {
             return lhs.x_ == rhs.x_ && lhs.y_ == rhs.y_;
         }
 
-        friend bool operator<(basic_point const& lhs, basic_point const& rhs)
+        friend bool operator<(basic_point const& lhs, basic_point const& rhs) ASHOGI_NOEXCEPT_OR_NOTHROW
         {
             auto const cond1 = lhs.y_ < rhs.y_;
             auto const cond2 = lhs.y_ == rhs.y_ && lhs.x_ < rhs.x_;

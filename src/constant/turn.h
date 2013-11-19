@@ -1,6 +1,8 @@
 ﻿#ifndef ANIMAL_SHOGI_CONSTANT_TURN_H
 #define ANIMAL_SHOGI_CONSTANT_TURN_H
 
+#include "../config.hpp"
+
 namespace animal_shogi
 {
     enum class turn
@@ -9,12 +11,12 @@ namespace animal_shogi
         WHITE   // 後手
     };
 
-    inline bool is_black(turn trn)
+    inline bool is_black(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
     {
         return trn == turn::BLACK;
     }
 
-    inline bool is_white(turn trn)
+    inline bool is_white(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
     {
         return !is_black(trn);
     }

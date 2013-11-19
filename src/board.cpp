@@ -3,7 +3,7 @@
 using namespace animal_shogi;
 using namespace std;
 
-static auto instance = board::get();
+ASHOGI_STATIC_INIT(auto instance = board::get();)
 
 detail::board::board()
 {
