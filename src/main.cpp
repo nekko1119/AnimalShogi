@@ -76,12 +76,8 @@ logging::logging()
     BOOST_LOG_TRIVIAL(info) << "起動";
 }
 
-logging::~logging() ASHOGI_NOEXCEPT
-try
+logging::~logging() ASHOGI_NOEXCEPT_OR_NOTHROW
 {
     BOOST_LOG_TRIVIAL(info) << "終了";
     boost::log::core::get()->remove_all_sinks();
-}
-catch (...)
-{
 }
