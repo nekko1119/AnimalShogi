@@ -8,7 +8,7 @@
 namespace animal_shogi
 {
     template <typename T, typename U = T>
-    std::enable_if_t<std::is_move_assignable<T>::value, T>
+    inline std::enable_if_t<std::is_move_assignable<T>::value, T>
         exchange(std::remove_reference_t<T>& obj, std::remove_reference_t<U>&& new_value)
     {
         T old_value = std::move(obj);
