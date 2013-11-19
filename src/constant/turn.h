@@ -11,12 +11,12 @@ namespace animal_shogi
         WHITE   // 後手
     };
 
-    inline bool is_black(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
+    inline ASHOGI_CONSTEXPR is_black(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
     {
         return trn == turn::BLACK;
     }
 
-    inline bool is_white(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
+    inline ASHOGI_CONSTEXPR bool is_white(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
     {
         return !is_black(trn);
     }
