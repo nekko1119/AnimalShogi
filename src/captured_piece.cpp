@@ -1,4 +1,4 @@
-﻿#include "captured_piece.h"
+﻿#include <captured_piece.h>
 #include <boost/log/trivial.hpp>
 using namespace animal_shogi;
 

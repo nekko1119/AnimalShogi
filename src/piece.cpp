@@ -1,4 +1,4 @@
-﻿#include "piece.h"
+﻿#include <piece.h>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/algorithm/transform.hpp>
 #include <functional>

@@ -1,5 +1,4 @@
-﻿#include "config.hpp"
-#include "captured_piece.h"// debug
+﻿#include <config.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/log/expressions.hpp>

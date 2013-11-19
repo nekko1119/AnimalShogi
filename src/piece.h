@@ -1,9 +1,9 @@
 ﻿#ifndef ANIMAL_SHOGI_PIECE_H
 #define ANIMAL_SHOGI_PIECE_H
 
-#include "constant/turn.h"
-#include "constant/ptype.h"
-#include "utility/point.hpp"
+#include <constant/turn.h>
+#include <constant/ptype.h>
+#include <utility/point.hpp>
 #include <string>
 #include <vector>
 

@@ -1,9 +1,9 @@
 ﻿#ifndef ANIMAL_SHOGI_BOARD_HPP
 #define ANIMAL_SHOGI_BOARD_HPP
 
-#include "config.hpp"
-#include "piece.h"
-#include "utility/singleton_holder.hpp"
+#include <config.hpp>
+#include <piece.h>
+#include <utility/singleton_holder.hpp>
 #include <boost/optional.hpp>
 #include <array>
 #include <string>

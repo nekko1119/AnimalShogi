@@ -1,7 +1,7 @@
 ﻿#ifndef ANIMAL_SHOGI_POINT_HPP
 #define NAIMAL_SHOGI_POINT_HPP
 
-#include "../config.hpp"
+#include <config.hpp>
 #include <boost/operators.hpp>
 #include <type_traits>
 
