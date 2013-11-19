@@ -30,7 +30,7 @@
 #if defined(ASHOGI_NO_CONSTEXPR)
 #   define ASHOGI_CONSTEXPR
 #   define ASHOGI_CONSTEXPR_OR_CONST const
-#elif
+#else
 #   define ASHOGI_CONSTEXPR constexpr
 #   define ASHOGI_CONSTEXPR_OR_CONST constexpr
 #endif
@@ -39,14 +39,14 @@
 // default move function
 #if defined(ASHOGI_NO_MOVE_FUNCTIONS)
 #   define ASHOGI_DEFAULTED_MOVE_FUN(fun, body) fun body
-#elif
+#else
 #   define ASHOGI_DEFAULTED_MOVE_FUN(fun, body) fun = default;
 #endif
 
 // thread safe static init
 #if defined(ASHOGI_NO_THREAD_SAFE_STATIC_INIT)
 #   define ASHOGI_STATIC_INIT(expr) expr
-#elif
+#else
 #   define ASHOGI_STATIC_INIT(expr)
 #endif
 
@@ -54,7 +54,7 @@
 #if defined(ASHOGI_NO_NOEXCEPT)
 #   define ASHOGI_NOEXCEPT
 #   define ASHOGI_NOEXCEPT_OR_NOTHROW throw()
-#elif
+#else
 #   define ASHOGI_NOEXCEPT noexcept
 #   define ASHOGI_NOEXCEPT_OR_NOTHROW noexcept
 #endif
@@ -63,7 +63,7 @@
 #if defined(ASHOGI_NO_ALIGNAS)
 #   define ASHOGI_ALIGNAS(n)
 #   define ASHOGI_ALIGNAS_OR_DECLSPEC(n) __declspec(align(n))
-#elif
+#else
 #   define ASHOGI_ALIGNAS(n) alignas(n)
 #   define ASHOGI_ALIGNAS_OR_DECLSPEC(n) alignas(n)
 #endif
@@ -71,7 +71,7 @@
 // decltype(auto)
 #if defined(ASHOGI_NO_DECLTYPE_AUTO)
 #   define ASHOGI_DECLTYPE_AUTO(expr) decltype(expr)
-#elif
+#else
 #   define ASHOGI_DECLTYPE_AUTO(expr) decltype(auto)
 #endif
 
@@ -79,7 +79,7 @@
 #if defined(ASHOGI_NO_DECLTYPE_NESTEDTYPE)
 #   include <type_traits>
 #   define ASHOGI_DECLTYPE(expr) std::identity<decltype(expr)>::type
-#elif
+#else
 #   define ASHOGI_DECLTYPE(expr) decltype(expr)
 #endif
 
