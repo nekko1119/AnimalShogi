@@ -34,7 +34,11 @@ piece::piece(turn turn, ptype ptype)
 vector<point> piece::calc_moves(point const& current) const
 {
     auto points = piece_movement_table.at(ptype_);
+#if defined(ASHOGI_MSVC12_CTP)
+    if (turn_ == turn::WHITE)
+#else
     if (is_white(turn_))
+#endif
     {
         reverse_points(points);
     }
