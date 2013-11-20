@@ -2,6 +2,7 @@
 #define ANIMAL_SHOGI_CONSTANT_PTYPE_H
 
 #include <utility/to_string.hpp>
+#include <stdexcept>
 
 namespace animal_shogi
 {
@@ -29,6 +30,8 @@ namespace animal_shogi
             return "LI";
         case ptype::HEN:
             return "HE";
+        default:
+            throw std::invalid_argument{"animal_shogi::to_string : value is invalid."};
         }
     }
 }
