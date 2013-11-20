@@ -25,6 +25,21 @@
 #   define ASHOGI_NO_AUTO_FUNCTION
 #endif
 
+#define ASHOGI_NO_CHAR16_T
+#define ASHOGI_NO_CHAR16_T
+#define ASHOGI_NO_UNICODE_LITERALS
+#define ASHOGI_NO_USER_DEFINED_LITERALS
+#define ASHOGI_NO_ATTRIBUTES
+#define ASHOGI_NO_THREAD_LOCAL
+#define ASHOGI_NO_INLINE_NAMESPACE
+
+// バージョン確認マクロ
+#if _MSC_FULL_VER == 180020827
+#   define ASHOGI_MSVC12
+#elif _MSC_FULL_VER == 180021114
+#   define ASHOGI_MSVC12_CTP
+#endif
+
 // ヘルパー
 // constexpr
 #if defined(ASHOGI_NO_CONSTEXPR)
@@ -87,5 +102,11 @@
 #if defined(_DEBUG)
 #   define ASHOGI_DEBUG
 #endif
+
+#if defined(ASHOGI_MSVC12_CTP)
+#   pragma warning(disable : 4592) // constexpr関数が実行時に呼ばれているかもしれないという警告。実行時に呼ばれても何も問題が無いので消す
+#endif
+
+#pragma warning(disable : 4819) //ファイル文字コードをUnicodeに直してという警告。Boostのヘッダで出ているので無視する
 
 #endif
