@@ -1,6 +1,8 @@
 ﻿#ifndef ANIMAL_SHOGI_CONSTANT_PTYPE_H
 #define ANIMAL_SHOGI_CONSTANT_PTYPE_H
 
+#include <utility/to_string.hpp>
+
 namespace animal_shogi
 {
     enum class ptype
@@ -11,6 +13,24 @@ namespace animal_shogi
         LION,       // ライオン
         HEN,        // 鶏
     };
+
+    template <>
+    inline std::string to_string<ptype>(ptype const& value)
+    {
+        switch (value)
+        {
+        case ptype::CHICK:
+            return "CH";
+        case ptype::GIRAFFE:
+            return "GI";
+        case ptype::ELEPHANT:
+            return "EL";
+        case ptype::LION:
+            return "LI";
+        case ptype::HEN:
+            return "HE";
+        }
+    }
 }
 
 #endif
