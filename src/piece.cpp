@@ -1,27 +1,28 @@
 ﻿#include <piece.h>
-#include <boost/range/algorithm/for_each.hpp>
 #include <unordered_map>
-#include <utility>
 using namespace animal_shogi;
 using namespace std;
 
 namespace
 {
-    using moves_t = unordered_map<ptype, pair<vector<point>, string>>;
+    using moves_t = unordered_map<ptype, vector<point>>;
 
     // 駒の動きの表
     moves_t const piece_movement_table =
     {
-        {ptype::CHICK, {{{0, -1}}, "CH"}},
-        {ptype::ELEPHANT, {{{-1, -1}, {1, -1}, {-1, 1}, {1, 1}}, "EL"}},
-        {ptype::GIRAFFE, {{{0, -1}, {-1, 0}, {1, 0}, {0, 1}}, "GI"}},
-        {ptype::LION, {{{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}}, "LI"}},
-        {ptype::HEN, {{{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {0, 1}}, "HE"}}
+        {ptype::CHICK, {{0, -1}}},
+        {ptype::ELEPHANT, {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}}},
+        {ptype::GIRAFFE, {{0, -1}, {-1, 0}, {1, 0}, {0, 1}}},
+        {ptype::LION, {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}}},
+        {ptype::HEN, {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {0, 1}}}
     };
 
     void reverse_points(vector<point>& points)
     {
-        boost::for_each(points, [](point& p){ p *= {1, -1}; });
+        for (auto& p : points)
+        {
+            p *= {1, -1};
+        }
     }
 }
 
@@ -32,17 +33,21 @@ piece::piece(turn turn, ptype ptype)
 
 vector<point> piece::calc_moves(point const& current) const
 {
-    auto points = piece_movement_table.at(ptype_).first;
+    auto points = piece_movement_table.at(ptype_);
     if (is_white(turn_))
     {
         reverse_points(points);
     }
-    boost::for_each(points, [&current](point& p){ p += current; });
+
+    for (auto& p : points)
+    {
+        p += current;
+    }
     return points;
 }
 
 string piece::str() const
 {
-    auto str = piece_movement_table.at(ptype_).second;
+    auto str = to_string(ptype_);
     return get_turn_mark(turn_) + str;
 }

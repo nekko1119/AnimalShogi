@@ -7,7 +7,7 @@ TEST(piece_test, example)
     piece const p{turn::BLACK, ptype::CHICK};
     auto const move_points = p.calc_moves({3, 2});
     EXPECT_EQ(point(3, 1), move_points[0]);
-    EXPECT_EQ("CH", p.str());
+    EXPECT_EQ("+CH", p.str());
 }
 
 TEST(piece_test, calc_moves)
@@ -51,32 +51,32 @@ TEST(piece_test, calc_moves)
 TEST(piece_test, str)
 {
     piece p = {turn::BLACK, ptype::CHICK};
-    EXPECT_EQ("CH", p.str());
+    EXPECT_EQ("+CH", p.str());
 
     p = {turn::WHITE, ptype::CHICK};
-    EXPECT_EQ("ch", p.str());
+    EXPECT_EQ("-CH", p.str());
 
     p = {turn::BLACK, ptype::ELEPHANT};
-    EXPECT_EQ("EL", p.str());
+    EXPECT_EQ("+EL", p.str());
 
     p = {turn::WHITE, ptype::ELEPHANT};
-    EXPECT_EQ("el", p.str());
+    EXPECT_EQ("-EL", p.str());
 
     p = {turn::BLACK, ptype::GIRAFFE};
-    EXPECT_EQ("GI", p.str());
+    EXPECT_EQ("+GI", p.str());
 
     p = {turn::WHITE, ptype::GIRAFFE};
-    EXPECT_EQ("gi", p.str());
+    EXPECT_EQ("-GI", p.str());
 
     p = {turn::BLACK, ptype::HEN};
-    EXPECT_EQ("HE", p.str());
+    EXPECT_EQ("+HE", p.str());
 
     p = {turn::WHITE, ptype::HEN};
-    EXPECT_EQ("he", p.str());
+    EXPECT_EQ("-HE", p.str());
 
     p = {turn::BLACK, ptype::LION};
-    EXPECT_EQ("LI", p.str());
+    EXPECT_EQ("+LI", p.str());
 
     p = {turn::WHITE, ptype::LION};
-    EXPECT_EQ("li", p.str());
+    EXPECT_EQ("-LI", p.str());
 }
