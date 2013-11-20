@@ -22,7 +22,7 @@ namespace animal_shogi
         return !is_black(trn);
     }
 
-    inline ASHOGI_CONSTEXPR std::string get_turn_mark(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
+    inline std::string get_turn_mark(turn trn) ASHOGI_NOEXCEPT_OR_NOTHROW
     {
         return is_black(trn) ? "+" : "-";
     }
