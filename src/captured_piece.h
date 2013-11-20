@@ -3,6 +3,7 @@
 
 #include <constant/ptype.h>
 #include <array>
+#include <string>
 
 namespace animal_shogi
 {
@@ -15,6 +16,7 @@ namespace animal_shogi
         void add(ptype p);
         void remove(ptype p);
         int get(ptype p) const;
+        std::string str() const;
 
     private:
         bool is_hen(ptype p) const;

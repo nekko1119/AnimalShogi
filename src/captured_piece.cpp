@@ -1,5 +1,7 @@
-﻿#include <captured_piece.h>
+﻿#include <config.hpp>
+#include <captured_piece.h>
 #include <boost/log/trivial.hpp>
+#include <type_traits>
 using namespace animal_shogi;
 
 void captured_piece::add(ptype p)
@@ -45,6 +47,19 @@ int captured_piece::get(ptype p) const
     using type = piece_type::size_type;
     return pieces_[static_cast<type>(p)];
 }
+
+std::string captured_piece::str() const
+{
+    std::string str;
+    auto const last = pieces_.size();
+    for (ASHOGI_DECLTYPE(pieces_)::size_type i = 0; i < last; ++i)
+    {
+        str += to_string(static_cast<ptype>(i)) + " " + std::to_string(pieces_[i]) + ", ";
+    }
+    str += "\n";
+    return str;
+}
+
 
 bool captured_piece::is_hen(ptype p) const
 {
