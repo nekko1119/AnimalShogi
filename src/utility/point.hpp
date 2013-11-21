@@ -1,5 +1,5 @@
 ﻿#ifndef ANIMAL_SHOGI_POINT_HPP
-#define NAIMAL_SHOGI_POINT_HPP
+#define ANIMAL_SHOGI_POINT_HPP
 
 #include <config.hpp>
 #include <boost/operators.hpp>
