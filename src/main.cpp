@@ -9,15 +9,20 @@
 #include <boost/log/trivial.hpp>
 #include <memory>
 
+#include <state.h>// debug
+#include <iostream>// debug
+
 struct logging
 {
     logging();
-    ~logging() ASHOGI_NOEXCEPT;
+    ~logging() BOOST_NOEXCEPT_OR_NOTHROW;
 };
 
 int main()
 {
     auto log = std::make_unique<logging>();
+    animal_shogi::state s;
+    std::cout << s.str();
 }
 
 logging::logging()
@@ -75,7 +80,7 @@ logging::logging()
     BOOST_LOG_TRIVIAL(info) << "起動";
 }
 
-logging::~logging() ASHOGI_NOEXCEPT_OR_NOTHROW
+logging::~logging() BOOST_NOEXCEPT_OR_NOTHROW
 {
     BOOST_LOG_TRIVIAL(info) << "終了";
     boost::log::core::get()->remove_all_sinks();

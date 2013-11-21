@@ -34,7 +34,7 @@ piece::piece(turn turn, ptype ptype)
 vector<point> piece::calc_moves(point const& current) const
 {
     auto points = piece_movement_table.at(ptype_);
-#if defined(ASHOGI_MSVC12_CTP)
+#if BOOST_WORKAROUND(BOOST_MSVC_FULL_VER, == 180021114)
     if (turn_ == turn::WHITE)
 #else
     if (is_white(turn_))

@@ -52,7 +52,7 @@ std::string captured_piece::str() const
 {
     std::string str;
     auto const last = pieces_.size();
-    for (ASHOGI_DECLTYPE(pieces_)::size_type i = 0; i < last; ++i)
+    for (ASHOGI_DECLTYPE_N3276(pieces_)::size_type i = 0; i < last; ++i)
     {
         str += to_string(static_cast<ptype>(i)) + " " + std::to_string(pieces_[i]) + ", ";
     }
