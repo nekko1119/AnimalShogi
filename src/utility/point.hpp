@@ -87,6 +87,12 @@ namespace animal_shogi
         T y_;
     };
 
+    template <typename T>
+    std::string to_string(basic_point<T> p)
+    {
+        return std::to_string(p.x()) + "," + std::to_string(p.y());
+    }
+
     using point = basic_point<int>;
 }
 
