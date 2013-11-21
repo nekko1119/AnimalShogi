@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimalShogi", "AnimalShogi\AnimalShogi.vcxproj", "{87E51BF9-0546-4A19-87FA-6D1C49BF6D37}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{EFABE3ED-667B-4961-8038-A13B959735C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{87E51BF9-0546-4A19-87FA-6D1C49BF6D37} = {87E51BF9-0546-4A19-87FA-6D1C49BF6D37}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87E51BF9-0546-4A19-87FA-6D1C49BF6D37}.Debug|Win32.ActiveCfg = Debug|Win32
+		{87E51BF9-0546-4A19-87FA-6D1C49BF6D37}.Debug|Win32.Build.0 = Debug|Win32
+		{87E51BF9-0546-4A19-87FA-6D1C49BF6D37}.Release|Win32.ActiveCfg = Release|Win32
+		{87E51BF9-0546-4A19-87FA-6D1C49BF6D37}.Release|Win32.Build.0 = Release|Win32
+		{EFABE3ED-667B-4961-8038-A13B959735C3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EFABE3ED-667B-4961-8038-A13B959735C3}.Debug|Win32.Build.0 = Debug|Win32
+		{EFABE3ED-667B-4961-8038-A13B959735C3}.Release|Win32.ActiveCfg = Release|Win32
+		{EFABE3ED-667B-4961-8038-A13B959735C3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
