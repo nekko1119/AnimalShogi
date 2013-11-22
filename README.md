@@ -1,7 +1,6 @@
 ###対応コンパイラ
 
 * Visual C++ 12.0 以上
-* gcc 4.7 以上(予定)
 
 ###ビルドするために必要なこと
 
@@ -15,8 +14,7 @@
 * `BOOST_DIR`...boostのディレクトリへのパス
 * `GTEST_DIR`...google testのディレクトリへのパス
 
-当然ですが、Visual Studio 2013でビルドする場合はVisual Studio 2013でビルドされたGoogle TestとBoostが必要です。  
-gccでビルドする場合も同様。
+Visual Studio 2013でビルドする場合はVisual Studio 2013でビルドされたGoogle TestとBoostが必要です。  
 
 ###用語定義
 
