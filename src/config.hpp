@@ -4,16 +4,10 @@
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
 
-#if defined(BOOST_GCC)
-//GCC
-#   if BOOST_GCC < 40700
-#       error "when you compile this source code with GCC, it must be version 4.7 or newer."
-#   endif
-
-#elif defined(BOOST_MSVC_FULL_VER)
+#if defined(BOOST_MSVC_FULL_VER)
 //MSVC
 #   if BOOST_MSVC < 1800
-#       error "when you compile this source code with MSVC, it must be version 12.0 or newer."
+#       error "this source code can complie only Microsoft Visual C++ 12.0 or newer."
 #   endif
 
 // 2013 Nov CTP
