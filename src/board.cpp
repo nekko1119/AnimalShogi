@@ -3,9 +3,7 @@
 using namespace animal_shogi;
 using namespace std;
 
-ASHOGI_STATIC_INIT(auto instance = board::get();)
-
-detail::board::board()
+board::board()
 {
     // どうぶつしょうぎの初期配置
     /*
@@ -24,7 +22,7 @@ detail::board::board()
     board_[4][3] = {turn::BLACK, ptype::GIRAFFE};
 }
 
-string detail::board::str() const
+string board::str() const
 {
     string str;
     for_each(begin(board_) + 1, end(board_) - 1, [&str](inner_type const& in)
