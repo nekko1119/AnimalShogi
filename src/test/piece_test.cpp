@@ -80,3 +80,17 @@ TEST(piece_test, str)
     p = {turn::WHITE, ptype::LION};
     EXPECT_EQ("-LI", p.str());
 }
+
+TEST(piece_test, equality)
+{
+    piece p1{turn::BLACK, ptype::CHICK};
+    piece p2{turn::BLACK, ptype::CHICK};
+    piece p3{turn::WHITE, ptype::CHICK};
+    piece p4{turn::BLACK, ptype::ELEPHANT};
+    piece p5{turn::WHITE, ptype::ELEPHANT};
+    EXPECT_TRUE(p1 == p1);
+    EXPECT_TRUE(p1 == p2);
+    EXPECT_TRUE(p1 != p3);
+    EXPECT_TRUE(p1 != p4);
+    EXPECT_TRUE(p1 != p5);
+}

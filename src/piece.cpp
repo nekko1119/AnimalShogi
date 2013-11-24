@@ -55,3 +55,13 @@ string piece::str() const
     auto str = to_string(ptype_);
     return get_turn_mark(turn_) + str;
 }
+
+bool piece::operator==(piece const& rhs) const
+{
+    return turn_ == rhs.turn_ && ptype_ == rhs.ptype_;
+}
+
+bool piece::operator!=(piece const& rhs) const
+{
+    return !(*this == rhs);
+}
