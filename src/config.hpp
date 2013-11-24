@@ -19,7 +19,7 @@
 #       pragma warning(disable : 4592) // constexpr関数が実行時に呼ばれているかもしれないという警告。実行時に呼ばれても何も問題が無いので消す
 #   endif
 
-#   pragma warning(disable : 4819) //ファイル文字コードをUnicodeに直してという警告。Boostのヘッダで出ているので無視する
+#   pragma warning(disable : 4819) // ファイル文字コードをUnicodeに直してという警告。Boostのヘッダで出ているので無視する
 
 #endif
 
