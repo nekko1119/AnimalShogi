@@ -65,7 +65,7 @@ logging::logging()
             % log::trivial::severity
             % expr::message;
         log::add_file_log(
-            keywords::file_name = "log%Y%d%m_%2N.txt",
+            keywords::file_name = "log%Y%m%d_%2N.txt",
             keywords::max_size = 1024 * 1024,// 10 MiB
             keywords::format = format,
             keywords::auto_flush = true
