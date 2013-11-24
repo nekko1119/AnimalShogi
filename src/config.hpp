@@ -5,7 +5,6 @@
 #include <boost/detail/workaround.hpp>
 
 #if defined(BOOST_MSVC_FULL_VER)
-//MSVC
 #   if BOOST_MSVC < 1800
 #       error "this source code can complie only Microsoft Visual C++ 12.0 or newer."
 #   endif
@@ -25,13 +24,6 @@
 #endif
 
 // ヘルパー
-
-// default move function
-#if BOOST_WORKAROUND(BOOST_MSVC_FULL_VER, < 180021114)
-#   define ASHOGI_DEFAULTED_MOVE_FUNCTION(fun, body) fun body
-#else
-#   define ASHOGI_DEFAULTED_MOVE_FUNCTION BOOST_DEFAULTED_FUNCTION
-#endif
 
 // thread safe static init
 #if defined(ASHOGI_NO_THREAD_SAFE_STATIC_INIT)
