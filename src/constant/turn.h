@@ -1,8 +1,8 @@
 ﻿#ifndef ANIMAL_SHOGI_CONSTANT_TURN_H
 #define ANIMAL_SHOGI_CONSTANT_TURN_H
 
-#include <config.hpp>
 #include <string>
+#include "config.hpp"
 
 namespace animal_shogi
 {

@@ -1,9 +1,9 @@
 ﻿#ifndef ANIMAL_SHOGI_CAPTURED_PIECE_H
 #define ANIMAL_SHOGI_CAPTURED_PIECE_H
 
-#include <constant/ptype.h>
 #include <array>
 #include <string>
+#include "constant/ptype.h"
 
 namespace animal_shogi
 {

@@ -1,11 +1,11 @@
 ﻿#ifndef ANIMAL_SHOGI_BOARD_HPP
 #define ANIMAL_SHOGI_BOARD_HPP
 
-#include <config.hpp>
-#include <piece.h>
-#include <boost/optional.hpp>
 #include <array>
 #include <string>
+#include <boost/optional.hpp>
+#include "config.hpp"
+#include "piece.h"
 
 namespace animal_shogi
 {

@@ -1,4 +1,4 @@
-﻿#include <config.hpp>
+﻿#include <memory>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/log/expressions.hpp>
@@ -7,9 +7,9 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/trivial.hpp>
-#include <memory>
+#include "config.hpp"
 
-#include <state.h>// debug
+#include "state.h"// debug
 #include <iostream>// debug
 
 struct logging

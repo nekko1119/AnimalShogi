@@ -1,7 +1,7 @@
-﻿#include <config.hpp>
-#include <captured_piece.h>
-#include <boost/log/trivial.hpp>
+﻿#include "captured_piece.h"
 #include <type_traits>
+#include <boost/log/trivial.hpp>
+#include "config.hpp"
 using namespace animal_shogi;
 
 void captured_piece::add(ptype p)

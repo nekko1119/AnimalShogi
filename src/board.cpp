@@ -1,4 +1,4 @@
-﻿#include <board.h>
+﻿#include "board.h"
 #include <algorithm>
 using namespace animal_shogi;
 using namespace std;

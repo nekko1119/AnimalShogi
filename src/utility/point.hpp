@@ -1,9 +1,9 @@
 ﻿#ifndef ANIMAL_SHOGI_POINT_HPP
 #define ANIMAL_SHOGI_POINT_HPP
 
-#include <config.hpp>
-#include <boost/operators.hpp>
 #include <type_traits>
+#include <boost/operators.hpp>
+#include "config.hpp"
 
 namespace animal_shogi
 {

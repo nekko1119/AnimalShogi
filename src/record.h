@@ -1,13 +1,13 @@
 ﻿#ifndef ANIMAL_SHOGI_RECORD_H
 #define ANIMAL_SHOGI_RECORD_H
 
-#include "config.hpp"
-#include "piece.h"
-#include "utility/point.hpp"
-#include <boost/optional.hpp>
 #include <string>
 #include <vector>
 #include <utility>
+#include <boost/optional.hpp>
+#include "config.hpp"
+#include "piece.h"
+#include "utility/point.hpp"
 
 namespace animal_shogi
 {
