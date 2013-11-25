@@ -2,7 +2,6 @@
 #define ANIMAL_SHOGI_CONSTANT_PTYPE_H
 
 #include <stdexcept>
-
 #include "utility/to_string.hpp"
 
 namespace animal_shogi

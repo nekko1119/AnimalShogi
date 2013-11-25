@@ -3,7 +3,7 @@
 using namespace animal_shogi;
 using namespace std;
 
-board::board()
+board::board(initial_placement_tag)
 {
     // どうぶつしょうぎの初期配置
     /*

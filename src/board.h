@@ -1,14 +1,17 @@
 ﻿#ifndef ANIMAL_SHOGI_BOARD_HPP
 #define ANIMAL_SHOGI_BOARD_HPP
 
+#include "config.hpp"
 #include <array>
 #include <string>
 #include <boost/optional.hpp>
-#include "config.hpp"
+
 #include "piece.h"
 
 namespace animal_shogi
 {
+    struct initial_placement_tag {};
+
     class board
     {
     public:
@@ -19,7 +22,8 @@ namespace animal_shogi
         using inner_type = std::array<boost::optional<piece>, MAX_ROW>;
         using board_type = std::array<inner_type, MAX_COLUMN>;
 
-        board();
+        board() = default;
+        board(initial_placement_tag);
 
         std::string str() const;
 
