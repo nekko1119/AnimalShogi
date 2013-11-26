@@ -5,7 +5,6 @@
 #include <array>
 #include <string>
 #include <boost/optional.hpp>
-
 #include "piece.h"
 
 namespace animal_shogi
@@ -19,7 +18,8 @@ namespace animal_shogi
         BOOST_STATIC_CONSTEXPR int MAX_ROW = 5;
         BOOST_STATIC_CONSTEXPR int MAX_COLUMN = 6;
 
-        using inner_type = std::array<boost::optional<piece>, MAX_ROW>;
+        using piece_type = boost::optional<piece>;
+        using inner_type = std::array<piece_type, MAX_ROW>;
         using board_type = std::array<inner_type, MAX_COLUMN>;
 
         board() = default;
