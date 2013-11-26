@@ -22,6 +22,16 @@ board::board(initial_placement_tag)
     board_[4][3] = {turn::BLACK, ptype::GIRAFFE};
 }
 
+board::piece_type const& board::get(point p) const
+{
+    return board_[p.y()][p.x()];
+}
+
+board::piece_type& board::get(point p)
+{
+    return board_[p.y()][p.x()];
+}
+
 string board::str() const
 {
     string str;
