@@ -88,10 +88,18 @@ record::const_iterator record::end() const
 
 record::reference record::operator[](size_type index)
 {
+    if (moves_.size() <= index)
+    {
+        BOOST_LOG_TRIVIAL(error) << "record::operator[] : 範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
+    }
     return moves_[index];
 }
 
 record::const_reference record::operator[](size_type index) const
 {
+    if (moves_.size() <= index)
+    {
+        BOOST_LOG_TRIVIAL(error) << "record::operator[] : 範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
+    }
     return moves_[index];
 }
