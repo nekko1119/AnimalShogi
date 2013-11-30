@@ -2,3 +2,4 @@ proj/
 !proj/AnimalShogi.sln
 !proj/AnimalShogi/AnimalShogi.vcxproj
 !proj/Test/Test.vcxproj
+*.o
