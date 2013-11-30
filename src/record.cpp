@@ -3,7 +3,7 @@
 
 namespace animal_shogi
 {
-    movement::movement(boost::optional<animal_shogi::point> from, animal_shogi::point to, piece pc)
+    movement::movement(boost::optional<animal_shogi::point> from, animal_shogi::point to, piece pc) BOOST_NOEXCEPT
     : from(std::move(from)), to(std::move(to)), pc(std::move(pc))
     {
     }
@@ -27,7 +27,7 @@ namespace animal_shogi
         swap(pc, rhs.pc);
     }
 
-    void animal_shogi::swap(movement& lhs, movement& rhs) BOOST_NOEXCEPT
+    void swap(movement& lhs, movement& rhs) BOOST_NOEXCEPT
     {
         lhs.swap(rhs);
     }

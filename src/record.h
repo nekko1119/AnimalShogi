@@ -15,7 +15,7 @@ namespace animal_shogi
     struct movement
     {
         movement(boost::optional<animal_shogi::point> from, animal_shogi::point to, piece pc) BOOST_NOEXCEPT;
-        movement(movement const&) BOOST_NOEXCEPT = default;
+        movement(movement const&) = default;
         movement(movement&& rhs) BOOST_NOEXCEPT;
         movement& operator=(movement rhs) BOOST_NOEXCEPT;
         void swap(movement& rhs) BOOST_NOEXCEPT;
@@ -37,7 +37,7 @@ namespace animal_shogi
     class record
     {
     public:
-        using container_type = std::vector<movement const>;
+        using container_type = std::vector<movement>;
         using value_type = container_type::value_type;
         using reference = container_type::reference;
         using const_reference = container_type::const_reference;
