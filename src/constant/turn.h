@@ -2,7 +2,7 @@
 #define ANIMAL_SHOGI_CONSTANT_TURN_H
 
 #include <string>
-#include "config.hpp"
+#include "../config.hpp"
 
 namespace animal_shogi
 {

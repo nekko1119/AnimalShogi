@@ -3,7 +3,7 @@
 
 #include <type_traits>
 #include <boost/operators.hpp>
-#include "config.hpp"
+#include "../config.hpp"
 
 namespace animal_shogi
 {
