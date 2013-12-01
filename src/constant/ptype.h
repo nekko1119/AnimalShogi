@@ -36,4 +36,20 @@ namespace animal_shogi
     }
 }
 
+#if BOOST_WORKAROUND(BOOST_GCC, < 409000)
+#include <functional>
+#include <type_traits>
+namespace std
+{
+    template <>
+    struct hash<animal_shogi::ptype>
+    {
+        size_t operator()(animal_shogi::ptype const& val) const
+        {
+            return hash<underlying_type<animal_shogi::ptype>::type>()(static_cast<underlying_type<animal_shogi::ptype>::type>(val));
+        }
+    };
+}
+#endif
+
 #endif

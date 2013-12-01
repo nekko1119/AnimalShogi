@@ -4,10 +4,12 @@
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
 
-#if defined(BOOST_MSVC_FULL_VER)
-#   if BOOST_MSVC < 1800
-#       error "this source code can complie only Microsoft Visual C++ 12.0 or newer."
-#   endif
+#if (!defined(BOOST_MSVC) || BOOST_MSVC < 1800) /*&& (!defined(BOOST_GCC) || BOOST_GCC < 40800)*/
+#   error "This source code can be compiled with gcc 4.8 or newer or MSVC 12.0 or newer."
+#   error "But yet it doesn't support gcc."
+#endif
+
+#if defined(BOOST_MSVC)
 
 // 2013 Nov CTP
 #   if BOOST_MSVC_FULL_VER < 180021114
@@ -40,7 +42,7 @@
 #endif
 
 // decltype(v)::type
-#if defined(BOOST_NO_DECLTYPE_N3276)
+#if defined(BOOST_NO_DECLTYPE_N3276) && BOOST_WORKAROUND(BOOST_MSVC_FULL_VER, < 180021114)
 #   include <type_traits>
 #   define ASHOGI_DECLTYPE_N3276(expr) std::identity<decltype(expr)>::type
 #else

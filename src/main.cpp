@@ -20,7 +20,11 @@ struct logging
 
 int main()
 {
+#if BOOST_WORKAROUND(BOOST_GCC, < 40900)
+    std::unique_ptr<logging> log{new logging{}};
+#else
     auto log = std::make_unique<logging>();
+#endif
     animal_shogi::state s;
     std::cout << s.str();
 }
