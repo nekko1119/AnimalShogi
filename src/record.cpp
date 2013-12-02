@@ -11,7 +11,7 @@ namespace animal_shogi
     movement::movement(movement&& rhs) BOOST_NOEXCEPT
     : from(std::move(rhs.from)), to(std::move(rhs.to)), pc(std::move(rhs.pc))
     {
-}
+    }
 
     movement& movement::operator=(movement rhs) BOOST_NOEXCEPT
     {

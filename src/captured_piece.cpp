@@ -52,7 +52,7 @@ namespace animal_shogi
     {
         std::string str;
         auto const last = pieces_.size() - 1;
-        for (decltype(last) i = 0; i < last; ++i)
+        for (std::size_t i = 0; i < last; ++i)
         {
             str += to_string(static_cast<ptype>(i)) + " " + std::to_string(pieces_[i]) + ", ";
         }
