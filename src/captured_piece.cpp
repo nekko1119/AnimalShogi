@@ -1,5 +1,4 @@
-﻿#include "config.hpp"
-#include "captured_piece.h"
+﻿#include "captured_piece.h"
 #include <type_traits>
 #include <boost/log/trivial.hpp>
 
@@ -53,7 +52,7 @@ namespace animal_shogi
     {
         std::string str;
         auto const last = pieces_.size() - 1;
-        for (ASHOGI_DECLTYPE_N3276(pieces_)::size_type i = 0; i < last; ++i)
+        for (decltype(last) i = 0; i < last; ++i)
         {
             str += to_string(static_cast<ptype>(i)) + " " + std::to_string(pieces_[i]) + ", ";
         }
