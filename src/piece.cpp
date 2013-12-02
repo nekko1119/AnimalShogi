@@ -31,7 +31,7 @@ namespace animal_shogi
     {
     }
 
-    std::vector<point> piece::calc_moves(point const& current) const
+    std::vector<point> piece::search(point const& current) const
     {
         auto points = piece_movement_table.at(ptype_);
 #if BOOST_WORKAROUND(BOOST_MSVC_FULL_VER, == 180021114)

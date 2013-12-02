@@ -5,46 +5,46 @@ using namespace animal_shogi;
 TEST(piece_test, example)
 {
     piece const p{turn::BLACK, ptype::CHICK};
-    auto const move_points = p.calc_moves({3, 2});
+    auto const move_points = p.search({3, 2});
     EXPECT_EQ(point(3, 1), move_points[0]);
     EXPECT_EQ("+CH", p.str());
 }
 
-TEST(piece_test, calc_moves)
+TEST(piece_test, search)
 {
     piece p{turn::BLACK, ptype::CHICK};
     std::vector<point> expect = {{0, -1}};
-    std::vector<point> actual = p.calc_moves({0, 0});
+    std::vector<point> actual = p.search({0, 0});
     EXPECT_EQ(expect, actual);
 
     p = piece{turn::BLACK, ptype::CHICK};
     expect = {{2, 2}};
-    actual = p.calc_moves({2, 3});
+    actual = p.search({2, 3});
     EXPECT_EQ(expect, actual);
 
     p = piece{turn::WHITE, ptype::CHICK};
     expect = {{0, 1}};
-    actual = p.calc_moves({0, 0});
+    actual = p.search({0, 0});
     EXPECT_EQ(expect, actual);
 
     p = piece{turn::BLACK, ptype::ELEPHANT};
     expect = {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
-    actual = p.calc_moves({0, 0});
+    actual = p.search({0, 0});
     EXPECT_EQ(expect, actual);
 
     p = piece{turn::BLACK, ptype::GIRAFFE};
     expect = {{0, -1}, {-1, 0}, {1, 0}, {0, 1}};
-    actual = p.calc_moves({0, 0});
+    actual = p.search({0, 0});
     EXPECT_EQ(expect, actual);
 
     p = piece{turn::BLACK, ptype::LION};
     expect = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
-    actual = p.calc_moves({0, 0});
+    actual = p.search({0, 0});
     EXPECT_EQ(expect, actual);
 
     p = piece{turn::BLACK, ptype::HEN};
     expect = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {0, 1}};
-    actual = p.calc_moves({0, 0});
+    actual = p.search({0, 0});
     EXPECT_EQ(expect, actual);
 }
 

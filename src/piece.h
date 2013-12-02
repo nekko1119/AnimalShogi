@@ -14,7 +14,7 @@ namespace animal_shogi
     public:
         piece(turn turn, ptype ptype);
 
-        std::vector<point> calc_moves(point const& current) const;
+        std::vector<point> search(point const& current) const;
         std::string str() const;
         bool operator==(piece const& rhs) const;
         bool operator!=(piece const& rhs) const;
