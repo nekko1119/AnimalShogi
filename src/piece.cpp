@@ -56,6 +56,11 @@ namespace animal_shogi
         return get_turn_mark(turn_) + str;
     }
 
+    turn piece::get_turn() const
+    {
+        return turn_;
+    }
+
     bool piece::operator==(piece const& rhs) const
     {
         return turn_ == rhs.turn_ && ptype_ == rhs.ptype_;

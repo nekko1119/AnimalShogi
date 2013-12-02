@@ -8,6 +8,7 @@ TEST(piece_test, example)
     auto const move_points = p.search({3, 2});
     EXPECT_EQ(point(3, 1), move_points[0]);
     EXPECT_EQ("+CH", p.str());
+    EXPECT_EQ(turn::BLACK, p.get_turn());
 }
 
 TEST(piece_test, search)
@@ -79,6 +80,15 @@ TEST(piece_test, str)
 
     p = {turn::WHITE, ptype::LION};
     EXPECT_EQ("-LI", p.str());
+}
+
+TEST(piece_test, get_turn)
+{
+    piece p1{turn::WHITE, ptype::GIRAFFE};
+    EXPECT_EQ(turn::WHITE, p1.get_turn());
+
+    piece p2{turn::BLACK, ptype::ELEPHANT};
+    EXPECT_EQ(turn::BLACK, p2.get_turn());
 }
 
 TEST(piece_test, equality)
