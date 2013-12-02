@@ -16,3 +16,15 @@ TEST(board_test, get)
     EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.get({1, 2}));
     EXPECT_TRUE(boost::none == b.get({2, 4}));
 }
+
+TEST(board_test, is_within_board)
+{
+    EXPECT_TRUE(is_within_board({1, 1}));
+    EXPECT_TRUE(is_within_board({3, 1}));
+    EXPECT_TRUE(is_within_board({1, 4}));
+    EXPECT_TRUE(is_within_board({3, 4}));
+    EXPECT_FALSE(is_within_board({0, 0}));
+    EXPECT_FALSE(is_within_board({4, 0}));
+    EXPECT_FALSE(is_within_board({0, 5}));
+    EXPECT_FALSE(is_within_board({4, 5}));
+}

@@ -32,6 +32,8 @@ namespace animal_shogi
     private:
         board_type board_;
     };
+
+    bool is_within_board(point const& p);
 }
 
 #endif
