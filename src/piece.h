@@ -17,6 +17,7 @@ namespace animal_shogi
         std::vector<point> search(point const& current) const;
         std::string str() const;
         turn get_turn() const;
+        ptype get_ptype() const;
         bool operator==(piece const& rhs) const;
         bool operator!=(piece const& rhs) const;
 

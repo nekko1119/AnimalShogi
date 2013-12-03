@@ -61,6 +61,11 @@ namespace animal_shogi
         return turn_;
     }
 
+    ptype piece::get_ptype() const
+    {
+        return ptype_;
+    }
+
     bool piece::operator==(piece const& rhs) const
     {
         return turn_ == rhs.turn_ && ptype_ == rhs.ptype_;

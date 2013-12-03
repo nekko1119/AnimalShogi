@@ -91,6 +91,15 @@ TEST(piece_test, get_turn)
     EXPECT_EQ(turn::BLACK, p2.get_turn());
 }
 
+TEST(piece_test, get_point)
+{
+    piece p1{turn::WHITE, ptype::GIRAFFE};
+    EXPECT_EQ(ptype::GIRAFFE, p1.get_ptype());
+
+    piece p2{turn::BLACK, ptype::ELEPHANT};
+    EXPECT_EQ(ptype::ELEPHANT, p2.get_ptype());
+}
+
 TEST(piece_test, equality)
 {
     piece p1{turn::BLACK, ptype::CHICK};
