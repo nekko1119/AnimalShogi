@@ -41,14 +41,6 @@
 #   define ASHOGI_DECLTYPE_AUTO(expr) decltype(auto)
 #endif
 
-// decltype(v)::type
-#if defined(BOOST_NO_DECLTYPE_N3276) && BOOST_WORKAROUND(BOOST_MSVC_FULL_VER, < 180021114)
-#   include <type_traits>
-#   define ASHOGI_DECLTYPE_N3276(expr) std::identity<decltype(expr)>::type
-#else
-#   define ASHOGI_DECLTYPE_N3276(expr) decltype(expr)
-#endif
-
 // Debugマクロ
 #if defined(_DEBUG) || defined(DEBUG)
 #   define ASHOGI_DEBUG
