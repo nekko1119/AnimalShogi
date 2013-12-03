@@ -46,7 +46,7 @@ namespace std
     {
         size_t operator()(animal_shogi::ptype const& val) const
         {
-            return hash<underlying_type<animal_shogi::ptype>::type>()(static_cast<underlying_type<animal_shogi::ptype>::type>(val));
+            return hash<underlying_type_t<animal_shogi::ptype>>()(static_cast<underlying_type_t<animal_shogi::ptype>>(val));
         }
     };
 }
