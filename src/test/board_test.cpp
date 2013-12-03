@@ -1,9 +1,29 @@
 ﻿#include "board.h"
 #include <gtest/gtest.h>
+#include <algorithm>
 using namespace animal_shogi;
 
 TEST(board_test, example)
 {
+}
+
+TEST(board_test, construct)
+{
+}
+
+TEST(board_test, serialize)
+{
+    board b1;
+    auto s1 = b1.serialize();
+
+    board b2{initial_placement_tag{}};
+    auto s2 = b2.serialize();
+
+    EXPECT_EQ(s1.size(), s2.size());
+    EXPECT_FALSE(std::equal(std::begin(s1), std::end(s1), std::begin(s2)));
+
+    EXPECT_TRUE(boost::none == s1[2 * board::MAX_ROW + 2]);
+    EXPECT_EQ(piece(turn::WHITE, ptype::CHICK), *(s2[2 * board::MAX_ROW + 2]));
 }
 
 TEST(board_test, get)

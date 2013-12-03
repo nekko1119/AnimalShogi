@@ -25,6 +25,7 @@ namespace animal_shogi
         board() = default;
         board(initial_placement_tag);
 
+        std::array<piece_type, MAX_ROW * MAX_COLUMN> serialize() const;
         piece_type const& get(point p) const;
         piece_type& get(point p);
         std::string str() const;

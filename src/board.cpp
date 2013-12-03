@@ -1,4 +1,5 @@
 ﻿#include "board.h"
+#include <boost/range/algorithm/copy.hpp>
 #include <algorithm>
 
 namespace animal_shogi
@@ -20,6 +21,17 @@ namespace animal_shogi
         board_[4][1] = {turn::BLACK, ptype::ELEPHANT};
         board_[4][2] = {turn::BLACK, ptype::LION};
         board_[4][3] = {turn::BLACK, ptype::GIRAFFE};
+    }
+
+    std::array<board::piece_type, board::MAX_ROW * board::MAX_COLUMN> board::serialize() const
+    {
+        std::array<piece_type, MAX_ROW * MAX_COLUMN> ar;
+        auto it = std::begin(ar);
+        for (auto const& row : board_)
+        {
+            it = boost::copy(row, it);
+        }
+        return ar;
     }
 
     board::piece_type const& board::get(point p) const
