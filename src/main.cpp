@@ -5,8 +5,10 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/sinks/debug_output_backend.hpp>
 #include <boost/log/support/date_time.hpp>
+#include <boost/log/utility/empty_deleter.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
 #include <boost/log/trivial.hpp>
 
 #include "state.h"// debug
@@ -35,14 +37,7 @@ logging::logging()
     namespace expr = log::expressions;
     namespace sinks = log::sinks;
     namespace keywords = log::keywords;
-    auto const data_format =
-        expr::format_date_time<posix_time::ptime>("TimeStamp", "%Y/%m/%d %H:%M:%S");
-    auto const format = expr::format("%1% [%2%] [%3%] [%4%] %5%")
-        % expr::attr<unsigned int>("LineID")
-        % data_format
-        % expr::attr<log::thread_id>("ThreadID")
-        % log::trivial::severity
-        % expr::message;
+
     // Visual Studioの出力ウインドウに出力する
     {
         auto const date_format =
@@ -75,7 +70,20 @@ logging::logging()
             keywords::auto_flush = true
         );
     }
-
+    // コンソールへ出力する
+    {
+        auto const format = expr::format("[%1%] [%2%] %3%")
+            % expr::attr<log::thread_id>("ThreadID")
+            % log::trivial::severity
+            % expr::message;
+        auto backend = make_shared<sinks::text_ostream_backend>();
+        using sink_type = sinks::synchronous_sink<sinks::text_ostream_backend>;
+        backend->add_stream(shared_ptr<std::ostream>(&std::clog, log::empty_deleter()));
+        backend->auto_flush(true);
+        auto sink = make_shared<sink_type>(backend);
+        sink->set_formatter(format);
+        log::core::get()->add_sink(sink);
+    }
     log::add_common_attributes();
 
 #if !defined(ASHOGI_DEBUG)
