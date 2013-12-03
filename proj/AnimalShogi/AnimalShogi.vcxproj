@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\src\piece.cpp" />
     <ClCompile Include="..\..\src\record.cpp" />
     <ClCompile Include="..\..\src\state.cpp" />
+    <ClCompile Include="..\..\src\utility\logging.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\board.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="..\..\src\record.h" />
     <ClInclude Include="..\..\src\state.h" />
     <ClInclude Include="..\..\src\utility\exchange.hpp" />
+    <ClInclude Include="..\..\src\utility\logging.h" />
     <ClInclude Include="..\..\src\utility\point.hpp" />
     <ClInclude Include="..\..\src\utility\singleton_holder.hpp" />
     <ClInclude Include="..\..\src\utility\to_string.hpp" />
