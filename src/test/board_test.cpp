@@ -9,6 +9,22 @@ TEST(board_test, example)
 
 TEST(board_test, construct)
 {
+    board b;
+    auto s = b.serialize();
+    bool const result = std::all_of(std::begin(s), std::end(s), [](board::piece_type const& op){ return op == boost::none; });
+    EXPECT_TRUE(result);
+
+    board init{initial_placement_tag{}};
+    auto const ar = init.serialize();
+
+    EXPECT_EQ(piece(turn::WHITE, ptype::GIRAFFE), *(ar[1 * board::MAX_ROW + 1]));
+    EXPECT_EQ(piece(turn::WHITE, ptype::LION), *(ar[1 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::WHITE, ptype::ELEPHANT), *(ar[1 * board::MAX_ROW + 3]));
+    EXPECT_EQ(piece(turn::WHITE, ptype::CHICK), *(ar[2 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::BLACK, ptype::ELEPHANT), *(ar[4 * board::MAX_ROW + 1]));
+    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *(ar[4 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::BLACK, ptype::GIRAFFE), *(ar[4 * board::MAX_ROW + 3]));
+    EXPECT_EQ(piece(turn::BLACK, ptype::CHICK), *(ar[3 * board::MAX_ROW + 2]));
 }
 
 TEST(board_test, serialize)
