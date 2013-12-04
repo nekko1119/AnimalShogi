@@ -27,7 +27,7 @@ namespace animal_shogi
     }
 
     piece::piece(turn turn, ptype ptype)
-    : turn_(turn), ptype_(ptype)
+    : turn_{turn}, ptype_{ptype}
     {
     }
 

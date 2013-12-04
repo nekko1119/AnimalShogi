@@ -4,12 +4,12 @@
 namespace animal_shogi
 {
     movement::movement(boost::optional<animal_shogi::point> from, animal_shogi::point to, piece pc) BOOST_NOEXCEPT
-    : from(std::move(from)), to(std::move(to)), pc(std::move(pc))
+    : from{std::move(from)}, to{std::move(to)}, pc{std::move(pc)}
     {
     }
 
     movement::movement(movement&& rhs) BOOST_NOEXCEPT
-    : from(std::move(rhs.from)), to(std::move(rhs.to)), pc(std::move(rhs.pc))
+    : from{std::move(rhs.from)}, to{std::move(rhs.to)}, pc{std::move(rhs.pc)}
     {
     }
 
