@@ -47,6 +47,16 @@ namespace animal_shogi
         return board_[p.y()][p.x()];
     }
 
+    board::piece_type const& board::operator[](point p) const
+    {
+        return get(p);
+    }
+
+    board::piece_type& board::operator[](point p)
+    {
+        return get(p);
+    }
+
     std::string board::str() const
     {
         std::string str;
