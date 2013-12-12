@@ -1,3 +1,5 @@
+#コンパイルは出来ます。リンクが出来ません。LIBSを正しく指定指定すれば動くと思います。
+
 CXX			= g++
 CXXFLAGS	= -O2 -Wall -Wextra -std=gnu++11
 SRCS		= main.cpp state.cpp record.cpp board.cpp captured_piece.cpp piece.cpp
