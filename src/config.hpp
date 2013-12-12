@@ -5,8 +5,8 @@
 #include <boost/detail/workaround.hpp>
 
 #if (!defined(BOOST_MSVC) || BOOST_MSVC < 1800) /*&& (!defined(BOOST_GCC) || BOOST_GCC < 40800)*/
-#   error "This source code can be compiled with gcc 4.8 or newer or MSVC 12.0 or newer."
-#   error "But yet it doesn't support gcc."
+#   error "This source code can be compiled with MSVC 12.0 or newer."
+#   error "It may support gcc 4.8 or newer."
 #endif
 
 #if defined(BOOST_MSVC)
