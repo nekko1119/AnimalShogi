@@ -60,7 +60,7 @@ namespace animal_shogi
     std::string board::str() const
     {
         std::string str;
-        std::for_each(std::begin(board_) + 1, std::end(board_) - 1, [&str](inner_type const& in)
+        std::for_each(std::begin(board_) + 1, std::end(board_) - 1, [&str](row_type const& in)
         {
             str.append("|");
             std::for_each(std::begin(in) + 1, std::end(in) - 1, [&str](boost::optional<piece> const& p)

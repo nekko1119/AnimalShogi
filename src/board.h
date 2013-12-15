@@ -19,8 +19,8 @@ namespace animal_shogi
         BOOST_STATIC_CONSTEXPR int MAX_COLUMN = 6;
 
         using piece_type = boost::optional<piece>;
-        using inner_type = std::array<piece_type, MAX_ROW>;
-        using board_type = std::array<inner_type, MAX_COLUMN>;
+        using row_type = std::array<piece_type, MAX_ROW>;
+        using board_type = std::array<row_type, MAX_COLUMN>;
 
         board() = default;
         board(initial_placement_tag) BOOST_NOEXCEPT_OR_NOTHROW;
