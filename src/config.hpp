@@ -46,4 +46,11 @@
 #   define ASHOGI_DEBUG
 #endif
 
+// __func__ワークアラウンド
+#if defined(__func__)
+#   define ASHOGI_FUNC __func__
+#elif defined(BOOST_MSVC)
+#   define ASHOGI_FUNC __FUNCTION__
+#endif
+
 #endif
