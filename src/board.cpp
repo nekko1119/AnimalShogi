@@ -77,6 +77,9 @@ namespace animal_shogi
     bool is_within_board(point const& p)
     {
         // どうぶつしょうぎで有効な座標は横が[1, 3]かつ、縦が[1, 4]
-        return (0 < p.x() && p.x() < board::MAX_ROW - 1) && (0 < p.y() && p.y() < board::MAX_COLUMN - 1);
+        bool is_within_row = 0 < p.x() && p.x() < board::MAX_ROW - 1;
+        bool is_within_column = 0 < p.y() && p.y() < board::MAX_COLUMN - 1;
+
+        return is_within_row && is_within_column;
     }
 }
