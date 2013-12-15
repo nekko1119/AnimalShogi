@@ -8,7 +8,6 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/console.hpp>
-#include <boost/log/trivial.hpp>
 
 namespace animal_shogi
 {
@@ -98,12 +97,12 @@ namespace animal_shogi
 #if !defined(ASHOGI_DEBUG)
         log::core::get()->set_filter(log::trivial::severity >= log::trivial::info);
 #endif
-        BOOST_LOG_TRIVIAL(info) << "起動";
+        ASHOGI_LOG_TRIVIAL(info) << "起動";
     }
 
     logging::~logging() BOOST_NOEXCEPT_OR_NOTHROW
     {
-        BOOST_LOG_TRIVIAL(info) << "終了";
+        ASHOGI_LOG_TRIVIAL(info) << "終了";
         boost::log::core::get()->remove_all_sinks();
     }
 }
