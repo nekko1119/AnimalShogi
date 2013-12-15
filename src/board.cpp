@@ -1,8 +1,9 @@
 ﻿#include "board.h"
-#include <boost/log/trivial.hpp>
+
+#include <algorithm>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/algorithm/copy.hpp>
-#include <algorithm>
+#include "utility/logging.h"
 
 namespace animal_shogi
 {
@@ -38,13 +39,13 @@ namespace animal_shogi
 
     board::piece_type const& board::get(point p) const
     {
-        BOOST_LOG_TRIVIAL(debug) << "board::get const : 引数座標 " << to_string(p);
+        ASHOGI_LOG_TRIVIAL(debug) << "引数座標 " << to_string(p);
         return board_[p.y()][p.x()];
     }
 
     board::piece_type& board::get(point p)
     {
-        BOOST_LOG_TRIVIAL(debug) << "board::get : 引数座標 " << to_string(p);
+        ASHOGI_LOG_TRIVIAL(debug) << "引数座標 " << to_string(p);
         return board_[p.y()][p.x()];
     }
 

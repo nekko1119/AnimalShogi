@@ -1,5 +1,5 @@
 ﻿#include "record.h"
-#include <boost/log/trivial.hpp>
+#include "utility/logging.h"
 
 namespace animal_shogi
 {
@@ -46,7 +46,7 @@ namespace animal_shogi
     {
         if (moves_.empty())
         {
-            BOOST_LOG_TRIVIAL(error) << "record::pop : 要素が0でpopが呼ばれた";
+            ASHOGI_LOG_TRIVIAL(error) << "要素が0でpopが呼ばれた";
             return;
         }
         moves_.pop_back();
@@ -91,7 +91,7 @@ namespace animal_shogi
     {
         if (moves_.size() <= index)
         {
-            BOOST_LOG_TRIVIAL(error) << "record::operator[] : 範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
+            ASHOGI_LOG_TRIVIAL(error) << "範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
         }
         return moves_[index];
     }
@@ -100,7 +100,7 @@ namespace animal_shogi
     {
         if (moves_.size() <= index)
         {
-            BOOST_LOG_TRIVIAL(error) << "record::operator[] : 範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
+            ASHOGI_LOG_TRIVIAL(error) << "範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
         }
         return moves_[index];
     }

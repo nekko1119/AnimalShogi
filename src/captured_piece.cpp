@@ -1,20 +1,21 @@
 ﻿#include "captured_piece.h"
+
 #include <type_traits>
-#include <boost/log/trivial.hpp>
+#include "utility/logging.h"
 
 namespace animal_shogi
 {
     void captured_piece::add(ptype p)
-    {
-        using type = piece_type::size_type;
+    {     
         if (is_hen(p))
         {
             return;
         }
 
+        using type = piece_type::size_type;
         if (2 <= pieces_[static_cast<type>(p)])
         {
-            BOOST_LOG_TRIVIAL(error) << "captured_piece::add : 同じ持ち駒は2枚より多くなりえない";
+            ASHOGI_LOG_TRIVIAL(error) << "同じ持ち駒は2枚より多くなりえない";
             return;
         }
         ++pieces_[static_cast<type>(p)];
@@ -30,7 +31,7 @@ namespace animal_shogi
         using type = piece_type::size_type;
         if (pieces_[static_cast<type>(p)] == 0)
         {
-            BOOST_LOG_TRIVIAL(error) << "captured_piece::remove : 持ち駒数が0でremoveが呼ばれた";
+            ASHOGI_LOG_TRIVIAL(error) << "持ち駒数が0でremoveが呼ばれた";
             return;
         }
 
@@ -65,7 +66,7 @@ namespace animal_shogi
     {
         if (p == ptype::HEN)
         {
-            BOOST_LOG_TRIVIAL(error) << "captured::get : ptype::HENは持ち駒ではない";
+            ASHOGI_LOG_TRIVIAL(error) << "ptype::HENは持ち駒ではない";
             return true;
         }
         return false;
