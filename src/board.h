@@ -23,7 +23,7 @@ namespace animal_shogi
         using board_type = std::array<inner_type, MAX_COLUMN>;
 
         board() = default;
-        board(initial_placement_tag);
+        board(initial_placement_tag) BOOST_NOEXCEPT_OR_NOTHROW;
 
         std::array<piece_type, MAX_ROW * MAX_COLUMN> serialize() const;
         piece_type const& get(point p) const;

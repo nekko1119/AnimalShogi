@@ -5,7 +5,7 @@
 
 namespace animal_shogi
 {
-    board::board(initial_placement_tag)
+    board::board(initial_placement_tag) BOOST_NOEXCEPT_OR_NOTHROW
     {
         // どうぶつしょうぎの初期配置
         /*
