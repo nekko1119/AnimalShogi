@@ -1,5 +1,6 @@
 ﻿#include "board.h"
 #include <boost/log/trivial.hpp>
+#include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/algorithm/copy.hpp>
 #include <algorithm>
 
@@ -59,16 +60,17 @@ namespace animal_shogi
 
     std::string board::str() const
     {
+        using boost::adaptors::sliced;
         std::string str;
-        std::for_each(std::begin(board_) + 1, std::end(board_) - 1, [&str](row_type const& in)
+        for (auto const& row : board_ | sliced(1, MAX_COLUMN - 1))
         {
             str.append("|");
-            std::for_each(std::begin(in) + 1, std::end(in) - 1, [&str](boost::optional<piece> const& p)
+            for (auto const& p : row | sliced(1, MAX_ROW - 1))
             {
                 str.append((p ? p->str() : "   ") + "|");
-            });
+            }
             str.append("\n");
-        });
+        }
         return str;
     }
 
