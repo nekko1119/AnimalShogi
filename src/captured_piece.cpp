@@ -8,7 +8,7 @@ namespace animal_shogi
 {
     void captured_piece::add(ptype p)
     {     
-        is_hen(p);
+        check_on_hen(p);
 
         using type = piece_type::size_type;
         if (2 <= pieces_[static_cast<type>(p)])
@@ -21,7 +21,7 @@ namespace animal_shogi
 
     void captured_piece::remove(ptype p)
     {
-        is_hen(p);
+        check_on_hen(p);
 
         using type = piece_type::size_type;
         if (pieces_[static_cast<type>(p)] == 0)
@@ -35,7 +35,7 @@ namespace animal_shogi
 
     int captured_piece::get(ptype p) const
     {
-        is_hen(p);
+        check_on_hen(p);
 
         using type = piece_type::size_type;
         return pieces_[static_cast<type>(p)];
@@ -53,7 +53,7 @@ namespace animal_shogi
         return str;
     }
 
-    void captured_piece::is_hen(ptype p) const
+    void captured_piece::check_on_hen(ptype p) const
     {
         if (p == ptype::HEN)
         {
