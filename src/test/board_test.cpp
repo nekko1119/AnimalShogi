@@ -7,13 +7,16 @@ TEST(board_test, example)
 {
 }
 
-TEST(board_test, construct)
+TEST(board_test, default_construct)
 {
     board b;
     auto s = b.serialize();
     bool const result = std::all_of(std::begin(s), std::end(s), [](board::piece_type const& op){ return op == boost::none; });
     EXPECT_TRUE(result);
+}
 
+TEST(board_test, tag_construct)
+{
     board init{initial_placement_tag{}};
     auto const ar = init.serialize();
 
