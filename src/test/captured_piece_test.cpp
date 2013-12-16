@@ -1,6 +1,6 @@
 ﻿#include "captured_piece.h"
-#include <gtest/gtest.h>
 #include <stdexcept>
+#include <gtest/gtest.h>
 using namespace animal_shogi;
 
 TEST(captured_piece_test, example)
@@ -21,7 +21,7 @@ TEST(captured_piece_test, construct)
     EXPECT_EQ(cp.get(ptype::ELEPHANT), 0);
     EXPECT_EQ(cp.get(ptype::GIRAFFE), 0);
     EXPECT_EQ(cp.get(ptype::LION), 0);
-    EXPECT_EQ(cp.get(ptype::HEN), 0);
+    EXPECT_THROW(cp.get(ptype::HEN), std::invalid_argument);
 }
 
 TEST(captured_piece_test, add)
@@ -29,14 +29,13 @@ TEST(captured_piece_test, add)
     captured_piece cp;
     cp.add(ptype::CHICK);
     cp.add(ptype::CHICK);
-    cp.add(ptype::CHICK);
+    EXPECT_THROW(cp.add(ptype::CHICK), std::out_of_range);
     cp.add(ptype::ELEPHANT);
     cp.add(ptype::ELEPHANT);
     cp.add(ptype::GIRAFFE);
-    cp.add(ptype::HEN);
+    EXPECT_THROW(cp.add(ptype::HEN), std::invalid_argument);
     EXPECT_EQ(cp.get(ptype::CHICK), 2);
     EXPECT_EQ(cp.get(ptype::ELEPHANT), 2);
     EXPECT_EQ(cp.get(ptype::GIRAFFE), 1);
     EXPECT_EQ(cp.get(ptype::LION), 0);
-    EXPECT_EQ(cp.get(ptype::HEN), 0);
 }

@@ -19,7 +19,7 @@ namespace animal_shogi
         std::string str() const;
 
     private:
-        bool is_hen(ptype p) const;
+        void is_hen(ptype p) const;
 
         piece_type pieces_ = {{0, 0, 0, 0}};
     };

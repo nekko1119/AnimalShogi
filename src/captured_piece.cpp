@@ -1,5 +1,6 @@
 ﻿#include "captured_piece.h"
 
+#include <stdexcept>
 #include <type_traits>
 #include "utility/logging.h"
 
@@ -7,32 +8,26 @@ namespace animal_shogi
 {
     void captured_piece::add(ptype p)
     {     
-        if (is_hen(p))
-        {
-            return;
-        }
+        is_hen(p);
 
         using type = piece_type::size_type;
         if (2 <= pieces_[static_cast<type>(p)])
         {
             ASHOGI_LOG_TRIVIAL(error) << "同じ持ち駒は2枚より多くなりえない";
-            return;
+            throw std::out_of_range("same captured piece is 2 at most");
         }
         ++pieces_[static_cast<type>(p)];
     }
 
     void captured_piece::remove(ptype p)
     {
-        if (is_hen(p))
-        {
-            return;
-        }
+        is_hen(p);
 
         using type = piece_type::size_type;
         if (pieces_[static_cast<type>(p)] == 0)
         {
             ASHOGI_LOG_TRIVIAL(error) << "持ち駒数が0でremoveが呼ばれた";
-            return;
+            throw std::out_of_range(to_string(p) + "is empty");
         }
 
         --pieces_[static_cast<type>(p)];
@@ -40,10 +35,7 @@ namespace animal_shogi
 
     int captured_piece::get(ptype p) const
     {
-        if (is_hen(p))
-        {
-            return 0;
-        }
+        is_hen(p);
 
         using type = piece_type::size_type;
         return pieces_[static_cast<type>(p)];
@@ -61,14 +53,12 @@ namespace animal_shogi
         return str;
     }
 
-
-    bool captured_piece::is_hen(ptype p) const
+    void captured_piece::is_hen(ptype p) const
     {
         if (p == ptype::HEN)
         {
             ASHOGI_LOG_TRIVIAL(error) << "ptype::HENは持ち駒ではない";
-            return true;
+            throw std::invalid_argument("ptype::hen can't be piece in hands.");
         }
-        return false;
     }
 }
