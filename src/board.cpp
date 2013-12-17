@@ -37,13 +37,13 @@ namespace animal_shogi
         return ar;
     }
 
-    board::piece_type const& board::get(point p) const
+    board::piece_type const& board::at(point p) const
     {
         ASHOGI_LOG_TRIVIAL(debug) << "引数座標 " << to_string(p);
         return board_[p.y()][p.x()];
     }
 
-    board::piece_type& board::get(point p)
+    board::piece_type& board::at(point p)
     {
         ASHOGI_LOG_TRIVIAL(debug) << "引数座標 " << to_string(p);
         return board_[p.y()][p.x()];
@@ -51,12 +51,12 @@ namespace animal_shogi
 
     board::piece_type const& board::operator[](point p) const
     {
-        return get(p);
+        return at(p);
     }
 
     board::piece_type& board::operator[](point p)
     {
-        return get(p);
+        return at(p);
     }
 
     std::string board::str() const

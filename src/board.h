@@ -26,8 +26,8 @@ namespace animal_shogi
         board(initial_placement_tag) BOOST_NOEXCEPT_OR_NOTHROW;
 
         std::array<piece_type, MAX_ROW * MAX_COLUMN> serialize() const;
-        piece_type const& get(point p) const;
-        piece_type& get(point p);
+        piece_type const& at(point p) const;
+        piece_type& at(point p);
         piece_type const& operator[](point p) const;
         piece_type& operator[](point p);
         std::string str() const;

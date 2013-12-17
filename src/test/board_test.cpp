@@ -45,20 +45,20 @@ TEST(board_test, serialize)
     EXPECT_EQ(piece(turn::WHITE, ptype::CHICK), *(s2[2 * board::MAX_ROW + 2]));
 }
 
-TEST(board_test, get)
+TEST(board_test, at)
 {
     board b{initial_placement_tag()};
 
     // 読み込み
-    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.get({2, 4}));
-    EXPECT_TRUE(boost::none == b.get({1, 2}));
+    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.at({2, 4}));
+    EXPECT_TRUE(boost::none == b.at({1, 2}));
 
     // 書き込み
-    b.get({2, 4}) = boost::none;
-    b.get({1, 2}) = piece{turn::BLACK, ptype::LION};
+    b.at({2, 4}) = boost::none;
+    b.at({1, 2}) = piece{turn::BLACK, ptype::LION};
 
-    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.get({1, 2}));
-    EXPECT_TRUE(boost::none == b.get({2, 4}));
+    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.at({1, 2}));
+    EXPECT_TRUE(boost::none == b.at({2, 4}));
 }
 
 TEST(board_test, is_within_board)
