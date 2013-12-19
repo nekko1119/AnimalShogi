@@ -81,9 +81,6 @@ namespace animal_shogi
     logging::logging()
     {
         using namespace boost;
-        namespace expr = log::expressions;
-        namespace sinks = log::sinks;
-        namespace keywords = log::keywords;
 
         // Visual Studioの出力ウインドウに出力する
         output_debug();
