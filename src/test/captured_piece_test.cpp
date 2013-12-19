@@ -29,7 +29,7 @@ TEST(captured_piece_test, add)
     captured_piece cp;
     cp.add(ptype::CHICK);
     cp.add(ptype::CHICK);
-    EXPECT_THROW(cp.add(ptype::CHICK), std::out_of_range);
+    EXPECT_THROW(cp.add(ptype::CHICK), std::runtime_error);
     cp.add(ptype::ELEPHANT);
     cp.add(ptype::ELEPHANT);
     cp.add(ptype::GIRAFFE);

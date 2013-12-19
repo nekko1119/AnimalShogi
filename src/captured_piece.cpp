@@ -13,7 +13,7 @@ namespace animal_shogi
         if (2 <= pieces_[static_cast<size_type>(p)])
         {
             ASHOGI_LOG_TRIVIAL(error) << "同じ持ち駒は2枚より多くなりえない";
-            throw std::out_of_range("same captured piece is 2 at most");
+            throw std::runtime_error("same captured piece is 2 at most");
         }
         ++pieces_[static_cast<size_type>(p)];
     }
@@ -25,7 +25,7 @@ namespace animal_shogi
         if (pieces_[static_cast<size_type>(p)] == 0)
         {
             ASHOGI_LOG_TRIVIAL(error) << "持ち駒数が0でremoveが呼ばれた";
-            throw std::out_of_range(to_string(p) + "is empty");
+            throw std::runtime_error(to_string(p) + "is empty");
         }
 
         --pieces_[static_cast<size_type>(p)];
