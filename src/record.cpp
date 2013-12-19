@@ -52,7 +52,7 @@ namespace animal_shogi
         moves_.pop_back();
     }
 
-    record::size_type record::size() const
+    record::size_type record::size() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return moves_.size();
     }
@@ -67,22 +67,22 @@ namespace animal_shogi
         return moves_.back();
     }
 
-    record::iterator record::begin()
+    record::iterator record::begin() BOOST_NOEXCEPT_OR_NOTHROW
     {
         return moves_.begin();
     }
 
-    record::const_iterator record::begin() const
+    record::const_iterator record::begin() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return moves_.begin();
     }
 
-    record::iterator record::end()
+    record::iterator record::end() BOOST_NOEXCEPT_OR_NOTHROW
     {
         return moves_.end();
     }
 
-    record::const_iterator record::end() const
+    record::const_iterator record::end() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return moves_.end();
     }

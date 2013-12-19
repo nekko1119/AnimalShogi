@@ -56,12 +56,12 @@ namespace animal_shogi
         return get_turn_mark(turn_) + str;
     }
 
-    turn piece::get_turn() const
+    turn piece::get_turn() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return turn_;
     }
 
-    ptype piece::get_ptype() const
+    ptype piece::get_ptype() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return ptype_;
     }

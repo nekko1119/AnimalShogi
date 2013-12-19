@@ -47,13 +47,13 @@ namespace animal_shogi
 
         void push(boost::optional<point> from, point to, piece pc);
         void pop();
-        size_type size() const;
+        size_type size() const BOOST_NOEXCEPT_OR_NOTHROW;
         reference top();
         const_reference top() const;
-        iterator begin();
-        const_iterator begin() const;
-        iterator end();
-        const_iterator end() const;
+        iterator begin() BOOST_NOEXCEPT_OR_NOTHROW;
+        const_iterator begin() const BOOST_NOEXCEPT_OR_NOTHROW;
+        iterator end() BOOST_NOEXCEPT_OR_NOTHROW;
+        const_iterator end() const BOOST_NOEXCEPT_OR_NOTHROW;
         reference operator[](size_type index);
         const_reference operator[](size_type index) const;
 
