@@ -10,35 +10,32 @@ namespace animal_shogi
     {     
         check_on_hen(p);
 
-        using type = piece_type::size_type;
-        if (2 <= pieces_[static_cast<type>(p)])
+        if (2 <= pieces_[static_cast<size_type>(p)])
         {
             ASHOGI_LOG_TRIVIAL(error) << "同じ持ち駒は2枚より多くなりえない";
             throw std::out_of_range("same captured piece is 2 at most");
         }
-        ++pieces_[static_cast<type>(p)];
+        ++pieces_[static_cast<size_type>(p)];
     }
 
     void captured_piece::remove(ptype p)
     {
         check_on_hen(p);
 
-        using type = piece_type::size_type;
-        if (pieces_[static_cast<type>(p)] == 0)
+        if (pieces_[static_cast<size_type>(p)] == 0)
         {
             ASHOGI_LOG_TRIVIAL(error) << "持ち駒数が0でremoveが呼ばれた";
             throw std::out_of_range(to_string(p) + "is empty");
         }
 
-        --pieces_[static_cast<type>(p)];
+        --pieces_[static_cast<size_type>(p)];
     }
 
     int captured_piece::get(ptype p) const
     {
         check_on_hen(p);
 
-        using type = piece_type::size_type;
-        return pieces_[static_cast<type>(p)];
+        return pieces_[static_cast<size_type>(p)];
     }
 
     std::string captured_piece::str() const

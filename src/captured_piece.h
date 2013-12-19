@@ -19,6 +19,7 @@ namespace animal_shogi
         std::string str() const;
 
     private:
+        using size_type = piece_type::size_type;
         void check_on_hen(ptype p) const;
 
         piece_type pieces_ = {{0, 0, 0, 0}};
