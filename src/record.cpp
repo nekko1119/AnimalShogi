@@ -1,4 +1,5 @@
 ﻿#include "record.h"
+#include <stdexcept>
 #include "utility/logging.h"
 
 namespace animal_shogi
@@ -47,7 +48,7 @@ namespace animal_shogi
         if (moves_.empty())
         {
             ASHOGI_LOG_TRIVIAL(error) << "要素が0でpopが呼ばれた";
-            return;
+            throw std::runtime_error("stack is empty");
         }
         moves_.pop_back();
     }
@@ -92,6 +93,7 @@ namespace animal_shogi
         if (moves_.size() <= index)
         {
             ASHOGI_LOG_TRIVIAL(error) << "範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
+            throw std::out_of_range("out of range");
         }
         return moves_[index];
     }
@@ -101,6 +103,7 @@ namespace animal_shogi
         if (moves_.size() <= index)
         {
             ASHOGI_LOG_TRIVIAL(error) << "範囲外アクセス 棋譜のサイズ : " << moves_.size() << "インデックス : " << index;
+            throw std::out_of_range("out of range");
         }
         return moves_[index];
     }

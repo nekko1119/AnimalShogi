@@ -36,7 +36,7 @@ TEST(record_test, example)
 TEST(record_test, construct)
 {
     record r;
-    r.pop();
+    EXPECT_THROW(r.pop(), std::runtime_error);
     //r[0].str(); // assert failure.
     r.begin();
     //r.end(); // assert failure
