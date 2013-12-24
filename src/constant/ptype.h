@@ -8,11 +8,11 @@ namespace animal_shogi
 {
     enum class ptype
     {
-        CHICK,      // ひよこ
-        GIRAFFE,    // キリン
-        ELEPHANT,   // 象
-        LION,       // ライオン
-        HEN,        // 鶏
+        chick,      // ひよこ
+        giraffe,    // キリン
+        elephant,   // 象
+        lion,       // ライオン
+        hen,        // 鶏
     };
 
     template <>
@@ -20,15 +20,15 @@ namespace animal_shogi
     {
         switch (value)
         {
-        case ptype::CHICK:
+        case ptype::chick:
             return "CH";
-        case ptype::GIRAFFE:
+        case ptype::giraffe:
             return "GI";
-        case ptype::ELEPHANT:
+        case ptype::elephant:
             return "EL";
-        case ptype::LION:
+        case ptype::lion:
             return "LI";
-        case ptype::HEN:
+        case ptype::hen:
             return "HE";
         default:
             throw std::invalid_argument{"animal_shogi::to_string : value is invalid."};

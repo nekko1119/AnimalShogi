@@ -52,9 +52,9 @@ namespace animal_shogi
 
     void captured_piece::check_on_hen(ptype p) const
     {
-        if (p == ptype::HEN)
+        if (p == ptype::hen)
         {
-            ASHOGI_LOG_TRIVIAL(error) << "ptype::HENは持ち駒ではない";
+            ASHOGI_LOG_TRIVIAL(error) << "ptype::henは持ち駒ではない";
             throw std::invalid_argument("ptype::hen can't be piece in hands.");
         }
     }

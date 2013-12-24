@@ -8,13 +8,13 @@ namespace animal_shogi
 {
     enum class turn
     {
-        BLACK,  // 先手
-        WHITE   // 後手
+        black,  // 先手
+        white   // 後手
     };
 
     inline BOOST_CONSTEXPR bool is_black(turn trn) BOOST_NOEXCEPT_OR_NOTHROW
     {
-        return trn == turn::BLACK;
+        return trn == turn::black;
     }
 
     inline BOOST_CONSTEXPR bool is_white(turn trn) BOOST_NOEXCEPT_OR_NOTHROW

@@ -16,14 +16,14 @@ namespace animal_shogi
         ＿ひ＿
         麒ラ象
         */
-        board_[1][1] = {turn::WHITE, ptype::GIRAFFE};
-        board_[1][2] = {turn::WHITE, ptype::LION};
-        board_[1][3] = {turn::WHITE, ptype::ELEPHANT};
-        board_[2][2] = {turn::WHITE, ptype::CHICK};
-        board_[3][2] = {turn::BLACK, ptype::CHICK};
-        board_[4][1] = {turn::BLACK, ptype::ELEPHANT};
-        board_[4][2] = {turn::BLACK, ptype::LION};
-        board_[4][3] = {turn::BLACK, ptype::GIRAFFE};
+        board_[1][1] = {turn::white, ptype::giraffe};
+        board_[1][2] = {turn::white, ptype::lion};
+        board_[1][3] = {turn::white, ptype::elephant};
+        board_[2][2] = {turn::white, ptype::chick};
+        board_[3][2] = {turn::black, ptype::chick};
+        board_[4][1] = {turn::black, ptype::elephant};
+        board_[4][2] = {turn::black, ptype::lion};
+        board_[4][3] = {turn::black, ptype::giraffe};
     }
 
     std::array<board::piece_type, board::MAX_ROW * board::MAX_COLUMN> board::serialize() const

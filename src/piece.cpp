@@ -10,11 +10,11 @@ namespace animal_shogi
         // 駒の動きの表
         moves_t const piece_movement_table =
         {
-            {ptype::CHICK, {{0, -1}}},
-            {ptype::ELEPHANT, {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}}},
-            {ptype::GIRAFFE, {{0, -1}, {-1, 0}, {1, 0}, {0, 1}}},
-            {ptype::LION, {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}}},
-            {ptype::HEN, {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {0, 1}}}
+            {ptype::chick, {{0, -1}}},
+            {ptype::elephant, {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}}},
+            {ptype::giraffe, {{0, -1}, {-1, 0}, {1, 0}, {0, 1}}},
+            {ptype::lion, {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}}},
+            {ptype::hen, {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {0, 1}}}
         };
 
         void reverse_points(std::vector<point>& points)
@@ -35,7 +35,7 @@ namespace animal_shogi
     {
         auto points = piece_movement_table.at(ptype_);
 #if BOOST_WORKAROUND(BOOST_MSVC_FULL_VER, == 180021114)
-        if (turn_ == turn::WHITE)
+        if (turn_ == turn::white)
 #else
         if (is_white(turn_))
 #endif

@@ -20,14 +20,14 @@ TEST(board_test, tag_construct)
     board init{initial_placement_tag{}};
     auto const ar = init.serialize();
 
-    EXPECT_EQ(piece(turn::WHITE, ptype::GIRAFFE), *(ar[1 * board::MAX_ROW + 1]));
-    EXPECT_EQ(piece(turn::WHITE, ptype::LION), *(ar[1 * board::MAX_ROW + 2]));
-    EXPECT_EQ(piece(turn::WHITE, ptype::ELEPHANT), *(ar[1 * board::MAX_ROW + 3]));
-    EXPECT_EQ(piece(turn::WHITE, ptype::CHICK), *(ar[2 * board::MAX_ROW + 2]));
-    EXPECT_EQ(piece(turn::BLACK, ptype::ELEPHANT), *(ar[4 * board::MAX_ROW + 1]));
-    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *(ar[4 * board::MAX_ROW + 2]));
-    EXPECT_EQ(piece(turn::BLACK, ptype::GIRAFFE), *(ar[4 * board::MAX_ROW + 3]));
-    EXPECT_EQ(piece(turn::BLACK, ptype::CHICK), *(ar[3 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::white, ptype::giraffe), *(ar[1 * board::MAX_ROW + 1]));
+    EXPECT_EQ(piece(turn::white, ptype::lion), *(ar[1 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::white, ptype::elephant), *(ar[1 * board::MAX_ROW + 3]));
+    EXPECT_EQ(piece(turn::white, ptype::chick), *(ar[2 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::black, ptype::elephant), *(ar[4 * board::MAX_ROW + 1]));
+    EXPECT_EQ(piece(turn::black, ptype::lion), *(ar[4 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::black, ptype::giraffe), *(ar[4 * board::MAX_ROW + 3]));
+    EXPECT_EQ(piece(turn::black, ptype::chick), *(ar[3 * board::MAX_ROW + 2]));
 }
 
 TEST(board_test, serialize)
@@ -42,7 +42,7 @@ TEST(board_test, serialize)
     EXPECT_FALSE(std::equal(std::begin(s1), std::end(s1), std::begin(s2)));
 
     EXPECT_TRUE(boost::none == s1[2 * board::MAX_ROW + 2]);
-    EXPECT_EQ(piece(turn::WHITE, ptype::CHICK), *(s2[2 * board::MAX_ROW + 2]));
+    EXPECT_EQ(piece(turn::white, ptype::chick), *(s2[2 * board::MAX_ROW + 2]));
 }
 
 TEST(board_test, at)
@@ -50,14 +50,14 @@ TEST(board_test, at)
     board b{initial_placement_tag()};
 
     // 読み込み
-    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.at({2, 4}));
+    EXPECT_EQ(piece(turn::black, ptype::lion), *b.at({2, 4}));
     EXPECT_TRUE(boost::none == b.at({1, 2}));
 
     // 書き込み
     b.at({2, 4}) = boost::none;
-    b.at({1, 2}) = piece{turn::BLACK, ptype::LION};
+    b.at({1, 2}) = piece{turn::black, ptype::lion};
 
-    EXPECT_EQ(piece(turn::BLACK, ptype::LION), *b.at({1, 2}));
+    EXPECT_EQ(piece(turn::black, ptype::lion), *b.at({1, 2}));
     EXPECT_TRUE(boost::none == b.at({2, 4}));
 }
 
