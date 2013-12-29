@@ -1,7 +1,26 @@
 ﻿#include "board.h"
 #include <gtest/gtest.h>
 #include <algorithm>
+#include <boost/range/algorithm/equal.hpp>
 using namespace animal_shogi;
+
+namespace
+{
+    std::array<board::piece_type, board::MAX_COLUMN * board::MAX_ROW> get_initial_placement_piece_array()
+    {
+        std::array<board::piece_type, board::MAX_COLUMN * board::MAX_ROW> board;
+        const auto r = board::MAX_ROW;
+        board[1 * r + 1] = {turn::white, ptype::giraffe};
+        board[1 * r + 2] = {turn::white, ptype::lion};
+        board[1 * r + 3] = {turn::white, ptype::elephant};
+        board[2 * r + 2] = {turn::white, ptype::chick};
+        board[3 * r + 2] = {turn::black, ptype::chick};
+        board[4 * r + 1] = {turn::black, ptype::elephant};
+        board[4 * r + 2] = {turn::black, ptype::lion};
+        board[4 * r + 3] = {turn::black, ptype::giraffe};
+        return board;
+    }
+}
 
 TEST(board_test, example)
 {
@@ -19,15 +38,8 @@ TEST(board_test, tag_construct)
 {
     board init{initial_placement_tag{}};
     auto const ar = init.serialize();
-
-    EXPECT_EQ(piece(turn::white, ptype::giraffe), *(ar[1 * board::MAX_ROW + 1]));
-    EXPECT_EQ(piece(turn::white, ptype::lion), *(ar[1 * board::MAX_ROW + 2]));
-    EXPECT_EQ(piece(turn::white, ptype::elephant), *(ar[1 * board::MAX_ROW + 3]));
-    EXPECT_EQ(piece(turn::white, ptype::chick), *(ar[2 * board::MAX_ROW + 2]));
-    EXPECT_EQ(piece(turn::black, ptype::elephant), *(ar[4 * board::MAX_ROW + 1]));
-    EXPECT_EQ(piece(turn::black, ptype::lion), *(ar[4 * board::MAX_ROW + 2]));
-    EXPECT_EQ(piece(turn::black, ptype::giraffe), *(ar[4 * board::MAX_ROW + 3]));
-    EXPECT_EQ(piece(turn::black, ptype::chick), *(ar[3 * board::MAX_ROW + 2]));
+    auto const are_equal = boost::equal(ar, get_initial_placement_piece_array());
+    EXPECT_TRUE(are_equal);
 }
 
 TEST(board_test, serialize)
