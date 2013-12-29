@@ -38,6 +38,11 @@ namespace animal_shogi
         return pieces_[static_cast<size_type>(p)];
     }
 
+    bool captured_piece::is_empty(ptype p) const
+    {
+        return pieces_[static_cast<size_type>(p)] == 0;
+    }
+
     std::string captured_piece::str() const
     {
         std::string str;

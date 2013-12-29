@@ -39,3 +39,12 @@ TEST(captured_piece_test, add)
     EXPECT_EQ(cp.get(ptype::giraffe), 1);
     EXPECT_EQ(cp.get(ptype::lion), 0);
 }
+
+TEST(captured_piece_test, is_empty)
+{
+    captured_piece cp;
+    cp.add(ptype::chick);
+
+    EXPECT_TRUE(cp.is_empty(ptype::elephant));
+    EXPECT_FALSE(cp.is_empty(ptype::chick));
+}

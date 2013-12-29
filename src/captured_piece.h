@@ -16,6 +16,7 @@ namespace animal_shogi
         void add(ptype p);
         void remove(ptype p);
         int get(ptype p) const;
+        bool is_empty(ptype p) const;
         std::string str() const;
 
     private:
