@@ -20,6 +20,7 @@ namespace animal_shogi
         void update_from_board(point from, point to);
         void update_from_cap_pc(point to, piece pc);
         std::vector<point> search(point const& pt) const;
+        bool has_won(turn t) const;
 
         board const& get_board() const BOOST_NOEXCEPT_OR_NOTHROW;
         captured_piece const& get_captured_piece(turn trn) const BOOST_NOEXCEPT_OR_NOTHROW;

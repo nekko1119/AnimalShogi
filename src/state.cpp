@@ -83,6 +83,11 @@ namespace animal_shogi
         throw std::runtime_error("the point of coordinate is empty");
     }
 
+    bool state::has_won(turn t) const
+    {
+        return captured_pieces_[static_cast<turn_type>(t)].get(ptype::lion) != 0;
+    }
+
     board const& state::get_board() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return board_;

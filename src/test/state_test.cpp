@@ -78,3 +78,13 @@ TEST(state_test, search)
     expect = {};
     EXPECT_TRUE(expect == s.search({1, 4}));
 }
+
+TEST(state_test, has_won)
+{
+    state s;
+    s.update_from_board({2, 2}, {2, 3});
+    s.update_from_board({2, 3}, {2, 4});
+
+    EXPECT_TRUE(s.has_won(turn::white));
+    EXPECT_FALSE(s.has_won(turn::black));
+}
