@@ -27,7 +27,6 @@ namespace animal_shogi
     {
     }
 
-	// TODO : テストコード
     void state::update_from_board(point from, point to)
     {
         // 移動可能なマスが存在するか
