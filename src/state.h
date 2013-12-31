@@ -35,6 +35,11 @@ namespace animal_shogi
         std::array<captured_piece, 2> captured_pieces_;
         record record_;
     };
+
+    inline bool has_result(state const& st)
+    {
+        return st.has_won(turn::black) || st.has_won(turn::white);
+    }
 }
 
 #endif
