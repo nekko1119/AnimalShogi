@@ -26,9 +26,9 @@ namespace animal_shogi
         board_[4][3] = {turn::black, ptype::giraffe};
     }
 
-    std::array<board::piece_type, board::MAX_ROW * board::MAX_COLUMN> board::serialize() const
+    std::array<board::piece_type, board::max_row * board::max_column> board::serialize() const
     {
-        std::array<piece_type, MAX_ROW * MAX_COLUMN> ar;
+        std::array<piece_type, max_row * max_column> ar;
         auto it = std::begin(ar);
         for (auto const& row : board_)
         {
@@ -63,10 +63,10 @@ namespace animal_shogi
     {
         using boost::adaptors::sliced;
         std::string str;
-        for (auto const& row : board_ | sliced(1, MAX_COLUMN - 1))
+        for (auto const& row : board_ | sliced(1, max_column - 1))
         {
             str.append("|");
-            for (auto const& p : row | sliced(1, MAX_ROW - 1))
+            for (auto const& p : row | sliced(1, max_row - 1))
             {
                 str.append((p ? p->str() : "   ") + "|");
             }
@@ -78,8 +78,8 @@ namespace animal_shogi
     bool is_within_board(point const& p)
     {
         // どうぶつしょうぎで有効な座標は横が[1, 3]かつ、縦が[1, 4]
-        bool is_within_row = 0 < p.x() && p.x() < board::MAX_ROW - 1;
-        bool is_within_column = 0 < p.y() && p.y() < board::MAX_COLUMN - 1;
+        bool is_within_row = 0 < p.x() && p.x() < board::max_row - 1;
+        bool is_within_column = 0 < p.y() && p.y() < board::max_column - 1;
 
         return is_within_row && is_within_column;
     }

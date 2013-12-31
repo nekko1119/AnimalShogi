@@ -6,10 +6,10 @@ using namespace animal_shogi;
 
 namespace
 {
-    std::array<board::piece_type, board::MAX_COLUMN * board::MAX_ROW> get_initial_placement_piece_array()
+    std::array<board::piece_type, board::max_column * board::max_row> get_initial_placement_piece_array()
     {
-        std::array<board::piece_type, board::MAX_COLUMN * board::MAX_ROW> board;
-        const auto r = board::MAX_ROW;
+        std::array<board::piece_type, board::max_column * board::max_row> board;
+        const auto r = board::max_row;
         board[1 * r + 1] = {turn::white, ptype::giraffe};
         board[1 * r + 2] = {turn::white, ptype::lion};
         board[1 * r + 3] = {turn::white, ptype::elephant};
@@ -53,8 +53,8 @@ TEST(board_test, serialize)
     EXPECT_EQ(s1.size(), s2.size());
     EXPECT_FALSE(std::equal(std::begin(s1), std::end(s1), std::begin(s2)));
 
-    EXPECT_TRUE(boost::none == s1[2 * board::MAX_ROW + 2]);
-    EXPECT_EQ(piece(turn::white, ptype::chick), *(s2[2 * board::MAX_ROW + 2]));
+    EXPECT_TRUE(boost::none == s1[2 * board::max_row + 2]);
+    EXPECT_EQ(piece(turn::white, ptype::chick), *(s2[2 * board::max_row + 2]));
 }
 
 TEST(board_test, at)
