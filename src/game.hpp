@@ -16,8 +16,8 @@ namespace animal_shogi
         {
             while (!has_result(state_))
             {
-                black_player_(state_, turn::black);
-                white_player_(state_, turn::white);
+                black_player_(state_);
+                white_player_(state_);
             }
         }
 

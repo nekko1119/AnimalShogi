@@ -77,6 +77,12 @@ namespace animal_shogi
             throw std::invalid_argument("\"from\" can not move to \"to\".");
         }
 
+        // もしひよこが相手の陣地に入る時は成る TODO : テストコード
+        if (board_[from]->get_ptype() == ptype::chick && (to.y() == 1 || to.y() == 4))
+        {
+            board_[from] = {board_[from]->get_turn(), ptype::hen};
+        }
+
         // toの座標に駒があれば持ち駒に加える            
         if (auto const dest = board_[to])
         {
@@ -87,6 +93,7 @@ namespace animal_shogi
 
         board_[to] = board_[from];
         board_[from] = boost::none;
+        reverse_turn();
     }
 
     void state::update_from_cap_pc(point to, piece pc)
@@ -100,6 +107,7 @@ namespace animal_shogi
         auto const trn = static_cast<turn_type>(pc.get_turn());
         captured_pieces_[trn].remove(pc.get_ptype());
         board_[to] = pc;
+        reverse_turn();
     }
 
     std::vector<point> state::search(point const& pt) const
@@ -116,6 +124,11 @@ namespace animal_shogi
     bool state::has_won(turn t) const
     {
         return captured_pieces_[static_cast<turn_type>(t)].get(ptype::lion) != 0;
+    }
+
+    turn state::current_turn() const BOOST_NOEXCEPT_OR_NOTHROW
+    {
+        return current_turn_;
     }
 
     board const& state::get_board() const BOOST_NOEXCEPT_OR_NOTHROW
@@ -137,6 +150,11 @@ namespace animal_shogi
         str += "White's captured pieces : ";
         str += captured_pieces_[1].str();
         return str;
+    }
+
+    void state::reverse_turn()
+    {
+        current_turn_ = is_black(current_turn_) ? turn::white : turn::black;
     }
 
     std::vector<movement> enumerate_movable_pieces(state const& s, turn trn)

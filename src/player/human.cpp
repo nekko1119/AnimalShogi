@@ -6,12 +6,12 @@
 
 namespace animal_shogi
 {
-    void human::operator()(state& s, turn t)
+    void human::operator()(state& s)
     {
         // 局面を描画
         std::cout << s.str() << std::endl;
         int index = 0;
-        auto const movable_list = enumerate_movable_pieces(s, t);
+        auto const movable_list = enumerate_movable_pieces(s, s.current_turn());
         std::cout << "No.\t: from\t->\tto\tpiece" << std::endl;
         for (auto const& it : movable_list)
         {

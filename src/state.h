@@ -21,6 +21,7 @@ namespace animal_shogi
         void update_from_cap_pc(point to, piece pc);
         std::vector<point> search(point const& pt) const;
         bool has_won(turn t) const;
+        turn current_turn() const BOOST_NOEXCEPT_OR_NOTHROW;
 
         board const& get_board() const BOOST_NOEXCEPT_OR_NOTHROW;
         captured_piece const& get_captured_piece(turn trn) const BOOST_NOEXCEPT_OR_NOTHROW;
@@ -29,11 +30,12 @@ namespace animal_shogi
     private:
         using turn_type = std::underlying_type_t<turn>;
 
-        void drop_piece(point from, piece pc);
+        void reverse_turn();
 
         board board_;
         std::array<captured_piece, 2> captured_pieces_;
         record record_;
+        turn current_turn_ = turn::black;
     };
 
     inline bool has_result(state const& st)

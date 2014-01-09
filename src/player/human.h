@@ -9,7 +9,7 @@ namespace animal_shogi
     class human
     {
     public:
-        void operator()(state& s, turn t);
+        void operator()(state& s);
     };
 }
 
