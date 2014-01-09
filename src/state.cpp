@@ -130,10 +130,10 @@ namespace animal_shogi
 
     std::string state::str() const
     {
-        std::string str = "second player's captured pieces : ";
+        std::string str = "先手持ち駒 : ";
         str += captured_pieces_[0].str();
         str += board_.str();
-        str += "first player's captured pieces : ";
+        str += "後手持ち駒 : ";
         str += captured_pieces_[1].str();
         return str;
     }
