@@ -1,6 +1,7 @@
 ﻿#include "state.h"
 #include <stdexcept>
 #include <type_traits>
+#include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/algorithm/find.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include "utility/logging.h"
@@ -156,14 +157,12 @@ namespace animal_shogi
         // 空いているマスに持ち駒を打つ手を追加する
         std::array<ptype, 4> const ptype_table = {ptype::chick, ptype::elephant, ptype::giraffe, ptype::giraffe};
         auto const& cap_pc = s.get_captured_piece(trn);
-        for (auto const& pc : ptype_table)
+        using boost::adaptors::filtered;
+        for (auto const& pc : ptype_table | filtered([&cap_pc](ptype p){ return !cap_pc.is_empty(p); }))
         {
-            if (!cap_pc.is_empty(pc))
+            for (auto const& pt : empty_points)
             {
-                for (auto const& pt : empty_points)
-                {
-                    movable_pieces.push_back({boost::none, {pt.x(), pt.y()}, {trn, pc}});
-                }
+                movable_pieces.push_back({boost::none, {pt.x(), pt.y()}, {trn, pc}});
             }
         }
 
