@@ -81,7 +81,8 @@ namespace animal_shogi
         if (auto const dest = board_[to])
         {
             auto const trn = static_cast<turn_type>(board_[from]->get_turn());
-            captured_pieces_[trn].add(dest->get_ptype());
+            auto const ptyp = dest->get_ptype(); // TODO : テストコード
+            captured_pieces_[trn].add(ptyp == ptype::hen ? ptype::chick : ptyp);
         }
 
         board_[to] = board_[from];
