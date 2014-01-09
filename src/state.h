@@ -40,6 +40,8 @@ namespace animal_shogi
     {
         return st.has_won(turn::black) || st.has_won(turn::white);
     }
+
+    std::vector<movement> enumerate_movable_pieces(state const& s, turn trn);
 }
 
 #endif

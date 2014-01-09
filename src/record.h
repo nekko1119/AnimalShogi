@@ -30,6 +30,13 @@ namespace animal_shogi
         animal_shogi::piece pc;
     };
 
+    inline bool operator==(movement const& left, movement const& right) BOOST_NOEXCEPT
+    {
+        return left.from == right.from &&
+        left.to == right.to &&
+        left.pc == right.pc;
+    }
+
     void swap(movement& lhs, movement& rhs) BOOST_NOEXCEPT;
 
     // 棋譜を表すクラス

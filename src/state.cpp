@@ -20,6 +20,38 @@ namespace animal_shogi
         {
             boost::remove_erase_if(arounds, [&](point const& p){ return b.at(p) && b[p]->get_turn() == trn; });
         }
+
+        std::vector<point> remove_invalid_points(point const& pt, board::piece_type const& target, board const& brd)
+        {
+            std::vector<point> arounds = target->search(pt);
+            remove_outside_points(arounds);
+            remove_same_turn(arounds, target->get_turn(), brd);
+            arounds.shrink_to_fit();
+            return arounds;
+        }
+
+        void emplace_back_if_piece_exists(state const& s, turn const& trn, point const& p, std::vector<point>& empty_points, std::vector<movement>& movable_pieces)
+        {
+            // 全てのマスにつき、駒があり、かつターンが同じか調べる
+            auto const pc = s.get_board().at({p.x(), p.y()});
+            if (!pc)
+            {
+                empty_points.emplace_back(p.x(), p.y());
+                return;
+            }
+
+            if (pc->get_turn() != trn)
+            {
+                return;
+            }
+
+            // 駒があるなら移動できるマスを全て列挙する
+            auto const move_list = s.search({p.x(), p.y()});
+            for (auto const& it : move_list)
+            {
+                movable_pieces.emplace_back(point{p.x(), p.y()}, point{it.x(), it.y()}, *pc);
+            }
+        }
     }
 
     state::state() BOOST_NOEXCEPT
@@ -72,14 +104,10 @@ namespace animal_shogi
     {
         if (auto const target = board_.at(pt))
         {
-            std::vector<point> arounds = target->search(pt);
-            remove_outside_points(arounds);
-            remove_same_turn(arounds, target->get_turn(), board_);
-            arounds.shrink_to_fit();
-            return arounds;
+            return remove_invalid_points(pt, target, board_);
         }
 
-        ASHOGI_LOG_TRIVIAL(error) << "駒のない座標が渡された";
+        ASHOGI_LOG_TRIVIAL(warning) << "駒のない座標が渡された";
         throw std::runtime_error("the point of coordinate is empty");
     }
 
@@ -107,5 +135,38 @@ namespace animal_shogi
         str += "first player's captured pieces : ";
         str += captured_pieces_[1].str();
         return str;
+    }
+
+    std::vector<movement> enumerate_movable_pieces(state const& s, turn trn)
+    {
+        // 次の番に指せる手のリスト
+        std::vector<movement> movable_pieces;
+        // 空のマスのリスト
+        std::vector<point> empty_points;
+
+        // 盤にある自駒の全ての移動候補(指し手)を追加する
+        for (int i = 1; i < board::max_row - 1; ++i)
+        {
+            for (int j = 1; j < board::max_column - 1; ++j)
+            {
+                emplace_back_if_piece_exists(s, trn, {i, j}, empty_points, movable_pieces);
+            }
+        }
+
+        // 空いているマスに持ち駒を打つ手を追加する
+        std::array<ptype, 4> const ptype_table = {ptype::chick, ptype::elephant, ptype::giraffe, ptype::giraffe};
+        auto const& cap_pc = s.get_captured_piece(trn);
+        for (auto const& pc : ptype_table)
+        {
+            if (!cap_pc.is_empty(pc))
+            {
+                for (auto const& pt : empty_points)
+                {
+                    movable_pieces.push_back({boost::none, {pt.x(), pt.y()}, {trn, pc}});
+                }
+            }
+        }
+
+        return movable_pieces;
     }
 }

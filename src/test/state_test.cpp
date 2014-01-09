@@ -88,3 +88,60 @@ TEST(state_test, has_won)
     EXPECT_TRUE(s.has_won(turn::white));
     EXPECT_FALSE(s.has_won(turn::black));
 }
+
+std::vector<movement> get_white_turn_movable_pieces_in_initial_board()
+{
+    return
+    {
+        {point{2, 1}, {1, 2}, {turn::white, ptype::lion}},
+        {point{2, 1}, {3, 2}, {turn::white, ptype::lion}},
+        {point{1, 1}, {1, 2}, {turn::white, ptype::giraffe}},
+        {point{2, 2}, {2, 3}, {turn::white, ptype::chick}}
+    };
+}
+
+std::vector<movement> get_white_turn_movable_and_dropable_pieces()
+{
+    return
+    {
+        {point{2, 1}, {1, 2}, {turn::white, ptype::lion}},
+        {point{2, 1}, {2, 2}, {turn::white, ptype::lion}},
+        {point{2, 1}, {3, 2}, {turn::white, ptype::lion}},
+        {point{3, 1}, {2, 2}, {turn::white, ptype::elephant}},
+        {point{1, 1}, {1, 2}, {turn::white, ptype::giraffe}},
+        {point{2, 3}, {2, 4}, {turn::white, ptype::chick}},
+        {boost::none, {1, 2}, {turn::white, ptype::chick}},
+        {boost::none, {3, 2}, {turn::white, ptype::chick}},
+        {boost::none, {1, 3}, {turn::white, ptype::chick}},
+        {boost::none, {3, 3}, {turn::white, ptype::chick}},
+        {boost::none, {2, 2}, {turn::white, ptype::chick}},
+    };
+}
+
+TEST(state_test, test_enumerate_movable_pieces)
+{
+    state s;
+    {
+        auto result = enumerate_movable_pieces(s, turn::white);
+        EXPECT_EQ(4, result.size());
+
+        auto const expected = get_white_turn_movable_pieces_in_initial_board();
+        const auto actual = std::all_of(std::begin(result), std::end(result), [&expected](movement const& m)
+        {
+            return std::find(std::begin(expected), std::end(expected), m) != std::end(expected);
+        });
+        EXPECT_TRUE(actual);
+    }
+    s.update_from_board({2, 2}, {2, 3});
+    {
+        auto result = enumerate_movable_pieces(s, turn::white);
+        EXPECT_EQ(11, result.size());
+
+        auto const expected = get_white_turn_movable_and_dropable_pieces();
+        const auto actual = std::all_of(std::begin(result), std::end(result), [&expected](movement const& m)
+        {
+            return std::find(std::begin(expected), std::end(expected), m) != std::end(expected);
+        });
+        EXPECT_TRUE(actual);
+    }
+}
