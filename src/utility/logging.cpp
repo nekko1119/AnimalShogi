@@ -86,8 +86,6 @@ namespace animal_shogi
         output_debug();
         // ファイルへ出力する
         output_file();
-        // コンソールへ出力する
-        output_console();
 
         log::add_common_attributes();
 
