@@ -35,7 +35,7 @@ namespace animal_shogi
 
     std::string movement::str() const
     {
-        return (from ? to_string(*from) : "none") + "\t" + to_string(to) + "\t" + pc.str();
+        return (from ? to_string(*from) : "----") + "\t" + to_string(to) + "\t" + pc.str();
     }
 
     void record::push(boost::optional<point> from, point to, piece pc)
