@@ -2,6 +2,7 @@
 #define ANIMAL_SHOGI_STATE_H
 
 #include <array>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/optional.hpp>
@@ -20,6 +21,7 @@ namespace animal_shogi
         void update_from_board(point from, point to);
         void update_from_cap_pc(point to, piece pc);
         std::vector<point> search(point const& pt) const;
+        std::uint64_t encode() const;
         bool has_won(turn t) const;
         turn current_turn() const BOOST_NOEXCEPT_OR_NOTHROW;
 

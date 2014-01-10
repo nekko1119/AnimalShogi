@@ -1,4 +1,5 @@
 ﻿#include "state.h"
+#include <cstdint>
 #include <stdexcept>
 #include <type_traits>
 #include <boost/range/adaptor/filtered.hpp>
@@ -52,6 +53,87 @@ namespace animal_shogi
             {
                 movable_pieces.emplace_back(point{p.x(), p.y()}, point{it.x(), it.y()}, *pc);
             }
+        }
+
+        std::array<ptype, 4> BOOST_CONSTEXPR_OR_CONST ptype_table = {ptype::chick, ptype::elephant, ptype::giraffe, ptype::lion};
+
+        std::uint16_t encode_captured_pieces(std::array<captured_piece, 2> const& cap)
+        {
+            /*
+            持ち駒の状態を14bitの符号無し整数型にする
+
+            0        2        4        6    7        9        11       13   14       16 (bits)
+            |--------|--------|--------|----|--------|--------|--------|----|~~~~~~~~|
+           　|chick   elephant graffe   lion |chick   elephant graffe   lion blank
+            |black turn                     |white turn
+            */
+
+            std::uint16_t result = 0U;
+            int bit_offset = 0;
+            for (auto const& c_it : cap)
+            {
+                for (auto const& p_it : ptype_table)
+                {
+                    result |= static_cast<unsigned int>(c_it.get(p_it)) << bit_offset;
+                    // 1つの持ち駒は0～2個なので3通り -> 2bit
+                    bit_offset += 2;
+                }
+                // ライオンは0～1個の2通りの1bitで良いので余計な1bitを引く
+                --bit_offset;
+            }
+            return result;
+        }
+
+        unsigned int encode_piece(board::piece_type const& pc)
+        {
+            if (!pc)
+            {
+                return 0U;
+            }
+
+            if (is_black(pc->get_turn()))
+            {
+                return static_cast<unsigned int>(pc->get_ptype());
+            }
+            else
+            {
+                return static_cast<unsigned int>(pc->get_ptype()) + 5U; // 駒は5種類
+            }
+        }
+
+        std::uint64_t encode_board(board const& brd)
+        {
+            /*
+            盤面の状態を48bitの符号無し整数型にする
+
+            0    4    8    12   16   20   24   28   32   36   40   44   48       64 (bits)
+            |----|----|----|----|----|----|----|----|----|----|----|----|~~~~~~~~|
+            (1,1)(1,2)(1,3)(1,4)(2,1)(2,2)(2,3)(2,4)(3,1)(3,2)(3,3)(3,4) blank
+
+            */
+            std::uint64_t result = 0U;
+            int bit_offset = 0;
+            for (int i = 1; i < board::max_row - 1; ++i)
+            {
+                for (int j = 1; j < board::max_column - 1; ++j)
+                {
+                    result |= encode_piece(brd[{i, j}]) << bit_offset;
+                    bit_offset += 4;
+                }
+            }
+            return result;
+        }
+
+        enum class encode_bit
+        {
+            turn = 0,
+            captured_pieces = 1,
+            board = 15,
+        };
+
+        std::underlying_type_t<encode_bit> encode_bit_cast(encode_bit enc_bit)
+        {
+            return static_cast<std::underlying_type_t<encode_bit>>((enc_bit));
         }
     }
 
@@ -121,6 +203,15 @@ namespace animal_shogi
         throw std::runtime_error("the point of coordinate is empty");
     }
 
+    std::uint64_t state::encode() const
+    {
+        std::uint64_t result = 0U;
+        result |= static_cast<std::uint64_t>(is_white(current_turn_)) << encode_bit_cast(encode_bit::turn);
+        result |= encode_captured_pieces(captured_pieces_) << encode_bit_cast(encode_bit::captured_pieces);
+        result |= encode_board(board_) << encode_bit_cast(encode_bit::board);
+        return result;
+    }
+
     bool state::has_won(turn t) const
     {
         return captured_pieces_[static_cast<turn_type>(t)].get(ptype::lion) != 0;
@@ -174,7 +265,6 @@ namespace animal_shogi
         }
 
         // 空いているマスに持ち駒を打つ手を追加する
-        std::array<ptype, 4> const ptype_table = {ptype::chick, ptype::elephant, ptype::giraffe, ptype::giraffe};
         auto const& cap_pc = s.get_captured_piece(trn);
         using boost::adaptors::filtered;
         for (auto const& pc : ptype_table | filtered([&cap_pc](ptype p){ return !cap_pc.is_empty(p); }))

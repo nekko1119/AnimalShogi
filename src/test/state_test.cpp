@@ -99,6 +99,15 @@ TEST(state_test, has_won)
     EXPECT_FALSE(s.has_won(turn::black));
 }
 
+TEST(state_test, encode)
+{
+    state s;
+    auto const enc1 = s.encode();
+    s.update_from_board({2, 3}, {2, 2});
+    auto const enc2 = s.encode();
+    EXPECT_NE(enc1, enc2);
+}
+
 std::vector<movement> get_white_turn_movable_pieces_in_initial_board()
 {
     return
