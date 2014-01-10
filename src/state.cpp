@@ -77,7 +77,7 @@ namespace animal_shogi
             throw std::invalid_argument("\"from\" can not move to \"to\".");
         }
 
-        // もしひよこが相手の陣地に入る時は成る TODO : テストコード
+        // もしひよこが相手の陣地に入る時は成る
         if (board_[from]->get_ptype() == ptype::chick && (to.y() == 1 || to.y() == 4))
         {
             board_[from] = {board_[from]->get_turn(), ptype::hen};
@@ -87,7 +87,7 @@ namespace animal_shogi
         if (auto const dest = board_[to])
         {
             auto const trn = static_cast<turn_type>(board_[from]->get_turn());
-            auto const ptyp = dest->get_ptype(); // TODO : テストコード
+            auto const ptyp = dest->get_ptype();
             captured_pieces_[trn].add(ptyp == ptype::hen ? ptype::chick : ptyp);
         }
 

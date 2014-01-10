@@ -22,8 +22,18 @@ TEST(state_test, update_from_board)
     EXPECT_TRUE(exists);
     
     // 取った駒が持ち駒に入っているか
-    auto const& captured = s.get_captured_piece(turn::white);
-    EXPECT_EQ(1, captured.get(ptype::chick));
+    auto const& captured_white = s.get_captured_piece(turn::white);
+    EXPECT_EQ(1, captured_white.get(ptype::chick));
+
+    // ひよこが相手の陣地に入ったらニワトリに成る
+    s.update_from_board({2, 3}, {2, 4});
+    exists = b[{2, 4}] == piece{turn::white, ptype::hen};
+    EXPECT_TRUE(exists);
+
+    // ニワトリが取られたら、ひよことして持ち駒に入る
+    s.update_from_board({3, 4}, {2, 4});
+    auto const& captured_black = s.get_captured_piece(turn::black);
+    EXPECT_EQ(1, captured_black.get(ptype::chick));
 }
 
 TEST(state_test, update_from_captured_piece)
