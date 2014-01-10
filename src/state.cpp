@@ -64,7 +64,7 @@ namespace animal_shogi
 
             0        2        4        6    7        9        11       13   14       16 (bits)
             |--------|--------|--------|----|--------|--------|--------|----|~~~~~~~~|
-           　|chick   elephant graffe   lion |chick   elephant graffe   lion blank
+            |chick   elephant graffe   lion |chick   elephant graffe   lion blank
             |black turn                     |white turn
             */
 
