@@ -94,7 +94,7 @@ namespace animal_shogi
 
             if (is_black(pc->get_turn()))
             {
-                return static_cast<std::uint64_t>(pc->get_ptype()) + 1ULL;
+                return static_cast<std::uint64_t>(pc->get_ptype()) + 1ULL; // 駒の無いマスが0なので、区別するために+1している
             }
             else
             {

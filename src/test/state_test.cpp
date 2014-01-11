@@ -102,6 +102,9 @@ TEST(state_test, has_won)
 
 void display_encoded_number(std::uint64_t bits)
 {
+    // すぐに綺麗な処理を思いつかなかったので力づくなコード
+    // 余裕が出来たら綺麗なループに直せないか挑戦する
+
     std::bitset<64> enc{bits};
     std::cout << "turn : " << enc[0] << std::endl;
     std::cout << "black chick : " << enc[2] << enc[1] << std::endl;
