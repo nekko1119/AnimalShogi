@@ -74,6 +74,7 @@ namespace animal_shogi
             {
                 for (auto const& p_it : ptype_table)
                 {
+                    ASHOGI_LOG_TRIVIAL(debug) << c_it.get(p_it);
                     result |= static_cast<unsigned int>(c_it.get(p_it)) << bit_offset;
                     // 1つの持ち駒は0～2個なので3通り -> 2bit
                     bit_offset += 2;
@@ -84,20 +85,20 @@ namespace animal_shogi
             return result;
         }
 
-        unsigned int encode_piece(board::piece_type const& pc)
+        std::uint64_t encode_piece(board::piece_type const& pc)
         {
             if (!pc)
             {
-                return 0U;
+                return 0ULL;
             }
 
             if (is_black(pc->get_turn()))
             {
-                return static_cast<unsigned int>(pc->get_ptype());
+                return static_cast<std::uint64_t>(pc->get_ptype()) + 1ULL;
             }
             else
             {
-                return static_cast<unsigned int>(pc->get_ptype()) + 5U; // 駒は5種類
+                return static_cast<std::uint64_t>(pc->get_ptype()) + 1ULL + 5ULL; // 駒は5種類
             }
         }
 
@@ -117,6 +118,7 @@ namespace animal_shogi
             {
                 for (int j = 1; j < board::max_column - 1; ++j)
                 {
+                    ASHOGI_LOG_TRIVIAL(trace) << "(" << i << ", " << j << ") : " << encode_piece(brd[{i, j}]);
                     result |= encode_piece(brd[{i, j}]) << bit_offset;
                     bit_offset += 4;
                 }
