@@ -70,6 +70,23 @@ TEST(state_test, update_invalid)
     EXPECT_THROW(s.update_from_cap_pc({2, 3}, {turn::black, ptype::chick}), std::runtime_error);
 }
 
+void one_cycle(state& s)
+{
+    s.update_from_board({3, 4}, {3, 3});
+    s.update_from_board({1, 1}, {1, 2});
+    s.update_from_board({3, 3}, {3, 4});
+    s.update_from_board({1, 2}, {1, 1});
+}
+
+TEST(state_test, is_a_draw)
+{
+    state s;
+    one_cycle(s);
+    EXPECT_FALSE(s.is_a_draw());
+    one_cycle(s);
+    EXPECT_TRUE(s.is_a_draw());
+}
+
 TEST(state_test, search)
 {
     state s;

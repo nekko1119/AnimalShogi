@@ -1,4 +1,5 @@
 ﻿#include "state.h"
+#include <algorithm>
 #include <cstdint>
 #include <stdexcept>
 #include <type_traits>
@@ -142,6 +143,7 @@ namespace animal_shogi
     state::state() BOOST_NOEXCEPT
     : board_{initial_placement_tag{}}
     {
+        increment_state_counter();
     }
 
     state& state::operator=(state rhs) BOOST_NOEXCEPT_OR_NOTHROW
@@ -203,6 +205,15 @@ namespace animal_shogi
         return captured_pieces_[static_cast<turn_type>(t)].get(ptype::lion) != 0;
     }
 
+    bool state::is_a_draw() const
+    {
+        return std::any_of(std::begin(state_counter_), std::end(state_counter_), [](decltype(state_counter_)::const_reference it)
+        {
+            // 同じ局面が３回登場すると千日手で引き分け
+            return 3 <= it.second;
+        });
+    }
+
     turn state::current_turn() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return current_turn_;
@@ -224,6 +235,7 @@ namespace animal_shogi
         using std::swap;
         swap(board_, rhs.board_);
         swap(captured_pieces_, rhs.captured_pieces_);
+        swap(state_counter_, rhs.state_counter_);
         swap(record_, rhs.record_);
         swap(current_turn_, rhs.current_turn_);
     }
@@ -272,6 +284,7 @@ namespace animal_shogi
         board_[to] = board_[from];
         board_[from] = boost::none;
         reverse_turn();
+        increment_state_counter();
     }
 
     void state::update_from_cap_pc_impl(point to, piece pc)
@@ -286,6 +299,14 @@ namespace animal_shogi
         captured_pieces_[trn].remove(pc.get_ptype());
         board_[to] = pc;
         reverse_turn();
+        increment_state_counter();
+    }
+
+    void state::increment_state_counter()
+    {
+        auto const id = encode();
+        auto const count = ++state_counter_[id];
+        ASHOGI_LOG_TRIVIAL(debug) << "ID : " << id << ", 登場回数 : " << count;
     }
 
     void state::reverse_turn()
