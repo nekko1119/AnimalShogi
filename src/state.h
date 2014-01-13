@@ -17,6 +17,7 @@ namespace animal_shogi
     {
     public:
         state() BOOST_NOEXCEPT;
+        state& operator=(state rhs) BOOST_NOEXCEPT_OR_NOTHROW;
 
         void update_from_board(point from, point to);
         state update_from_board_copy(point from, point to) const;
@@ -29,11 +30,14 @@ namespace animal_shogi
 
         board const& get_board() const BOOST_NOEXCEPT_OR_NOTHROW;
         captured_piece const& get_captured_piece(turn trn) const BOOST_NOEXCEPT_OR_NOTHROW;
+        void swap(state& rhs) BOOST_NOEXCEPT_OR_NOTHROW;
         std::string str() const;
 
     private:
         using turn_type = std::underlying_type_t<turn>;
 
+        void update_from_board_impl(point from, point to);
+        void update_from_cap_pc_impl(point to, piece pc);
         void reverse_turn();
 
         board board_;
@@ -47,6 +51,7 @@ namespace animal_shogi
         return st.has_won(turn::black) || st.has_won(turn::white);
     }
 
+    void swap(state& lhs, state& rhs) BOOST_NOEXCEPT_OR_NOTHROW;
     std::vector<movement> enumerate_movable_pieces(state const& s, turn trn);
 }
 

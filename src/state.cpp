@@ -144,40 +144,17 @@ namespace animal_shogi
     {
     }
 
+    state& state::operator=(state rhs) BOOST_NOEXCEPT_OR_NOTHROW
+    {
+        swap(rhs);
+        return *this;
+    }
+
     void state::update_from_board(point from, point to)
     {
-        // 移動可能なマスが存在するか
-        auto const points = search(from);
-        if (points.empty())
-        {
-            ASHOGI_LOG_TRIVIAL(error) << "移動できる座標のない駒がfromに渡された";
-            throw std::invalid_argument("\"from\" can not move.");
-        }
-
-        // その移動可能なマスにtoが含まれているか
-        if (boost::find(points, to) == std::end(points))
-        {
-            ASHOGI_LOG_TRIVIAL(error) << "toには移動できない";
-            throw std::invalid_argument("\"from\" can not move to \"to\".");
-        }
-
-        // もしひよこが相手の陣地に入る時は成る
-        if (board_[from]->get_ptype() == ptype::chick && (to.y() == 1 || to.y() == 4))
-        {
-            board_[from] = {board_[from]->get_turn(), ptype::hen};
-        }
-
-        // toの座標に駒があれば持ち駒に加える            
-        if (auto const dest = board_[to])
-        {
-            auto const trn = static_cast<turn_type>(board_[from]->get_turn());
-            auto const ptyp = dest->get_ptype();
-            captured_pieces_[trn].add(ptyp == ptype::hen ? ptype::chick : ptyp);
-        }
-
-        board_[to] = board_[from];
-        board_[from] = boost::none;
-        reverse_turn();
+        state temp{*this};
+        temp.update_from_board_impl(std::move(from), std::move(to));
+        swap(temp);
     }
 
     state state::update_from_board_copy(point from, point to) const
@@ -189,16 +166,9 @@ namespace animal_shogi
 
     void state::update_from_cap_pc(point to, piece pc)
     {
-        if (board_[to])
-        {
-            ASHOGI_LOG_TRIVIAL(error) << "既に駒のある座標に持ち駒を置こうとした";
-            throw std::runtime_error("there is a piece already");
-        }
-
-        auto const trn = static_cast<turn_type>(pc.get_turn());
-        captured_pieces_[trn].remove(pc.get_ptype());
-        board_[to] = pc;
-        reverse_turn();
+        state temp{*this};
+        temp.update_from_cap_pc_impl(std::move(to), std::move(pc));
+        swap(temp);
     }
 
     state state::update_from_cap_pc_copy(point from, piece pc) const
@@ -249,6 +219,15 @@ namespace animal_shogi
         return captured_pieces_[static_cast<turn_t>(trn)];
     }
 
+    void state::swap(state& rhs) BOOST_NOEXCEPT_OR_NOTHROW
+    {
+        using std::swap;
+        swap(board_, rhs.board_);
+        swap(captured_pieces_, rhs.captured_pieces_);
+        swap(record_, rhs.record_);
+        swap(current_turn_, rhs.current_turn_);
+    }
+
     std::string state::str() const
     {
         std::string str = board_.str();
@@ -259,9 +238,64 @@ namespace animal_shogi
         return str;
     }
 
+    void state::update_from_board_impl(point from, point to)
+    {
+        // 移動可能なマスが存在するか
+        auto const points = search(from);
+        if (points.empty())
+        {
+            ASHOGI_LOG_TRIVIAL(error) << "移動できる座標のない駒がfromに渡された";
+            throw std::invalid_argument("\"from\" can not move.");
+        }
+
+        // その移動可能なマスにtoが含まれているか
+        if (boost::find(points, to) == std::end(points))
+        {
+            ASHOGI_LOG_TRIVIAL(error) << "toには移動できない";
+            throw std::invalid_argument("\"from\" can not move to \"to\".");
+        }
+
+        // もしひよこが相手の陣地に入る時は成る
+        if (board_[from]->get_ptype() == ptype::chick && (to.y() == 1 || to.y() == 4))
+        {
+            board_[from] = {board_[from]->get_turn(), ptype::hen};
+        }
+
+        // toの座標に駒があれば持ち駒に加える            
+        if (auto const dest = board_[to])
+        {
+            auto const trn = static_cast<turn_type>(board_[from]->get_turn());
+            auto const ptyp = dest->get_ptype();
+            captured_pieces_[trn].add(ptyp == ptype::hen ? ptype::chick : ptyp);
+        }
+
+        board_[to] = board_[from];
+        board_[from] = boost::none;
+        reverse_turn();
+    }
+
+    void state::update_from_cap_pc_impl(point to, piece pc)
+    {
+        if (board_[to])
+        {
+            ASHOGI_LOG_TRIVIAL(error) << "既に駒のある座標に持ち駒を置こうとした";
+            throw std::runtime_error("there is a piece already");
+        }
+
+        auto const trn = static_cast<turn_type>(pc.get_turn());
+        captured_pieces_[trn].remove(pc.get_ptype());
+        board_[to] = pc;
+        reverse_turn();
+    }
+
     void state::reverse_turn()
     {
         current_turn_ = is_black(current_turn_) ? turn::white : turn::black;
+    }
+
+    void swap(state& lhs, state& rhs) BOOST_NOEXCEPT_OR_NOTHROW
+    {
+        lhs.swap(rhs);
     }
 
     std::vector<movement> enumerate_movable_pieces(state const& s, turn trn)
