@@ -21,7 +21,7 @@ namespace animal_shogi
 
         // 指し手のコードを入力
         int move = -1;
-        while (move < 0 || movable_list.size() - 1 < move)
+        while (move < 0 || movable_list.size() - 1 < static_cast<decltype(movable_list)::size_type>(move))
         {
             std::cout << "input number >";
             std::cin >> move;
