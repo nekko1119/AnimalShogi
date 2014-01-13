@@ -180,6 +180,13 @@ namespace animal_shogi
         reverse_turn();
     }
 
+    state state::update_from_board_copy(point from, point to) const
+    {
+        state copy{*this};
+        copy.update_from_board(std::move(from), std::move(to));
+        return copy;
+    }
+
     void state::update_from_cap_pc(point to, piece pc)
     {
         if (board_[to])
@@ -192,6 +199,13 @@ namespace animal_shogi
         captured_pieces_[trn].remove(pc.get_ptype());
         board_[to] = pc;
         reverse_turn();
+    }
+
+    state state::update_from_cap_pc_copy(point from, piece pc) const
+    {
+        state copy{*this};
+        copy.update_from_cap_pc(std::move(from), std::move(pc));
+        return copy;
     }
 
     std::vector<point> state::search(point const& pt) const

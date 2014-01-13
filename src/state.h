@@ -19,7 +19,9 @@ namespace animal_shogi
         state() BOOST_NOEXCEPT;
 
         void update_from_board(point from, point to);
+        state update_from_board_copy(point from, point to) const;
         void update_from_cap_pc(point to, piece pc);
+        state update_from_cap_pc_copy(point to, piece pc) const;
         std::vector<point> search(point const& pt) const;
         std::uint64_t encode() const;
         bool has_won(turn t) const;
