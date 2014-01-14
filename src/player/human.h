@@ -4,7 +4,6 @@
 namespace animal_shogi
 {
     class state;
-    enum class turn;
 
     class human
     {

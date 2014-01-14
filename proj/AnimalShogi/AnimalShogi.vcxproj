@@ -101,6 +101,7 @@
     <ClInclude Include="..\..\src\constant\ptype.h" />
     <ClInclude Include="..\..\src\game.h" />
     <ClInclude Include="..\..\src\piece.h" />
+    <ClInclude Include="..\..\src\player\ai.h" />
     <ClInclude Include="..\..\src\player\human.h" />
     <ClInclude Include="..\..\src\record.h" />
     <ClInclude Include="..\..\src\state.h" />
