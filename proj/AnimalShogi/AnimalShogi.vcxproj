@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\board.cpp" />
     <ClCompile Include="..\..\src\captured_piece.cpp" />
+    <ClCompile Include="..\..\src\game.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\piece.cpp" />
     <ClCompile Include="..\..\src\player\human.cpp" />
@@ -98,7 +99,7 @@
     <ClInclude Include="..\..\src\config.hpp" />
     <ClInclude Include="..\..\src\constant\turn.h" />
     <ClInclude Include="..\..\src\constant\ptype.h" />
-    <ClInclude Include="..\..\src\game.hpp" />
+    <ClInclude Include="..\..\src\game.h" />
     <ClInclude Include="..\..\src\piece.h" />
     <ClInclude Include="..\..\src\player\human.h" />
     <ClInclude Include="..\..\src\record.h" />

@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "game.hpp"
+#include "game.h"
 #include "player/human.h"
 #include "utility/logging.h"
 
@@ -8,7 +8,7 @@ int main()
     try
     {
         auto log = animal_shogi::logging{};
-        animal_shogi::game<animal_shogi::human, animal_shogi::human>{}();
+        animal_shogi::game{animal_shogi::human{}, animal_shogi::human{}}();
     }
     catch (std::exception const& e)
     {
