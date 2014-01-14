@@ -39,13 +39,11 @@ namespace animal_shogi
 
     board::piece_type const& board::at(point p) const
     {
-        ASHOGI_LOG_TRIVIAL(debug) << "引数座標 " << to_string(p);
         return board_[p.y()][p.x()];
     }
 
     board::piece_type& board::at(point p)
     {
-        ASHOGI_LOG_TRIVIAL(debug) << "引数座標 " << to_string(p);
         return board_[p.y()][p.x()];
     }
 

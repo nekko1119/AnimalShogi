@@ -75,7 +75,6 @@ namespace animal_shogi
             {
                 for (auto const& p_it : ptype_table)
                 {
-                    ASHOGI_LOG_TRIVIAL(debug) << c_it.get(p_it);
                     result |= static_cast<unsigned int>(c_it.get(p_it)) << bit_offset;
                     // 1つの持ち駒は0～2個なので3通り -> 2bit
                     bit_offset += 2;
@@ -119,7 +118,6 @@ namespace animal_shogi
             {
                 for (int j = 1; j < board::max_column - 1; ++j)
                 {
-                    ASHOGI_LOG_TRIVIAL(trace) << "(" << i << ", " << j << ") : " << encode_piece(brd[{i, j}]);
                     result |= encode_piece(brd[{i, j}]) << bit_offset;
                     bit_offset += 4;
                 }
