@@ -43,3 +43,5 @@ Visual Studio 2013でビルドする場合はVisual Studio 2013でビルドさ�
 |drop           |打ち           |
 |board          |盤            |
 |state          |局面          |
+|control        |利き           |
+|piece advantage|駒得           |
