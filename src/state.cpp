@@ -334,7 +334,6 @@ namespace animal_shogi
     {
         auto const id = encode();
         auto const count = ++state_counter_[id];
-        ASHOGI_LOG_TRIVIAL(debug) << "ID : " << id << ", 登場回数 : " << count;
     }
 
     void state::reverse_turn()
