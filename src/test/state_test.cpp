@@ -109,12 +109,26 @@ TEST(state_test, search)
 
 TEST(state_test, has_won)
 {
-    state s;
-    s.update_from_board({2, 2}, {2, 3});
-    s.update_from_board({2, 3}, {2, 4});
+    {
+        state s;
+        s.update_from_board({2, 2}, {2, 3});
+        s.update_from_board({2, 3}, {2, 4});
 
-    EXPECT_TRUE(s.has_won(turn::white));
-    EXPECT_FALSE(s.has_won(turn::black));
+        EXPECT_TRUE(s.has_won(turn::white));
+        EXPECT_FALSE(s.has_won(turn::black));
+    }
+    {
+        state s;
+        s.update_from_board({2, 4}, {1, 3});
+        s.update_from_board({1, 3}, {1, 2});
+        s.update_from_board({1, 2}, {1, 1});
+
+        EXPECT_FALSE(s.has_won(turn::black));
+        
+        s.update_from_board({2, 1}, {3, 2});
+
+        EXPECT_TRUE(s.has_won(turn::black));
+    }
 }
 
 void display_encoded_number(std::uint64_t bits)
@@ -205,4 +219,21 @@ TEST(state_test, test_enumerate_movable_pieces)
         });
         EXPECT_TRUE(actual);
     }
+}
+
+TEST(state_test, test_enumerate_control_pieces)
+{
+    state s;
+    s.update_from_board({2, 3}, {2, 2});
+    auto result = enumerate_control_pieces(s, turn::black, {2, 3});
+    std::vector<movement> expected =
+    {
+        {point{2, 4}, {2, 3}, {turn::black, ptype::lion}},
+        {point{1, 4}, {2, 3}, {turn::black, ptype::elephant}}
+    };
+    const auto actual = std::all_of(std::begin(result), std::end(result), [&expected](movement const& m)
+    {
+        return std::find(std::begin(expected), std::end(expected), m) != std::end(expected);
+    });
+    EXPECT_TRUE(actual);
 }

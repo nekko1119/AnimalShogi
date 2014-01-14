@@ -56,7 +56,12 @@ namespace animal_shogi
     }
 
     void swap(state& lhs, state& rhs) BOOST_NOEXCEPT_OR_NOTHROW;
+
+    // 指せる手を全て列挙する
     std::vector<movement> enumerate_movable_pieces(state const& s, turn trn);
+
+    // あるマスに利いている駒の数を列挙する
+    std::vector<movement> enumerate_control_pieces(state const& s, turn trn, point const& pos);
 }
 
 #endif

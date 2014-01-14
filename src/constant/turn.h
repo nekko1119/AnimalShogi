@@ -22,6 +22,11 @@ namespace animal_shogi
         return !is_black(trn);
     }
 
+    inline BOOST_CONSTEXPR turn operator!(turn trn) BOOST_NOEXCEPT_OR_NOTHROW
+    {
+        return is_black(trn) ? turn::white : turn::black;
+    }
+
     inline std::string get_turn_mark(turn trn) BOOST_NOEXCEPT_OR_NOTHROW
     {
         return is_black(trn) ? "+" : "-";

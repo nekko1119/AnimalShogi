@@ -202,7 +202,37 @@ namespace animal_shogi
 
     bool state::has_won(turn t) const
     {
-        return captured_pieces_[static_cast<turn_type>(t)].get(ptype::lion) != 0;
+        // 相手のライオンを取っていれば勝ち(キャッチ)
+        if (captured_pieces_[static_cast<turn_type>(t)].get(ptype::lion) != 0)
+        {
+            return true;
+        }
+
+        // 自信のライオンが相手の陣地に入っており、次の相手ターンに取られなければ勝ち(トライ)
+
+        // 自身のライオンが相手の陣地あるか
+        auto const lion_pos = [this, &t]() -> boost::optional<point>
+        {
+            auto const enemy_are_line = is_black(t) ? 1 : 4;
+            for (int x = 1; x < board::max_row - 1; ++ x)
+            {
+                auto const pos = point{x, enemy_are_line};
+                if (board_[pos] && *(board_[pos]) == piece{t, ptype::lion})
+                {
+                    return pos;
+                }
+            }
+            return boost::none;
+        }();
+
+        if (!lion_pos)
+        {
+            // 相手の陣地のライオンが入っていなかった
+            return false;
+        }
+
+        // 自身のライオンの位置に、相手の駒の利きがなければトライ成立
+        return enumerate_control_pieces(*this, !t, *lion_pos).empty();
     }
 
     bool state::is_a_draw() const
@@ -311,7 +341,7 @@ namespace animal_shogi
 
     void state::reverse_turn()
     {
-        current_turn_ = is_black(current_turn_) ? turn::white : turn::black;
+        current_turn_ = !current_turn_;
     }
 
     void swap(state& lhs, state& rhs) BOOST_NOEXCEPT_OR_NOTHROW
@@ -347,5 +377,13 @@ namespace animal_shogi
         }
 
         return movable_pieces;
+    }
+
+    std::vector<movement> enumerate_control_pieces(state const& s, turn trn, point const& pos)
+    {
+        // あるマスに効いている駒とは、持ち駒を除いて行き先(to)がそのマス(pos)である駒
+        auto control_pieces = enumerate_movable_pieces(s, std::move(trn));
+        boost::remove_erase_if(control_pieces, [&pos](movement const& m){ return !m.from || m.to != pos; });
+        return control_pieces;
     }
 }
