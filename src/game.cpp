@@ -14,7 +14,8 @@ namespace animal_shogi
             if (is_black(state_.current_turn()))
             {
                 black_player_(state_);
-            } else
+            }
+            else
             {
                 white_player_(state_);
             }
