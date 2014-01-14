@@ -11,15 +11,16 @@ namespace animal_shogi
     public:
         using eval_func_type = std::function<int (state const&)>;
 
-        explicit minimax(eval_func_type eval_func, std::size_t depth);
+        minimax(eval_func_type eval_func, std::size_t depth);
 
-        int operator()(state const& st) const;
+        int operator()(state st);
 
     private:
         using result_type = std::pair<int, boost::optional<movement>>;
 
         result_type execute(state const& st, std::size_t depth) const;
 
+        state state_;
         eval_func_type eval_func_;
         std::size_t depth_;
     };

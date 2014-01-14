@@ -10,7 +10,7 @@ namespace animal_shogi
     class ai
     {
     public:
-        using search_func_type = std::function<int (state const&)>;
+        using search_func_type = std::function<int (state)>;
 
         explicit ai(search_func_type search_func);
 

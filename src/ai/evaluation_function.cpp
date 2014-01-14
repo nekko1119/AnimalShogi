@@ -40,26 +40,22 @@ namespace animal_shogi
         auto const own_cap = s.get_captured_piece(s.current_turn());
         for (auto const& it : ptype_table)
         {
-            if (!own_cap.is_empty(it))
-            {
-                state_eval = 1000; // TODO
-            }
-            else
-            {
-                state_eval += piece_eval_table.at(it) * own_cap.get(it);
-            }
+            state_eval += piece_eval_table.at(it) * own_cap.get(it);
         }
         auto const enemy_cap = s.get_captured_piece(!s.current_turn());
         for (auto const& it : ptype_table)
         {
-            if (!enemy_cap.is_empty(it))
-            {
-                state_eval = -1000; // TODO
-            }
-            else
-            {
-                state_eval -= piece_eval_table.at(it) * enemy_cap.get(it);
-            }
+            state_eval -= piece_eval_table.at(it) * enemy_cap.get(it);
+        }
+        
+        if (s.has_won(s.current_turn()))
+        {
+            state_eval += 10;
+        }
+
+        if (s.has_won(!s.current_turn()) || s.is_a_draw())
+        {
+            state_eval -= 100;
         }
 
         ASHOGI_LOG_TRIVIAL(debug) << state_eval;
