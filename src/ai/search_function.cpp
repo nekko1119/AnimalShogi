@@ -40,13 +40,10 @@ namespace animal_shogi
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         if (depth == 0 || moves.empty())
         {
-            auto const sign = state_.current_turn() == st.current_turn() ? 1 : -1;
-            return {sign * eval_func_(st), boost::none};
+            return {eval_func_(st), boost::none};
         }
 
-        using move_list_t = std::unordered_map<int, std::vector<boost::optional<movement>>>;
-        using value_type = move_list_t::value_type;
-        move_list_t best;
+        std::pair<int, boost::optional<movement>> max{std::numeric_limits<int>::min(), boost::none};
         for (auto const& it : moves)
         {
             state next;
@@ -61,19 +58,71 @@ namespace animal_shogi
 
             ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1 << ", move : " << it.str();
             auto score = execute(next, depth - 1);
-            best[score.first].push_back(it);
+            if (max.first < -score.first)
+            {
+                max.first = -score.first;
+                max.second = it;
+            }
         }
 
-        // 評価値が一番高い指し手を検索
-        auto first = std::max_element(std::begin(best), std::end(best), [](value_type const& l, value_type const& r)
+        return max;
+    }
+
+    alphabeta::alphabeta(eval_func_type eval_func, std::size_t depth)
+    : eval_func_{std::move(eval_func)},
+    depth_{depth}
+    {
+        if (depth < 1)
         {
-            return l.first < r.first;
-        });
+            ASHOGI_LOG_TRIVIAL(error) << "再帰深度は１以上でなければならない";
+            throw std::invalid_argument{"depth should be at least 1"};
+        }
+    }
 
-        // その中から１つランダムで選ぶ
-        std::uniform_int_distribution<> dist{0, static_cast<int>(first->second.size() - 1)};
-        auto const index = dist(engine);
+    int alphabeta::operator()(state st)
+    {
+        state_ = st;
+        auto const moves = enumerate_movable_pieces(st, st.current_turn());
+        auto const move = *(execute(st, depth_, std::numeric_limits<int>::min() + 1, std::numeric_limits<int>::max()).second);
+        auto const it = boost::find(moves, move);
+        return std::distance(std::begin(moves), it);
+    }
 
-        return {first->first, *(first->second[index])};
+    alphabeta::result_type alphabeta::execute(state const& st, std::size_t depth, int alpha, int beta) const
+    {
+        auto const moves = enumerate_movable_pieces(st, st.current_turn());
+        if (depth == 0 || moves.empty())
+        {
+            return {eval_func_(st), boost::none};
+        }
+
+        std::pair<int, boost::optional<movement>> max{std::numeric_limits<int>::min(), boost::none};
+        for (auto const& it : moves)
+        {
+            state next;
+            if (it.from)
+            {
+                next = st.update_from_board_copy(*(it.from), it.to);
+            }
+            else
+            {
+                next = st.update_from_cap_pc_copy(it.to, it.pc);
+            }
+
+            ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1 << ", move : " << it.str();
+            auto const score = execute(next, depth - 1, -beta, -alpha);
+            if (beta <= alpha)
+            {
+                return {alpha, it};
+            }
+
+            if (max.first < -score.first)
+            {
+                max.first = -score.first;
+                max.second = it;
+                alpha = std::max(alpha, -score.first);
+            }
+        }
+        return max;
     }
 }
