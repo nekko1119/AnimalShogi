@@ -12,6 +12,7 @@ namespace animal_shogi
             ("help,h", "Lists commands")
             ("black,b", program_options::value<std::string>(), "Firtst player : \"human\" or \"ai\"")
             ("white,w", program_options::value<std::string>(), "Second player : \"human\" or \"ai\"")
+            ("loop,l", program_options::value<int>()->default_value(1), "Loop count")
             ("depth,d", program_options::value<std::size_t>()->default_value(6), "AI's depth limit of search (standard 1 ~ 9) ")
             ("depth2,D", program_options::value<std::size_t>()->default_value(6), "Another AI's depth limit of search (standard 1 ~ 9) ");
 

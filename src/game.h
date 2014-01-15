@@ -6,6 +6,13 @@
 
 namespace animal_shogi
 {
+    enum class result
+    {
+        black,
+        white,
+        draw
+    };
+
     class game
     {
     public:
@@ -13,7 +20,7 @@ namespace animal_shogi
 
         game(player_type black_player, player_type white_player);
 
-        void operator()();
+        result operator()();
 
     private:
         state state_;

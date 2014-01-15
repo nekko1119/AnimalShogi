@@ -7,7 +7,7 @@ namespace animal_shogi
     {
     }
     
-    void game::operator()()
+    result game::operator()()
     {
         while (!has_result(state_))
         {
@@ -19,6 +19,19 @@ namespace animal_shogi
             {
                 white_player_(state_);
             }
+        }
+
+        if (state_.is_a_draw())
+        {
+            return result::draw;
+        }
+        else if (state_.has_won(turn::black))
+        {
+            return result::black;
+        }
+        else
+        {
+            return result::white;
         }
     }
 }
