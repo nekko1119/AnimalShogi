@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <limits>
 #include <random>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <boost/range/algorithm/find.hpp>
 #include "../utility/logging.h"
@@ -43,7 +43,7 @@ namespace animal_shogi
             return {eval_func_(st), boost::none};
         }
 
-        std::pair<int, boost::optional<movement>> max{std::numeric_limits<int>::min(), boost::none};
+        std::multimap<int, movement> move_evals;
         for (auto const& it : moves)
         {
             state next;
@@ -58,14 +58,21 @@ namespace animal_shogi
 
             ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1 << ", move : " << it.str();
             auto score = execute(next, depth - 1);
-            if (max.first < -score.first)
-            {
-                max.first = -score.first;
-                max.second = it;
-            }
+            move_evals.emplace(-score.first, it);
         }
+        // 評価値が最大の最初の要素の位置を得る
+        using val_t = decltype(move_evals)::value_type;
+        auto pos = std::max_element(std::begin(move_evals), std::end(move_evals), [](val_t const& l, val_t const& r)
+        {
+            return l.first < r.first;
+        });
 
-        return max;
+        // 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成
+        std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count((*pos).first)) - 1};
+
+        // 最大評価値の指し手のうち、実際に指す手を一様乱数で決める
+        result_type result{(*pos).first, (*std::next(pos, dist(engine))).second};
+        return result;
     }
 
     alphabeta::alphabeta(eval_func_type eval_func, std::size_t depth)
@@ -96,7 +103,7 @@ namespace animal_shogi
             return {eval_func_(st), boost::none};
         }
 
-        std::pair<int, boost::optional<movement>> max{std::numeric_limits<int>::min(), boost::none};
+        std::multimap<int, movement> move_evals;
         for (auto const& it : moves)
         {
             state next;
@@ -116,13 +123,21 @@ namespace animal_shogi
                 return {alpha, it};
             }
 
-            if (max.first < -score.first)
-            {
-                max.first = -score.first;
-                max.second = it;
-                alpha = std::max(alpha, -score.first);
-            }
+            move_evals.emplace(-score.first, it);
+            alpha = std::max(alpha, -score.first);
         }
-        return max;
+        // 評価値が最大の最初の要素の位置を得る
+        using val_t = decltype(move_evals)::value_type;
+        auto pos = std::max_element(std::begin(move_evals), std::end(move_evals), [](val_t const& l, val_t const& r)
+        {
+            return l.first < r.first;
+        });
+
+        // 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成
+        std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count((*pos).first)) - 1};
+
+        // 最大評価値の指し手のうち、実際に指す手を一様乱数で決める
+        result_type result{(*pos).first, (*std::next(pos, dist(engine))).second};
+        return result;
     }
 }
