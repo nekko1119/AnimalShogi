@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include <boost/range/algorithm/find.hpp>
+#include <boost/range/algorithm/max_element.hpp>
 #include "../utility/logging.h"
 
 namespace animal_shogi
@@ -128,7 +129,7 @@ namespace animal_shogi
         }
         // 評価値が最大の最初の要素の位置を得る
         using val_t = decltype(move_evals)::value_type;
-        auto pos = std::max_element(std::begin(move_evals), std::end(move_evals), [](val_t const& l, val_t const& r)
+        auto pos = boost::max_element(move_evals, [](val_t const& l, val_t const& r)
         {
             return l.first < r.first;
         });
