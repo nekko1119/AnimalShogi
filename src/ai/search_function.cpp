@@ -133,11 +133,17 @@ namespace animal_shogi
             return l.first < r.first;
         });
 
+
+        if (pos->first < -90)
+        {
+            ASHOGI_LOG_TRIVIAL(info) << "負け確定 : " << pos->first;
+        }
+
         // 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成
-        std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count((*pos).first)) - 1};
+        std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count(pos->first)) - 1};
 
         // 最大評価値の指し手のうち、実際に指す手を一様乱数で決める
-        result_type result{(*pos).first, (*std::next(pos, dist(engine))).second};
+        result_type result{pos->first, std::next(pos, dist(engine))->second};
         return result;
     }
 }
