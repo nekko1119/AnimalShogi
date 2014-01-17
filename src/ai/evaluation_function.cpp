@@ -50,7 +50,7 @@ namespace animal_shogi
         
         if (s.has_won(s.current_turn()))
         {
-            state_eval += 10;
+            state_eval += 50;
         }
 
         if (s.has_won(!s.current_turn()) || s.is_a_draw())

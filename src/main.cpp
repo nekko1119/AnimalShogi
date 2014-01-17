@@ -54,9 +54,10 @@ int main(int argc, char** argv)
             {
                 std::size_t depth = parser.get<std::size_t>("depth");
                 std::size_t depth2 = parser.get<std::size_t>("depth2");
-                gm = animal_shogi::game{animal_shogi::ai{
-                    animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth}},
-                    animal_shogi::ai{animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2}}};
+                gm = animal_shogi::game{
+                    animal_shogi::ai{animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth}},
+                    animal_shogi::ai{animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2}}
+                };
             }
             res = gm();
             ++results[static_cast<int>(res)];
