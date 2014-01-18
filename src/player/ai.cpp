@@ -15,7 +15,7 @@ namespace animal_shogi
         auto const movable_list = enumerate_movable_pieces(s, s.current_turn());
 
         auto const move = search_func_(s);
-        ASHOGI_LOG_TRIVIAL(debug) << move;
+        ASHOGI_LOG_TRIVIAL(debug) << "select : " << move;
 
         // 局面を更新
         if (movable_list[move].from)

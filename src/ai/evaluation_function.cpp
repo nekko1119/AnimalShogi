@@ -58,7 +58,7 @@ namespace animal_shogi
             state_eval -= 100;
         }
 
-        ASHOGI_LOG_TRIVIAL(debug) << state_eval;
+        ASHOGI_LOG_TRIVIAL(debug) << "eval : " << state_eval;
         return state_eval;
     }
 
