@@ -41,7 +41,7 @@ namespace animal_shogi
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         if (depth == 0 || moves.empty())
         {
-            return {eval_func_(st), boost::none};
+            return {static_cast<double>(eval_func_(st)), boost::none};
         }
 
         std::multimap<int, movement> move_evals;
@@ -101,7 +101,7 @@ namespace animal_shogi
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         if (depth == 0 || moves.empty())
         {
-            return {eval_func_(st), boost::none};
+            return {static_cast<double>(eval_func_(st)), boost::none};
         }
 
         std::multimap<int, movement> move_evals;

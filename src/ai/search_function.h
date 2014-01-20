@@ -9,14 +9,14 @@ namespace animal_shogi
     class minimax
     {
     public:
-        using eval_func_type = std::function<int (state const&)>;
+        using eval_func_type = std::function<double (state const&)>;
 
         minimax(eval_func_type eval_func, std::size_t depth);
 
         int operator()(state st);
 
     private:
-        using result_type = std::pair<int, boost::optional<movement>>;
+        using result_type = std::pair<double, boost::optional<movement>>;
 
         result_type execute(state const& st, std::size_t depth) const;
 
@@ -28,14 +28,14 @@ namespace animal_shogi
     class alphabeta
     {
     public:
-        using eval_func_type = std::function<int(state const&)>;
+        using eval_func_type = std::function<double (state const&)>;
 
         alphabeta(eval_func_type eval_func, std::size_t depth);
 
         int operator()(state st);
 
     private:
-        using result_type = std::pair<int, boost::optional<movement>>;
+        using result_type = std::pair<double, boost::optional<movement>>;
 
         result_type execute(state const& st, std::size_t depth, int alpha, int beta) const;
 
