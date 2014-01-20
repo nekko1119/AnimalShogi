@@ -14,7 +14,7 @@ namespace animal_shogi
 
         explicit ai(search_func_type search_func);
 
-        void operator()(state& s);
+        void operator()(state& s) const;
 
     private:
         search_func_type search_func_;

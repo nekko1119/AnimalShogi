@@ -10,7 +10,7 @@ namespace animal_shogi
     {
     }
 
-    void ai::operator()(state& s)
+    void ai::operator()(state& s) const
     {
         auto const movable_list = enumerate_movable_pieces(s, s.current_turn());
 

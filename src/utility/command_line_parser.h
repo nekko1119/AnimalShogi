@@ -11,7 +11,7 @@ namespace animal_shogi
     class command_line_parser
     {
     public:
-        command_line_parser(int argc, char** argv);
+        command_line_parser(int argc, char** argv, bool is_learn);
 
         template <typename T>
         T get(boost::string_ref const& ref) const

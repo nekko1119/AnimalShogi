@@ -113,6 +113,7 @@
     <ClInclude Include="..\..\src\state.h" />
     <ClInclude Include="..\..\src\utility\command_line_parser.h" />
     <ClInclude Include="..\..\src\utility\exchange.hpp" />
+    <ClInclude Include="..\..\src\utility\io_csv.hpp" />
     <ClInclude Include="..\..\src\utility\logging.h" />
     <ClInclude Include="..\..\src\utility\point.hpp" />
     <ClInclude Include="..\..\src\utility\singleton_holder.hpp" />

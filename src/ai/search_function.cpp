@@ -27,9 +27,8 @@ namespace animal_shogi
         }
     }
 
-    int minimax::operator()(state st)
+    int minimax::operator()(state st) const
     {
-        state_ = st;
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         auto const move = *(execute(st, depth_).second);
         auto const it = boost::find(moves, move);
@@ -87,16 +86,19 @@ namespace animal_shogi
         }
     }
 
-    int alphabeta::operator()(state st)
+    int alphabeta::operator()(state st) const
     {
-        state_ = st;
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
-        auto const move = *(execute(st, depth_, std::numeric_limits<int>::min() + 1, std::numeric_limits<int>::max()).second);
+        auto const move = execute(
+            st,
+            depth_,
+            static_cast<double>(std::numeric_limits<int>::min() + 1),
+            static_cast<double>(std::numeric_limits<int>::max())).second.get();
         auto const it = boost::find(moves, move);
         return std::distance(std::begin(moves), it);
     }
 
-    alphabeta::result_type alphabeta::execute(state const& st, std::size_t depth, int alpha, int beta) const
+    alphabeta::result_type alphabeta::execute(state const& st, std::size_t depth, double alpha, double beta) const
     {
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         if (depth == 0 || moves.empty())
