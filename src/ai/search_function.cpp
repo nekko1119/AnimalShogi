@@ -43,7 +43,7 @@ namespace animal_shogi
             return {static_cast<double>(eval_func_(st)), boost::none};
         }
 
-        std::multimap<int, movement> move_evals;
+        std::multimap<double, movement> move_evals;
         for (auto const& it : moves)
         {
             state next;
@@ -106,7 +106,7 @@ namespace animal_shogi
             return {static_cast<double>(eval_func_(st)), boost::none};
         }
 
-        std::multimap<int, movement> move_evals;
+        std::multimap<double, movement> move_evals;
         for (auto const& it : moves)
         {
             state next;
@@ -139,7 +139,7 @@ namespace animal_shogi
 
         if (pos->first < -90)
         {
-            ASHOGI_LOG_TRIVIAL(info) << "負け確定 : " << pos->first;
+            ASHOGI_LOG_TRIVIAL(debug) << "負け確定 : " << pos->first;
         }
 
         // 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成

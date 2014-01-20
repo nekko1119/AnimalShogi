@@ -16,7 +16,8 @@
 
 namespace
 {
-    std::string const eval_file_name{"eval_table.csv"};
+    std::string const win_eval_file_name{"win_eval_table.csv"};
+    std::string const lose_eval_file_name{"lose_eval_table.csv"};
     std::string const result_file_name{"result_table.csv"};
 }
 
@@ -131,7 +132,7 @@ void learn(int argc, char** argv)
         std::cout << i + 1 << "generations\n";
 
         // もし乱数データのファイルが存在するのならばそれを使用し、無ければ乱数を生成して使用する
-        std::ifstream ifs{eval_file_name};
+        std::ifstream ifs{win_eval_file_name};
         auto const get_random_eval_values = [&ifs]()
         {
             if (ifs)
@@ -157,7 +158,8 @@ void learn(int argc, char** argv)
     
         ifs.close();
 
-        //スレッドを作成し、半分回数ずつ実行する
+        // スレッドを作成し、半分回数ずつ実行する
+        // 先手後手差が出ないように、先手半分、後手半分で実行する
         auto const last = parser.get<int>("loop") / 2;
         auto future = std::async([&]()
         {
@@ -173,7 +175,8 @@ void learn(int argc, char** argv)
         std::array<int, 3> results = {{0, 0, 0}};
         for (int i = 0; i < last; ++i)
         {
-            auto const res = animal_shogi::game{black_player, white_player}();
+            // 先手後手入れ変えている
+            auto const res = animal_shogi::game{white_player, black_player}();
             ++results[static_cast<int>(res)];
         }
 
@@ -183,10 +186,14 @@ void learn(int argc, char** argv)
         decltype(results) sum_results = {{0, 0, 0}};
         calculate(std::begin(results), std::end(results), std::begin(other_results), std::begin(sum_results));
 
-        // 勝敗と勝った方の乱数テーブルを記録する
+        // 勝敗と乱数テーブルを記録する
         std::ofstream result_ofs{result_file_name, std::ios::out | std::ios::app};
         animal_shogi::write_csv(result_ofs, sum_results);
-        std::ofstream eval_ofs{eval_file_name, std::ios::out | std::ios::app};
-        animal_shogi::write_csv(eval_ofs, sum_results[0] < sum_results[1] ? white_player_rand_eval_table : black_player_rand_eval_table);
+
+        std::ofstream win_eval_ofs{win_eval_file_name, std::ios::out | std::ios::app};
+        animal_shogi::write_csv(win_eval_ofs, sum_results[0] < sum_results[1] ? white_player_rand_eval_table : black_player_rand_eval_table);
+
+        std::ofstream lose_eval_ofs{lose_eval_file_name, std::ios::out | std::ios::app};
+        animal_shogi::write_csv(lose_eval_ofs, sum_results[0] < sum_results[1] ? black_player_rand_eval_table : white_player_rand_eval_table);
     }
 }
