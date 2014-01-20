@@ -2,12 +2,15 @@
 
 #include <array>
 #include <limits>
+#include <random>
 #include <unordered_map>
 #include "../state.h"
 #include "../utility/logging.h"
 
 namespace animal_shogi
 {
+    const double random_piece_advantage::max_eval_value = 10.0;
+
     namespace
     {
         std::unordered_map<ptype, int> const piece_eval_table =
@@ -20,6 +23,9 @@ namespace animal_shogi
         };
 
         std::array<ptype, 4> BOOST_CONSTEXPR_OR_CONST ptype_table = {ptype::chick, ptype::elephant, ptype::giraffe, ptype::lion};
+
+        auto engine(std::mt19937{std::random_device{}()});
+        auto dist = std::uniform_real_distribution<>{0.0, random_piece_advantage::max_eval_value};
     }
 
     int piece_advantage::operator()(state const& s) const
@@ -66,5 +72,15 @@ namespace animal_shogi
     {
         auto const sign = current == p.get_turn() ? 1 : -1;
         return piece_eval_table.at(p.get_ptype()) * sign;
+    }
+
+    random_piece_advantage::random_piece_advantage()
+    : random_piece_advantage{{1.0, dist(engine), dist(engine), dist(engine), dist(engine)}}
+    {
+    }
+
+    random_piece_advantage::random_piece_advantage(value_type values)
+    : piece_values_{std::move(values)}
+    {
     }
 }
