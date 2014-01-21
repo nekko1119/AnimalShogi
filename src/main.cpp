@@ -50,6 +50,7 @@ void calculate(ForwardIterator1 first1, ForwardIterator1 const last1, ForwardIte
 
 void play(int argc, char** argv);
 void learn(int argc, char** argv);
+void special(int argc, char** argv);
 
 int main(int argc, char** argv)
 {
@@ -57,23 +58,26 @@ int main(int argc, char** argv)
     {
         auto log = animal_shogi::logging{};
 
-
-        // 学習かどうか選択
+        // モードを選択
         char input = '\0';
-        while (input != 'y' && input != 'n')
+        while (input != 'p' && input != 'l' && input != 's')
         {
-            std::cout << "learning mode ? (y/n) >";
+            std::cout << "play(p) learn(l) special(s) >";
             std::cin >> input;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-        if (input == 'n')
+        if (input == 'p')
         {
             play(argc, argv);
         }
-        else if (input == 'y')
+        else if (input == 'l')
         {
             learn(argc, argv);
+        }
+        else if (input == 's')
+        {
+            special(argc, argv);
         }
     }
     catch (std::exception const& e)
@@ -106,6 +110,39 @@ void play(int argc, char** argv)
     }
 
     auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth});
+    auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2});
+
+    std::array<int, 3> results = {{0, 0, 0}};
+    auto const last = parser.get<int>("loop");
+    for (int i = 0; i < last; ++i)
+    {
+        auto const res = animal_shogi::game{black_player, white_player}();
+        ++results[static_cast<int>(res)];
+    }
+    animal_shogi::write_csv(std::cout, results);
+}
+
+void special(int argc, char** argv)
+{
+    animal_shogi::command_line_parser parser{argc, argv, false};
+
+    auto const black_str = parser.get<std::string>("black");
+    auto const white_str = parser.get<std::string>("white");
+
+    std::size_t depth = 0U;
+    std::size_t depth2 = 0U;
+    if (black_str == "ai" && white_str == "ai")
+    {
+        depth = parser.get<std::size_t>("depth");
+        depth2 = parser.get<std::size_t>("depth2");
+    }
+    else
+    {
+        depth = depth2 = parser.get<std::size_t>("depth");
+    }
+
+    std::vector<double> const rand_piece_eval_table = {1.0, 8.77283, 7.61874, 8.64285, 3.95307};
+    auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::random_piece_advantage{rand_piece_eval_table}, depth});
     auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2});
 
     std::array<int, 3> results = {{0, 0, 0}};
@@ -177,7 +214,7 @@ void learn(int argc, char** argv)
         {
             // 先手後手入れ変えている
             auto const res = animal_shogi::game{white_player, black_player}();
-            ++results[static_cast<int>(res)];
+            ++results[static_cast<int>(!res)];
         }
 
         auto other_results = future.get();

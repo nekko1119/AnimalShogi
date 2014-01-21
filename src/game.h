@@ -13,6 +13,13 @@ namespace animal_shogi
         draw
     };
 
+    inline BOOST_CONSTEXPR result operator!(result r)
+    {
+        return r == result::black ? result::white
+                                : r == result::white ? result::black
+                                                    : result::draw;
+    }
+
     class game
     {
     public:
