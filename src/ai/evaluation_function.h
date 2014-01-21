@@ -14,11 +14,11 @@ namespace animal_shogi
     class piece_advantage
     {
     public:
-        using result_type = int;
+        using result_type = double;
         result_type operator()(state const& s) const;
 
     private:
-        int to_int(piece const& p, turn current) const;
+        double to_double(piece const& p, turn current) const;
     };
 
     class random_piece_advantage

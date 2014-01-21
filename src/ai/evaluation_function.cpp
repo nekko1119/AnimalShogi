@@ -13,13 +13,13 @@ namespace animal_shogi
 
     namespace
     {
-        std::unordered_map<ptype, int> const piece_eval_table =
+        std::unordered_map<ptype, double> const piece_eval_table =
         {
-            {ptype::chick, 1},
-            {ptype::elephant, 4},
-            {ptype::giraffe, 4},
-            {ptype::hen, 5},
-            {ptype::lion, 8}
+            {ptype::chick, 1.0},
+            {ptype::elephant, 4.0},
+            {ptype::giraffe, 4.0},
+            {ptype::hen, 6.0},
+            {ptype::lion, 8.0}
         };
 
         std::array<ptype, 4> BOOST_CONSTEXPR_OR_CONST ptype_table = {ptype::chick, ptype::elephant, ptype::giraffe, ptype::lion};
@@ -39,7 +39,7 @@ namespace animal_shogi
         {
             if (it)
             {
-                state_eval += to_int(*it, s.current_turn());
+                state_eval += to_double(*it, s.current_turn());
             }
         }
 
@@ -69,9 +69,9 @@ namespace animal_shogi
         return state_eval;
     }
 
-    int piece_advantage::to_int(piece const& p, turn current) const
+    double piece_advantage::to_double(piece const& p, turn current) const
     {
-        auto const sign = current == p.get_turn() ? 1 : -1;
+        auto const sign = current == p.get_turn() ? 1.0 : -1.0;
         return piece_eval_table.at(p.get_ptype()) * sign;
     }
 
