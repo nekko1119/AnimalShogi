@@ -27,6 +27,9 @@ namespace animal_shogi
 
         auto engine(std::mt19937{std::random_device{}()});
         auto dist = std::uniform_real_distribution<>{0.0, random_piece_advantage::max_eval_value};
+
+        double const win_eval = 100.0;
+        double const lose_eval = -200.0;
     }
 
     piece_advantage::result_type piece_advantage::operator()(state const& s) const
@@ -52,17 +55,17 @@ namespace animal_shogi
         auto const enemy_cap = s.get_captured_piece(!s.current_turn());
         for (auto const& it : ptype_table)
         {
-            state_eval -= piece_eval_table.at(it) * enemy_cap.get(it);
+            state_eval += piece_eval_table.at(it) * enemy_cap.get(it);
         }
         
         if (s.has_won(s.current_turn()))
         {
-            state_eval += static_cast<result_type>(100);
+            state_eval += static_cast<result_type>(win_eval);
         }
 
         if (s.has_won(!s.current_turn()) || s.is_a_draw())
         {
-            state_eval -= static_cast<result_type>(-200);
+            state_eval += static_cast<result_type>(lose_eval);
         }
 
         ASHOGI_LOG_TRIVIAL(debug) << "eval : " << state_eval;
@@ -124,12 +127,12 @@ namespace animal_shogi
 
         if (s.has_won(s.current_turn()))
         {
-            state_eval += static_cast<result_type>(100);
+            state_eval += static_cast<result_type>(win_eval);
         }
 
         if (s.has_won(!s.current_turn()) || s.is_a_draw())
         {
-            state_eval -= static_cast<result_type>(-200);
+            state_eval += static_cast<result_type>(lose_eval);
         }
 
         ASHOGI_LOG_TRIVIAL(debug) << "eval : " << state_eval;
