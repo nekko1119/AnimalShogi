@@ -114,8 +114,13 @@ void play(int argc, char** argv)
 
     std::array<int, 3> results = {{0, 0, 0}};
     auto const last = parser.get<int>("loop");
+
+    ASHOGI_LOG_TRIVIAL(info) << "先手" << black_str << " 読み深さ" << depth << " 後手" << white_str << " 読み深さ" << depth2;
+    ASHOGI_LOG_TRIVIAL(info) << "対戦回数" << last;
+
     for (int i = 0; i < last; ++i)
     {
+        ASHOGI_LOG_TRIVIAL(info) << i + 1 << "戦目";
         auto const res = animal_shogi::game{black_player, white_player}();
         ++results[static_cast<int>(res)];
     }

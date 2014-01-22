@@ -129,7 +129,7 @@ namespace animal_shogi
 
         if (s.has_won(!s.current_turn()) || s.is_a_draw())
         {
-            state_eval -= static_cast<result_type>(200);
+            state_eval -= static_cast<result_type>(-200);
         }
 
         ASHOGI_LOG_TRIVIAL(debug) << "eval : " << state_eval;
