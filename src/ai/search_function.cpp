@@ -32,6 +32,10 @@ namespace animal_shogi
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         auto const move = *(execute(st, depth_).second);
         auto const it = boost::find(moves, move);
+        if (it == moves.end())
+        {
+            throw std::runtime_error{"movement is not found"};
+        }
         return std::distance(std::begin(moves), it);
     }
 
@@ -95,6 +99,10 @@ namespace animal_shogi
             static_cast<double>(std::numeric_limits<int>::min() + 1),
             static_cast<double>(std::numeric_limits<int>::max())).second.get();
         auto const it = boost::find(moves, move);
+        if (it == moves.end())
+        {
+            throw std::runtime_error{"movement is not found"};
+        }
         return std::distance(std::begin(moves), it);
     }
 
