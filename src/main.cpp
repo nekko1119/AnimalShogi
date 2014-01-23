@@ -22,11 +22,11 @@ namespace
 }
 
 template <typename... Args>
-std::function<animal_shogi::movement const& (animal_shogi::state&)> create_player(boost::string_ref const& player, Args&&... args)
+std::function<void (animal_shogi::state&, animal_shogi::record&)> create_player(boost::string_ref const& player, Args&&... args)
 {
     if (player == "human")
     {
-            return animal_shogi::human{};
+        return animal_shogi::human{};
     }
     else if (player == "ai")
     {
@@ -109,8 +109,8 @@ void play(int argc, char** argv)
         depth = depth2 = parser.get<std::size_t>("depth");
     }
 
-    auto black_player = create_player(black_str, animal_shogi::minimax{animal_shogi::piece_advantage{}, depth});
-    auto white_player = create_player(white_str, animal_shogi::minimax{animal_shogi::piece_advantage{}, depth2});
+    auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth});
+    auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2});
 
     std::array<int, 3> results = {{0, 0, 0}};
     auto const last = parser.get<int>("loop");
@@ -150,8 +150,8 @@ void special(int argc, char** argv)
     }
 
     std::vector<double> const rand_piece_eval_table = {1.0, 4.9142, 5.51566, 4.58977, 1.57597};
-    auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth});
-    auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::random_piece_advantage{rand_piece_eval_table}, depth2});
+    auto black_player = create_player(black_str, animal_shogi::minimax{animal_shogi::piece_advantage{}, depth});
+    auto white_player = create_player(white_str, animal_shogi::minimax{animal_shogi::random_piece_advantage{rand_piece_eval_table}, depth2});
 
     std::array<int, 3> results = {{0, 0, 0}};
     auto const last = parser.get<int>("loop");

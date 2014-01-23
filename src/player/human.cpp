@@ -7,7 +7,7 @@
 
 namespace animal_shogi
 {
-    movement human::operator()(state& s) const
+    void human::operator()(state& s, record& r) const
     {
         // 局面を描画
         std::cout << s.str() << std::endl;
@@ -31,6 +31,7 @@ namespace animal_shogi
         }
 
         // 局面を更新
+        r.push_back(movable_list[move]);
         if (movable_list[move].from)
         {
             s.update_from_board(movable_list[move].from.get(), movable_list[move].to);
@@ -39,7 +40,5 @@ namespace animal_shogi
         {
             s.update_from_cap_pc(movable_list[move].to, movable_list[move].pc);
         }
-
-        return movable_list[move];
     }
 }

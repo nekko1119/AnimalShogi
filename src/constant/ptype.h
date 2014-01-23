@@ -31,7 +31,6 @@ namespace animal_shogi
         case ptype::hen:
             return "HE";
         default:
-            return "??";
             throw std::invalid_argument{"animal_shogi::to_string : value is invalid."};
         }
     }

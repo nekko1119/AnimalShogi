@@ -28,8 +28,8 @@ namespace animal_shogi
         auto engine(std::mt19937{std::random_device{}()});
         auto dist = std::uniform_real_distribution<>{0.0, random_piece_advantage::max_eval_value};
 
-        double const win_eval = 100.0;
-        double const lose_eval = -200.0;
+        double const win_eval = 400.0;
+        double const lose_eval = -400.0;
     }
 
     piece_advantage::result_type piece_advantage::operator()(state const& s) const

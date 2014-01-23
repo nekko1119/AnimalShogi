@@ -2,6 +2,7 @@
 #define ANIMAL_SHOGI_SEARCH_FUNCTION_H
 
 #include <functional>
+#include <map>
 #include "../state.h"
 
 namespace animal_shogi
@@ -18,7 +19,7 @@ namespace animal_shogi
     private:
         using result_type = std::pair<double, boost::optional<movement>>;
 
-        result_type execute(state const& st, std::size_t depth) const;
+        result_type execute(state const& st, std::size_t depth, std::multimap<double, movement>& move_evals) const;
 
         eval_func_type eval_func_;
         std::size_t depth_;
@@ -36,7 +37,7 @@ namespace animal_shogi
     private:
         using result_type = std::pair<double, boost::optional<movement>>;
 
-        result_type execute(state const& st, std::size_t depth, double alpha, double beta) const;
+        result_type execute(state const& st, std::size_t depth, double alpha, double beta, std::multimap<double, movement>& move_evals) const;
 
         eval_func_type eval_func_;
         std::size_t depth_;

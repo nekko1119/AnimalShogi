@@ -11,22 +11,20 @@ namespace animal_shogi
     {
     }
 
-    movement ai::operator()(state& s) const
+    void ai::operator()(state& s, record& r) const
     {
         auto const movable_list = enumerate_movable_pieces(s, s.current_turn());
-
         auto const move = search_func_(s);
-        ASHOGI_LOG_TRIVIAL(debug) << "select : " << movable_list[move].str();
 
         // 局面を更新
+        r.push_back(movable_list[move]);
         if (movable_list[move].from)
         {
             s.update_from_board(movable_list[move].from.get(), movable_list[move].to);
-        } else
+        }
+        else
         {
             s.update_from_cap_pc(movable_list[move].to, movable_list[move].pc);
         }
-
-        return movable_list[move];
     }
 }

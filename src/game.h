@@ -24,7 +24,7 @@ namespace animal_shogi
     class game
     {
     public:
-        using player_type = std::function<movement (state&)>;
+        using player_type = std::function<void (state&, record&)>;
 
         game(player_type black_player, player_type white_player);
 
