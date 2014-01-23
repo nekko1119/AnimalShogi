@@ -1,5 +1,6 @@
 ﻿#include "ai.h"
 
+#include "../record.h"
 #include "../state.h"
 #include "../utility/logging.h"
 
@@ -10,7 +11,7 @@ namespace animal_shogi
     {
     }
 
-    void ai::operator()(state& s) const
+    movement const& ai::operator()(state& s) const
     {
         auto const movable_list = enumerate_movable_pieces(s, s.current_turn());
 
@@ -25,5 +26,7 @@ namespace animal_shogi
         {
             s.update_from_cap_pc(movable_list[move].to, movable_list[move].pc);
         }
+
+        return movable_list[move];
     }
 }

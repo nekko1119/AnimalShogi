@@ -3,12 +3,13 @@
 
 namespace animal_shogi
 {
+    struct movement;
     class state;
 
     class human
     {
     public:
-        void operator()(state& s) const;
+        movement const& operator()(state& s) const;
     };
 }
 

@@ -13,11 +13,11 @@ namespace animal_shogi
         {
             if (is_black(state_.current_turn()))
             {
-                black_player_(state_);
+                record_.push_back(black_player_(state_));
             }
             else
             {
-                white_player_(state_);
+                record_.push_back(white_player_(state_));
             }
         }
 

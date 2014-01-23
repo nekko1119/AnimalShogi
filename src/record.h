@@ -65,6 +65,15 @@ namespace animal_shogi
         reference operator[](size_type index);
         const_reference operator[](size_type index) const;
 
+        template <typename Stream>
+        void write(Stream& out) const
+        {
+            for (auto const& it : moves_)
+            {
+                out << it.str() << std::endl;
+            }
+        }
+
     private:
         container_type moves_;
     };

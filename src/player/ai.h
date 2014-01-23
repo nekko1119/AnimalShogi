@@ -5,6 +5,7 @@
 
 namespace animal_shogi
 {
+    struct movement;
     class state;
 
     class ai
@@ -14,7 +15,7 @@ namespace animal_shogi
 
         explicit ai(search_func_type search_func);
 
-        void operator()(state& s) const;
+        movement const& operator()(state& s) const;
 
     private:
         search_func_type search_func_;

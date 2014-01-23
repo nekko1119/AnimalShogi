@@ -22,7 +22,7 @@ namespace
 }
 
 template <typename... Args>
-std::function<void (animal_shogi::state&)> create_player(boost::string_ref const& player, Args&&... args)
+std::function<animal_shogi::movement const& (animal_shogi::state&)> create_player(boost::string_ref const& player, Args&&... args)
 {
     if (player == "human")
     {
@@ -121,7 +121,10 @@ void play(int argc, char** argv)
     for (int i = 0; i < last; ++i)
     {
         ASHOGI_LOG_TRIVIAL(info) << i + 1 << "戦目";
-        auto const res = animal_shogi::game{black_player, white_player}();
+        animal_shogi::game g{black_player, white_player};
+        auto const res = g();
+        std::ofstream ofs{"record_" + std::to_string(i)};
+        g.write(ofs);
         ++results[static_cast<int>(res)];
     }
     animal_shogi::write_csv(std::cout, results);
@@ -154,7 +157,10 @@ void special(int argc, char** argv)
     auto const last = parser.get<int>("loop");
     for (int i = 0; i < last; ++i)
     {
-        auto const res = animal_shogi::game{black_player, white_player}();
+        animal_shogi::game g{black_player, white_player};
+        auto const res = g();
+        std::ofstream ofs{"record_" + std::to_string(i)};
+        g.write(ofs);
         ++results[static_cast<int>(res)];
     }
     animal_shogi::write_csv(std::cout, results);
@@ -209,7 +215,10 @@ void learn(int argc, char** argv)
             for (int i = 0; i < last; ++i)
             {
                 ASHOGI_LOG_TRIVIAL(info) << "A:" << i + 1 << "戦目";
-                auto const res = animal_shogi::game{black_player, white_player}();
+                animal_shogi::game g{black_player, white_player};
+                auto const res = g();
+                std::ofstream ofs{"record_" + std::to_string(i)};
+                g.write(ofs);
                 ++results[static_cast<int>(res)];
             }
             return results;
@@ -220,7 +229,10 @@ void learn(int argc, char** argv)
         {
             // 先手後手入れ変えている
             ASHOGI_LOG_TRIVIAL(info) << "B:" << i + 1 << "戦目";
-            auto const res = animal_shogi::game{white_player, black_player}();
+            animal_shogi::game g{white_player, black_player};
+            auto const res = g();
+            std::ofstream ofs{"record_" + std::to_string(i) + "_"};
+            g.write(ofs);
             ++results[static_cast<int>(!res)];
         }
 

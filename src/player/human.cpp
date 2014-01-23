@@ -2,11 +2,12 @@
 
 #include <iostream>
 #include <limits>
+#include "../record.h"
 #include "../state.h"
 
 namespace animal_shogi
 {
-    void human::operator()(state& s) const
+    movement const& human::operator()(state& s) const
     {
         // 局面を描画
         std::cout << s.str() << std::endl;
@@ -38,5 +39,7 @@ namespace animal_shogi
         {
             s.update_from_cap_pc(movable_list[move].to, movable_list[move].pc);
         }
+
+        return movable_list[move];
     }
 }
