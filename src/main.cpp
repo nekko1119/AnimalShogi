@@ -123,7 +123,7 @@ void play(int argc, char** argv)
         ASHOGI_LOG_TRIVIAL(info) << i + 1 << "戦目";
         animal_shogi::game g{black_player, white_player};
         auto const res = g();
-        std::ofstream ofs{"record_" + std::to_string(i)};
+        std::ofstream ofs{"record_" + std::to_string(i) + ".txt"};
         g.write(ofs);
         ++results[static_cast<int>(res)];
     }
@@ -159,7 +159,7 @@ void special(int argc, char** argv)
     {
         animal_shogi::game g{black_player, white_player};
         auto const res = g();
-        std::ofstream ofs{"record_" + std::to_string(i)};
+        std::ofstream ofs{"record_" + std::to_string(i) + ".txt"};
         g.write(ofs);
         ++results[static_cast<int>(res)];
     }
@@ -217,7 +217,7 @@ void learn(int argc, char** argv)
                 ASHOGI_LOG_TRIVIAL(info) << "A:" << i + 1 << "戦目";
                 animal_shogi::game g{black_player, white_player};
                 auto const res = g();
-                std::ofstream ofs{"record_" + std::to_string(i)};
+                std::ofstream ofs{"record_" + std::to_string(i) + ".txt"};
                 g.write(ofs);
                 ++results[static_cast<int>(res)];
             }
@@ -231,7 +231,7 @@ void learn(int argc, char** argv)
             ASHOGI_LOG_TRIVIAL(info) << "B:" << i + 1 << "戦目";
             animal_shogi::game g{white_player, black_player};
             auto const res = g();
-            std::ofstream ofs{"record_" + std::to_string(i) + "_"};
+            std::ofstream ofs{"record_" + std::to_string(i) + "_" + ".txt"};
             g.write(ofs);
             ++results[static_cast<int>(!res)];
         }
