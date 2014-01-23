@@ -38,6 +38,11 @@ namespace animal_shogi
         return (from ? to_string(*from) : "----") + "\t" + to_string(to) + "\t" + pc.str();
     }
 
+    void record::push_back(movement const& mv)
+    {
+        moves_.push_back(mv);
+    }
+
     void record::emplace_back(boost::optional<point> from, point to, piece pc)
     {
         moves_.emplace_back(std::move(from), std::move(to), std::move(pc));
