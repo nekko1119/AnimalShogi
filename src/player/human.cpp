@@ -7,7 +7,7 @@
 
 namespace animal_shogi
 {
-    movement const& human::operator()(state& s) const
+    movement human::operator()(state& s) const
     {
         // 局面を描画
         std::cout << s.str() << std::endl;

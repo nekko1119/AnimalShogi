@@ -109,8 +109,8 @@ void play(int argc, char** argv)
         depth = depth2 = parser.get<std::size_t>("depth");
     }
 
-    auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth});
-    auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2});
+    auto black_player = create_player(black_str, animal_shogi::minimax{animal_shogi::piece_advantage{}, depth});
+    auto white_player = create_player(white_str, animal_shogi::minimax{animal_shogi::piece_advantage{}, depth2});
 
     std::array<int, 3> results = {{0, 0, 0}};
     auto const last = parser.get<int>("loop");

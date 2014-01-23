@@ -15,7 +15,7 @@ namespace animal_shogi
 
         explicit ai(search_func_type search_func);
 
-        movement const& operator()(state& s) const;
+        movement operator()(state& s) const;
 
     private:
         search_func_type search_func_;

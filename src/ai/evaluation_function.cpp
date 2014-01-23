@@ -34,7 +34,7 @@ namespace animal_shogi
 
     piece_advantage::result_type piece_advantage::operator()(state const& s) const
     {
-        result_type state_eval = 0;
+        result_type state_eval = 0.0;
 
         // 盤面の評価
         auto const brd = s.get_board().serialize();
@@ -55,7 +55,7 @@ namespace animal_shogi
         auto const enemy_cap = s.get_captured_piece(!s.current_turn());
         for (auto const& it : ptype_table)
         {
-            state_eval += piece_eval_table.at(it) * enemy_cap.get(it);
+            state_eval -= piece_eval_table.at(it) * enemy_cap.get(it);
         }
         
         if (s.has_won(s.current_turn()))
@@ -68,7 +68,6 @@ namespace animal_shogi
             state_eval += static_cast<result_type>(lose_eval);
         }
 
-        ASHOGI_LOG_TRIVIAL(debug) << "eval : " << state_eval;
         return state_eval;
     }
 

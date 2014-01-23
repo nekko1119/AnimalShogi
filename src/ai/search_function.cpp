@@ -60,8 +60,7 @@ namespace animal_shogi
                 next = st.update_from_cap_pc_copy(it.to, it.pc);
             }
 
-            ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1 << ", move : " << it.str();
-            auto score = execute(next, depth - 1);
+            auto const score = execute(next, depth - 1);
             move_evals.emplace(-score.first, it);
         }
         // 評価値が最大の最初の要素の位置を得る
@@ -70,6 +69,12 @@ namespace animal_shogi
         {
             return l.first < r.first;
         });
+
+        ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1;
+        for (auto it = pos; it != std::end(move_evals); ++it)
+        {
+            ASHOGI_LOG_TRIVIAL(debug) << "move : " << it->second.str() << ", eval : " << it->first;
+        }
 
         // 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成
         std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count((*pos).first)) - 1};
@@ -127,7 +132,6 @@ namespace animal_shogi
                 next = st.update_from_cap_pc_copy(it.to, it.pc);
             }
 
-            ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1 << ", move : " << it.str();
             auto const score = execute(next, depth - 1, -beta, -alpha);
             if (beta <= alpha)
             {
@@ -144,6 +148,11 @@ namespace animal_shogi
             return l.first < r.first;
         });
 
+        ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1;
+        for (auto it = pos; it != std::end(move_evals); ++it)
+        {
+            ASHOGI_LOG_TRIVIAL(debug) << "move : " << it->second.str() << ", eval : " << it->first;
+        }
 
         if (pos->first < -90)
         {

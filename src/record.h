@@ -53,6 +53,7 @@ namespace animal_shogi
         using const_iterator = container_type::const_iterator;
         
         void push_back(movement const& mv);
+        void push_back(movement&& mv);
         void emplace_back(boost::optional<point> from, point to, piece pc);
         void pop();
         size_type size() const BOOST_NOEXCEPT_OR_NOTHROW;

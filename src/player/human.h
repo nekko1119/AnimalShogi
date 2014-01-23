@@ -9,7 +9,7 @@ namespace animal_shogi
     class human
     {
     public:
-        movement const& operator()(state& s) const;
+        movement operator()(state& s) const;
     };
 }
 

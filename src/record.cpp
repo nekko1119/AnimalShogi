@@ -43,6 +43,12 @@ namespace animal_shogi
         moves_.push_back(mv);
     }
 
+    void record::push_back(movement&& mv)
+    {
+        moves_.push_back(std::move(mv));
+    }
+
+
     void record::emplace_back(boost::optional<point> from, point to, piece pc)
     {
         moves_.emplace_back(std::move(from), std::move(to), std::move(pc));
