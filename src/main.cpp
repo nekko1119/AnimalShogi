@@ -146,9 +146,9 @@ void special(int argc, char** argv)
         depth = depth2 = parser.get<std::size_t>("depth");
     }
 
-    std::vector<double> const rand_piece_eval_table = {1.0, 8.77283, 7.61874, 8.64285, 3.95307};
-    auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::random_piece_advantage{rand_piece_eval_table}, depth});
-    auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth2});
+    std::vector<double> const rand_piece_eval_table = {1.0, 4.9142, 5.51566, 4.58977, 1.57597};
+    auto black_player = create_player(black_str, animal_shogi::alphabeta{animal_shogi::piece_advantage{}, depth});
+    auto white_player = create_player(white_str, animal_shogi::alphabeta{animal_shogi::random_piece_advantage{rand_piece_eval_table}, depth2});
 
     std::array<int, 3> results = {{0, 0, 0}};
     auto const last = parser.get<int>("loop");
@@ -208,6 +208,7 @@ void learn(int argc, char** argv)
             std::array<int, 3> results = {{0, 0, 0}};
             for (int i = 0; i < last; ++i)
             {
+                ASHOGI_LOG_TRIVIAL(info) << "A:" << i + 1 << "戦目";
                 auto const res = animal_shogi::game{black_player, white_player}();
                 ++results[static_cast<int>(res)];
             }
@@ -218,6 +219,7 @@ void learn(int argc, char** argv)
         for (int i = 0; i < last; ++i)
         {
             // 先手後手入れ変えている
+            ASHOGI_LOG_TRIVIAL(info) << "B:" << i + 1 << "戦目";
             auto const res = animal_shogi::game{white_player, black_player}();
             ++results[static_cast<int>(!res)];
         }
