@@ -61,12 +61,15 @@ int main(int argc, char** argv)
 
         //logディレクトリを作成する
         boost::filesystem::path fsys{"log"};
-        boost::system::error_code error_code;
-        auto const result = boost::filesystem::create_directory(fsys, error_code);
-        if (!result || error_code)
+        if (!boost::filesystem::exists(fsys))
         {
-            std::cerr << "ディレクトリの作成に失敗" << std::endl;
-            return 1;
+            boost::system::error_code error_code;
+            auto const result = boost::filesystem::create_directory(fsys, error_code);
+            if (!result || error_code)
+            {
+                std::cerr << "ディレクトリの作成に失敗" << std::endl;
+                return 1;
+            }
         }
 
         // モードを選択
@@ -134,7 +137,7 @@ void play(int argc, char** argv)
         ASHOGI_LOG_TRIVIAL(info) << i + 1 << "戦目";
         animal_shogi::game g{black_player, white_player};
         auto const res = g();
-        std::ofstream ofs{"record_" + std::to_string(i) + ".txt"};
+        std::ofstream ofs{"log/record_" + std::to_string(i) + ".txt"};
         g.write(ofs);
         ++results[static_cast<int>(res)];
     }
@@ -170,7 +173,7 @@ void special(int argc, char** argv)
     {
         animal_shogi::game g{black_player, white_player};
         auto const res = g();
-        std::ofstream ofs{"record_" + std::to_string(i) + ".txt"};
+        std::ofstream ofs{"log/record_" + std::to_string(i) + ".txt"};
         g.write(ofs);
         ++results[static_cast<int>(res)];
     }
@@ -242,7 +245,7 @@ void learn(int argc, char** argv)
             ASHOGI_LOG_TRIVIAL(info) << "B:" << i + 1 << "戦目";
             animal_shogi::game g{white_player, black_player};
             auto const res = g();
-            std::ofstream ofs{"record_" + std::to_string(i) + "_" + ".txt"};
+            std::ofstream ofs{"log/record_" + std::to_string(i) + "_" + ".txt"};
             g.write(ofs);
             ++results[static_cast<int>(!res)];
         }
