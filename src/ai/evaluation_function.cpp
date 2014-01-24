@@ -32,7 +32,7 @@ namespace animal_shogi
         double const lose_eval = -400.0;
     }
 
-    piece_advantage::result_type piece_advantage::operator()(state const& s) const
+    piece_advantage::result_type piece_advantage::operator()(state const& s, turn trn) const
     {
         result_type state_eval = 0.0;
 
@@ -42,28 +42,28 @@ namespace animal_shogi
         {
             if (it)
             {
-                state_eval += to_double(*it, s.current_turn());
+                state_eval += to_double(*it, trn);
             }
         }
 
         // 持ち駒の評価
-        auto const own_cap = s.get_captured_piece(s.current_turn());
+        auto const own_cap = s.get_captured_piece(trn);
         for (auto const& it : ptype_table)
         {
             state_eval += piece_eval_table.at(it) * own_cap.get(it);
         }
-        auto const enemy_cap = s.get_captured_piece(!s.current_turn());
+        auto const enemy_cap = s.get_captured_piece(!trn);
         for (auto const& it : ptype_table)
         {
             state_eval -= piece_eval_table.at(it) * enemy_cap.get(it);
         }
         
-        if (s.has_won(s.current_turn()))
+        if (s.has_won(trn))
         {
             state_eval += static_cast<result_type>(win_eval);
         }
 
-        if (s.has_won(!s.current_turn()) || s.is_a_draw())
+        if (s.has_won(!trn) || s.is_a_draw())
         {
             state_eval += static_cast<result_type>(lose_eval);
         }
@@ -98,7 +98,7 @@ namespace animal_shogi
         }
     }
 
-    random_piece_advantage::result_type random_piece_advantage::operator()(state const& s) const
+    random_piece_advantage::result_type random_piece_advantage::operator()(state const& s, turn trn) const
     {
         result_type state_eval = 0;
 
@@ -108,28 +108,28 @@ namespace animal_shogi
         {
             if (it)
             {
-                state_eval += to_double(*it, s.current_turn());
+                state_eval += to_double(*it, trn);
             }
         }
 
         // 持ち駒の評価
-        auto const own_cap = s.get_captured_piece(s.current_turn());
+        auto const own_cap = s.get_captured_piece(trn);
         for (auto const& it : ptype_table)
         {
             state_eval += piece_values_.at(it) * own_cap.get(it);
         }
-        auto const enemy_cap = s.get_captured_piece(!s.current_turn());
+        auto const enemy_cap = s.get_captured_piece(!trn);
         for (auto const& it : ptype_table)
         {
             state_eval -= piece_values_.at(it) * enemy_cap.get(it);
         }
 
-        if (s.has_won(s.current_turn()))
+        if (s.has_won(trn))
         {
             state_eval += static_cast<result_type>(win_eval);
         }
 
-        if (s.has_won(!s.current_turn()) || s.is_a_draw())
+        if (s.has_won(!trn) || s.is_a_draw())
         {
             state_eval += static_cast<result_type>(lose_eval);
         }

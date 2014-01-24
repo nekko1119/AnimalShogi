@@ -160,7 +160,7 @@ namespace animal_shogi
     state state::update_from_board_copy(point from, point to) const
     {
         state copy{*this};
-        copy.update_from_board(std::move(from), std::move(to));
+        copy.update_from_board_impl(std::move(from), std::move(to));
         return copy;
     }
 
@@ -174,7 +174,7 @@ namespace animal_shogi
     state state::update_from_cap_pc_copy(point from, piece pc) const
     {
         state copy{*this};
-        copy.update_from_cap_pc(std::move(from), std::move(pc));
+        copy.update_from_cap_pc_impl(std::move(from), std::move(pc));
         return copy;
     }
 

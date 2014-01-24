@@ -46,7 +46,7 @@ namespace animal_shogi
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
         if (depth == 0 || moves.empty())
         {
-            return {static_cast<double>(eval_func_(st)), boost::none};
+            return {static_cast<double>(eval_func_(st, !st.current_turn())), boost::none};
         }
 
         ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1;
@@ -64,9 +64,10 @@ namespace animal_shogi
             }
 
             auto score = execute(next, depth - 1, move_evals);
-
             score.first *= -1.0;
 
+            ASHOGI_LOG_TRIVIAL(debug) << "move : " << it.str() << ", eval : " << score.first;
+            
             if (max_score < score.first)
             {
                 max_score = score.first;
@@ -102,69 +103,84 @@ namespace animal_shogi
 
     int alphabeta::operator()(state st) const
     {
-        std::multimap<double, movement> move_evals;
         auto const moves = enumerate_movable_pieces(st, st.current_turn());
-        auto const move = execute(
-            st,
-            depth_,
-            static_cast<double>(std::numeric_limits<int>::min() + 1),
-            static_cast<double>(std::numeric_limits<int>::max()), move_evals);
-        auto const target = move.second.get();
-        auto const it = boost::find(moves, target);
-        if (it == moves.end())
-        {
-            throw std::runtime_error{"movement is not found"};
-        }
-        ASHOGI_LOG_TRIVIAL(debug) << "select : " << move.second->str() << ", eval : " << move.first;
-        return std::distance(std::begin(moves), it);
-    }
-
-    alphabeta::result_type alphabeta::execute(state const& st, std::size_t depth, double alpha, double beta, std::multimap<double, movement>& move_evals) const
-    {
-        auto const moves = enumerate_movable_pieces(st, st.current_turn());
-        if (depth == 0 || moves.empty())
-        {
-            return {static_cast<double>(eval_func_(st)), boost::none};
-        }
-
-        ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1;
+        // 最も高い評価値とその指し手を記録する
+        std::multimap<double, boost::optional<movement>> move_evals;
+        ASHOGI_LOG_TRIVIAL(debug) << "depth : " << 1 << "@ --------";
         for (auto const& it : moves)
         {
-            state next;
-            if (it.from)
-            {
-                next = st.update_from_board_copy(*(it.from), it.to);
-            }
-            else
-            {
-                next = st.update_from_cap_pc_copy(it.to, it.pc);
-            }
+            auto const eval = execute(
+                st,
+                st.current_turn(),
+                it,
+                depth_ - 1,
+                static_cast<double>(std::numeric_limits<int>::min() + 1),
+                static_cast<double>(std::numeric_limits<int>::max()));
 
-            auto score = execute(next, depth - 1, -beta, -alpha, move_evals);
-            score.first *= -1.0;
-            
-            move_evals.emplace(score.first, it);
-
-            alpha = std::max(alpha, score.first);
-            if (beta <= score.first)
-            {
-                ASHOGI_LOG_TRIVIAL(debug) << "move : " << it.str() << ", eval : " << score.first;
-                return {score.first, it};
-            }            
+            move_evals.emplace(eval, it);
         }
-        return result_type{alpha, move_evals.lower_bound(alpha)->second};
-        //// 評価値が最大の最初の要素の位置を得る
-        //using val_t = decltype(move_evals)::value_type;
-        //auto pos = boost::max_element(move_evals, [](val_t const& l, val_t const& r)
-        //{
-        //    return l.first < r.first;
-        //});
 
-        //// 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成
-        //std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count(pos->first)) - 1};
+        // 評価値が最大の最初の要素の位置を得る
+        using val_t = decltype(move_evals)::value_type;
+        auto pos = boost::max_element(move_evals, [](val_t const& l, val_t const& r)
+        {
+            return l.first < r.first;
+        });
 
-        //// 最大評価値の指し手のうち、実際に指す手を一様乱数で決める
-        //result_type result{pos->first, std::next(pos, dist(engine))->second};
-        //return result;*/
+        // 評価値が最大の要素数を得、[0, count)の範囲の乱数分布器を作成
+        std::uniform_int_distribution<> dist{0, static_cast<int>(move_evals.count(pos->first)) - 1};
+
+        // 最大評価値の指し手のうち、実際に指す手を一様乱数で決める
+        std::advance(pos, dist(engine));
+
+        ASHOGI_LOG_TRIVIAL(debug) << "select : " << pos->second->str() << ", eval : " << pos->first;
+        return std::distance(std::begin(moves), boost::find(moves, pos->second.get()));
+    }
+
+    alphabeta::result_type alphabeta::execute(state const& st, turn trn, movement const& move, std::size_t depth, double alpha, double beta) const
+    {
+        state next;
+        if (move.from)
+        {
+            next = st.update_from_board_copy(move.from.get(), move.to);
+        }
+        else
+        {
+            next = st.update_from_cap_pc_copy(move.to, move.pc);
+        }
+        auto const next_moves = enumerate_movable_pieces(next, next.current_turn());
+
+        if (depth == 0)
+        {
+            auto const eval = eval_func_(next, trn);
+            ASHOGI_LOG_TRIVIAL(debug) << "move : " << move.str() << ", eval : " << eval;
+            return static_cast<double>(eval);
+        }
+
+        ASHOGI_LOG_TRIVIAL(debug) << "depth : " << depth_ - depth + 1 << "@ " << move.str();
+        if (trn == next.current_turn())
+        {
+            for (auto const& it : next_moves)
+            {
+                auto const score = std::max(alpha, execute(next, trn, it, depth - 1, alpha, beta));            
+                if (beta <= alpha)
+                {
+                    return beta;
+                }
+            }
+            return alpha;
+        }
+        else
+        {
+            for (auto const& it : next_moves)
+            {
+                auto const score = std::min(alpha, execute(next, trn, it, depth - 1, alpha, beta));
+                if (beta <= alpha)
+                {
+                    return alpha;
+                }
+            }
+            return beta;
+        }
     }
 }

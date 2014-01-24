@@ -15,7 +15,7 @@ namespace animal_shogi
     {
     public:
         using result_type = double;
-        result_type operator()(state const& s) const;
+        result_type operator()(state const& s, turn trn) const;
 
     private:
         double to_double(piece const& p, turn current) const;
@@ -31,7 +31,7 @@ namespace animal_shogi
         random_piece_advantage();
         explicit random_piece_advantage(std::vector<result_type> const& values);
 
-        result_type operator()(state const& s) const;
+        result_type operator()(state const& s, turn trn) const;
         std::vector<result_type> piece_values() const;
 
     private:
