@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <future>
+#include <boost/filesystem.hpp>
 #include <boost/range/algorithm/transform.hpp>
 #include <boost/utility/string_ref.hpp>
 #include "ai/evaluation_function.h"
@@ -16,9 +17,9 @@
 
 namespace
 {
-    std::string const win_eval_file_name{"win_eval_table.csv"};
-    std::string const lose_eval_file_name{"lose_eval_table.csv"};
-    std::string const result_file_name{"result_table.csv"};
+    std::string const win_eval_file_name{"log/win_eval_table.csv"};
+    std::string const lose_eval_file_name{"log/lose_eval_table.csv"};
+    std::string const result_file_name{"log/result_table.csv"};
 }
 
 template <typename... Args>
@@ -57,6 +58,16 @@ int main(int argc, char** argv)
     try
     {
         auto log = animal_shogi::logging{};
+
+        //logディレクトリを作成する
+        boost::filesystem::path fsys{"log"};
+        boost::system::error_code error_code;
+        auto const result = boost::filesystem::create_directory(fsys, error_code);
+        if (!result || error_code)
+        {
+            std::cerr << "ディレクトリの作成に失敗" << std::endl;
+            return 1;
+        }
 
         // モードを選択
         char input = '\0';
