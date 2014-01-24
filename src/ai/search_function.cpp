@@ -162,7 +162,7 @@ namespace animal_shogi
         {
             for (auto const& it : next_moves)
             {
-                auto const score = std::max(alpha, execute(next, trn, it, depth - 1, alpha, beta));            
+                alpha = std::max(alpha, execute(next, trn, it, depth - 1, alpha, beta));            
                 if (beta <= alpha)
                 {
                     return beta;
@@ -174,7 +174,7 @@ namespace animal_shogi
         {
             for (auto const& it : next_moves)
             {
-                auto const score = std::min(alpha, execute(next, trn, it, depth - 1, alpha, beta));
+                beta = std::min(beta, execute(next, trn, it, depth - 1, alpha, beta));
                 if (beta <= alpha)
                 {
                     return alpha;
